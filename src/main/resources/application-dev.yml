@@ -1,0 +1,30 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/snailrenting?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&allowMultiQueries=true
+    driver-class-name: com.mysql.jdbc.Driver
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  http:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+#指定mybatis映射文件的地址
+mybatis:
+  #配置文件的路径
+  #config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # mybatis自动扫描包中的实体类，自动定义别名，别名是类名(首字母大写或小写都可以,一般用小写)
+  type-aliases-package: com.alien.entity
+#showSql
+logging:
+  level:
+    com:
+      example:
+        mapper : debug

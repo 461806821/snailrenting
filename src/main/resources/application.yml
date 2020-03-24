@@ -1,0 +1,25 @@
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+spring:
+  profiles:
+    active: dev
+#logging:
+#  config: classpath:log4j2.yml
+vhall:
+  api:
+      class:
+        create: http://api-class.e.vhall.com/api/class/create
+        edit: http://api-class.e.vhall.com/api/class/edit
+        delete: http://api-class.e.vhall.com/api/class/delete
+        list: http://api-class.e.vhall.com/api/class/list
+        pwd: http://api-class.e.vhall.com/api/class/pwd
+        live-url: http://api-class.e.vhall.com/api/class/live-url
+        invalid-liveurl: http://api-class.e.vhall.com/api/class/invalid-liveurl
+        
+
+
