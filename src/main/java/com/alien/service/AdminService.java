@@ -1,7 +1,8 @@
 package com.alien.service;
 
 import com.alien.entity.SnailAdmin;
-import com.alien.mapper.AdminMapper;
+import com.alien.entity.vo.SessionAdmin;
+import com.alien.mapper.SnailAdminMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
 public class AdminService {
 
     @Autowired
-    private AdminMapper adminMapper;
+    private SnailAdminMapper adminMapper;
 
     /**
      * 登陆接口
@@ -30,7 +31,10 @@ public class AdminService {
         SnailAdmin a= adminMapper.select(snailAdmin);
         if(a!=null){
             if(snailAdmin.getPassword().equals(a.getPassword())){
-                httpSession.setAttribute("admin", a);
+                SessionAdmin sessionadmin =new SessionAdmin();
+                sessionadmin.setId(a.getId());
+                sessionadmin.setUsername(a.getUsername());
+                httpSession.setAttribute("sessionuser", sessionadmin);
                 return new ModelAndView("redirect:/index/Admin_index");
             }
             modelAndView.addObject("msg", "密码不正确！");

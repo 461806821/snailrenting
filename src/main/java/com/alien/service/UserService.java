@@ -1,19 +1,17 @@
 package com.alien.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
 import com.alien.entity.SnailAdmin;
 import com.alien.entity.SnailUser;
-import com.alien.mapper.UserMapper;
+import com.alien.entity.vo.SessionAdmin;
+import com.alien.entity.vo.SessionUser;
+import com.alien.mapper.SnailUserMapper;
 import com.alien.utils.UuidUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.log4j.Log4j2;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +27,7 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserMapper userMapper;
+    private SnailUserMapper userMapper;
 
     /**
      * 登陆接口
@@ -41,7 +39,11 @@ public class UserService {
         SnailUser a= userMapper.select(snailUser);
         if(a!=null){
             if(snailUser.getPassword().equals(a.getPassword())){
-                httpSession.setAttribute("user", a);
+                SessionUser sessionuser =new SessionUser();
+                sessionuser.setId(a.getId());
+                sessionuser.setUsername(a.getUsername());
+                sessionuser.setHeadImg(a.getHeadImg());
+                httpSession.setAttribute("sessionuser", sessionuser);
                 return new ModelAndView("redirect:/index/Web_index");
             }
             modelAndView.addObject("msg", "密码不正确！");
@@ -52,51 +54,102 @@ public class UserService {
     }
 
     @Transactional(readOnly = false)
-    public ModelAndView register(SnailUser snailUser){
-        snailUser.setId(UuidUtils.getUUID());
-        snailUser.setDelFlag(0);
-//        snailUser.preInsert(operatid);
+    public ModelAndView web_insert(SnailUser snailUser){
+        snailUser.preInsert(0);
         userMapper.insert(snailUser);
         return ModelAndViewResult.succeed("/Web_login", "注册成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
-    public ModelAndView list(SnailUser snailUser){
+    public ModelAndView web_select_identity(SnailUser snailUser,HttpSession httpSession){
+        SessionUser sessionuser=(SessionUser) httpSession.getAttribute("sessionuser");
+        if(sessionuser == null){
+            return new ModelAndView("redirect:/user/Web_login");
+        }
+        snailUser.setId(sessionuser.getId());
+        //房东或租户身份 回显，不是 跳转认证界面
+        SnailUser u =userMapper.select(snailUser);
+        Integer certificate = 2;
+        if(certificate == 0 ){
+            return ModelAndViewResult.succeed("/Web_certificate",null, CodeEnum.MSG_SUCCES.getMsg());
+        }
+        return ModelAndViewResult.succeed("/Web_certificate",u,CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+    @Transactional(readOnly = false)
+    public ModelAndView web_update_identity(SnailUser snailUser,HttpSession httpSession){
+        SessionUser sessionuser=(SessionUser) httpSession.getAttribute("sessionuser");
+        if(sessionuser == null){
+            return new ModelAndView("redirect:/user/Web_login");
+        }
+        //身份认证逻辑
+        snailUser.setId(sessionuser.getId());
+        snailUser.preUpdate(sessionuser.getId());
+        userMapper.update(snailUser);
+        SnailUser u=userMapper.select(snailUser);
+        return ModelAndViewResult.succeed("/Web_certificate",u, "认证成功！", CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+    public ModelAndView web_select(SnailUser snailUser,HttpSession httpSession){
+        SessionUser sessionuser=(SessionUser) httpSession.getAttribute("sessionuser");
+        if(sessionuser == null){
+            return new ModelAndView("redirect:/user/Web_login");
+        }
+        snailUser.setId(sessionuser.getId());
+        SnailUser u=userMapper.select(snailUser);
+        return ModelAndViewResult.succeed("/Web_usercenter",u, CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+    @Transactional(readOnly = false)
+    public ModelAndView web_update(SnailUser snailUser,HttpSession httpSession){
+        SessionUser sessionuser=(SessionUser) httpSession.getAttribute("sessionuser");
+        if(sessionuser == null){
+            return new ModelAndView("redirect:/user/Web_login");
+        }
+        snailUser.setId(sessionuser.getId());
+        snailUser.preUpdate(sessionuser.getId());
+        userMapper.update(snailUser);
+        SnailUser u=userMapper.select(snailUser);
+        return ModelAndViewResult.succeed("/Web_usercenter",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+    public ModelAndView admin_list(SnailUser snailUser,HttpSession httpSession){
         PageHelper.startPage(snailUser.getPageNum(), snailUser.getPageSize());
         List<SnailUser> list= userMapper.list(snailUser);
         PageInfo<SnailUser> pageInfo = new PageInfo<>(list);
         return ModelAndViewResult.succeedPage("/Admin_userlist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
     }
 
-    public ModelAndView select(SnailUser snailUser){
+    public ModelAndView admin_select(SnailUser snailUser,HttpSession httpSession){
         SnailUser u=userMapper.select(snailUser);
         return ModelAndViewResult.succeed("/Admin_userupdate",u, null, CodeEnum.MSG_SUCCES.getMsg());
     }
 
     @Transactional(readOnly = false)
-    public ModelAndView insert(SnailUser snailUser){
-        snailUser.setId(UuidUtils.getUUID());
-        snailUser.setDelFlag(0);
-//        snailUser.preInsert(operatid);
+    public ModelAndView admin_insert(SnailUser snailUser,HttpSession httpSession){
+        snailUser.preInsert(101);
         userMapper.insert(snailUser);
         SnailUser u=userMapper.select(snailUser);
         return ModelAndViewResult.succeed("/Admin_userupdate",u, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
     @Transactional(readOnly = false)
-    public ModelAndView update(SnailUser snailUser){
-//        snailUser.preUpdate(operatid);
+    public ModelAndView admin_update(SnailUser snailUser,HttpSession httpSession){
+        snailUser.preUpdate(101);
         userMapper.update(snailUser);
         SnailUser u=userMapper.select(snailUser);
         return ModelAndViewResult.succeed("/Admin_userupdate",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
     @Transactional(readOnly = false)
-    public ModelAndView delete(SnailUser snailUser,HttpSession httpSession){
-        SnailAdmin admin=(SnailAdmin) httpSession.getAttribute("admin");
-        snailUser.preUpdate(admin.getId());
+    public ModelAndView admin_delete(SnailUser snailUser,HttpSession httpSession){
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/user/Web_login");
+        }
+        snailUser.preUpdate(sessionadmin.getId());
         userMapper.delete(snailUser);
 
-        return list(snailUser);
+        return admin_list(snailUser,httpSession);
     }
 
 //    public void export(SnailUser user, HttpServletResponse response) throws IOException {

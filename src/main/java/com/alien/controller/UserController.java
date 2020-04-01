@@ -5,6 +5,7 @@ import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
 import com.alien.entity.SnailAdmin;
 import com.alien.entity.SnailUser;
+import com.alien.entity.vo.SessionUser;
 import com.alien.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +31,7 @@ public class UserController {
 
     @ApiOperation(value = "用户登录页面")
     @RequestMapping("/Web_login")
-    public ModelAndView Web_login() {
+    public ModelAndView pWeb_login() {
         log.info("用户登录页面");
         ModelAndView modelAndView = new ModelAndView("/Web_login");//设置对应JSP的模板文件
         modelAndView.addObject("checkword", "ALIEN");
@@ -54,7 +55,7 @@ public class UserController {
     private ModelAndView register(@ModelAttribute SnailUser snailUser) {
         try {
             log.info("注册接口"+snailUser.getUsername());
-            return userService.register(snailUser);
+            return userService.web_insert(snailUser);
         }
         catch (Exception e) {
             log.error("注册操作失败", e);
@@ -70,10 +71,10 @@ public class UserController {
 
     @ApiOperation(value = "用户列表")
     @RequestMapping("/Admin_list")
-    private ModelAndView Admin_list(@ModelAttribute SnailUser snailUser) {
+    private ModelAndView Admin_list(@ModelAttribute SnailUser snailUser,HttpSession httpSession) {
         try {
             log.info("用户列表");
-            return userService.list(snailUser);
+            return userService.admin_list(snailUser,httpSession);
         }
         catch (Exception e) {
             log.error("用户列表操作失败", e);
@@ -84,10 +85,10 @@ public class UserController {
 
     @ApiOperation(value = "用户回显")
     @RequestMapping("/Admin_select")
-    private ModelAndView Admin_select(@ModelAttribute SnailUser snailUser) {
+    private ModelAndView Admin_select(@ModelAttribute SnailUser snailUser,HttpSession httpSession) {
         try {
             log.info("用户回显");
-            return userService.select(snailUser);
+            return userService.admin_select(snailUser,httpSession);
         }
         catch (Exception e) {
             log.error("用户回显操作失败", e);
@@ -97,10 +98,10 @@ public class UserController {
 
     @ApiOperation(value = "用户添加")
     @RequestMapping("/Admin_insert")
-    private ModelAndView Admin_insert(@ModelAttribute SnailUser snailUser) {
+    private ModelAndView Admin_insert(@ModelAttribute SnailUser snailUser,HttpSession httpSession) {
         try {
             log.info("用户添加");
-            return userService.insert(snailUser);
+            return userService.admin_insert(snailUser,httpSession);
         }
         catch (Exception e) {
             log.error("用户添加操作失败", e);
@@ -110,10 +111,10 @@ public class UserController {
 
     @ApiOperation(value = "用户修改")
     @RequestMapping("/Admin_update")
-    private ModelAndView Admin_update(@ModelAttribute SnailUser snailUser) {
+    private ModelAndView Admin_update(@ModelAttribute SnailUser snailUser,HttpSession httpSession) {
         try {
             log.info("用户修改");
-            return userService.update(snailUser);
+            return userService.admin_update(snailUser,httpSession);
         }
         catch (Exception e) {
             log.error("用户修改操作失败", e);
@@ -126,7 +127,7 @@ public class UserController {
     private ModelAndView Admin_delete(@ModelAttribute SnailUser snailUser,HttpSession httpSession) {
         try {
             log.info("用户删除"+snailUser.getId()+"==");
-            return userService.delete(snailUser,httpSession);
+            return userService.admin_delete(snailUser,httpSession);
         }
         catch (Exception e) {
             log.error("用户删除操作失败", e);

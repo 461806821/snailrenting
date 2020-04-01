@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,9 +17,30 @@ import java.util.List;
 public class SnailUser extends BaseEntity<SnailUser> {
 
     private String username;
+
+    private String email;
+
     private String password;
 
+    private String name;
+
+    private String headImg;
+
+    private String phone;
+
+    private String address;
+
+    private String identity;
+
+    private Integer certificate;
+
+    private Integer loginNum;
+
+    private Date logintIme;
+
     private String password1;
+    private String repassword;
+    private String webidentity;
     private List<String> ids;
 }
 

@@ -5,11 +5,14 @@
   Time: 19:50
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
-<html>
 <head>
-    <title>Single</title>
+    <title>蜗牛找房网</title>
     <!-- for-mobile-apps -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -47,29 +50,10 @@
         <div class="container">
             <div class="header-top-left">
                 <ul>
-                    <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 345 569</li>
-                    <li><a href="mailto:info@example.com"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>info@example.com</a></li>
+                    <%--                    <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 345 569</li>--%>
+                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border pinterest" aria-hidden="true"></span>登录</a></li>
+                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border twitter" aria-hidden="true"></span>注册</a></li>
                 </ul>
-            </div>
-            <div class="header-top-left1">
-                <ul class="social-icons">
-                    <li><a href="#" class="icon icon-border facebook"></a></li>
-                    <li><a href="#" class="icon icon-border twitter"></a></li>
-                    <li><a href="#" class="icon icon-border instagram"></a></li>
-                    <li><a href="#" class="icon icon-border pinterest"></a></li>
-                </ul>
-            </div>
-            <div class="header-top-right">
-                <div class="search">
-                    <input class="search_box" type="checkbox" id="search_box">
-                    <label class="icon-search" for="search_box"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></label>
-                    <div class="search_form">
-                        <form action="#" method="post">
-                            <input type="text" name="Search" placeholder="Search...">
-                            <input type="submit" value=" ">
-                        </form>
-                    </div>
-                </div>
             </div>
             <div class="clearfix"> </div>
         </div>
@@ -86,7 +70,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="logo">
-                        <h1><a class="navbar-brand" href="index.html">Plottage <span>Real Estate</span></a></h1>
+                        <h1><a class="navbar-brand" href="${pageContext.request.contextPath }/index/Web_index">蜗牛找房<span>Snail renting</span></a></h1>
                     </div>
                 </div>
 
@@ -94,11 +78,11 @@
                 <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
                     <nav>
                         <ul class="nav navbar-nav">
-                            <li><a href="index.html" class="hvr-bounce-to-bottom">Home</a></li>
-                            <li><a href="services.html" class="hvr-bounce-to-bottom">Services</a></li>
-                            <li><a href="gallery.html" class="hvr-bounce-to-bottom">Gallery</a></li>
-                            <li><a href="short-codes.html" class="hvr-bounce-to-bottom">Short Codes</a></li>
-                            <li><a href="mail.html" class="hvr-bounce-to-bottom">Mail Us</a></li>
+                            <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
+                            <li><a href="${pageContext.request.contextPath }/house/Web_list" class="hvr-bounce-to-bottom">全部房源</a></li>
+                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">蜗牛服务</a></li>
+                            <li><a href="${pageContext.request.contextPath }/collectiom/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
+                            <li><a class="hvr-bounce-to-bottom">VR看房(未解锁)</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -109,32 +93,36 @@
 </div>
 <!-- //header -->
 <!-- breadcrumbs -->
+<!-- breadcrumbs -->
 <div class="services-top-breadcrumbs">
     <div class="container">
         <div class="services-top-breadcrumbs-right">
             <ul>
-                <li><a href="index.html">Home</a> <i>/</i></li>
-                <li>Single Page</li>
+                <li><a href="${pageContext.request.contextPath }/index/Web_index">主页</a> <i>/</i></li>
+                <li>房源详情</li>
             </ul>
         </div>
         <div class="services-top-breadcrumbs-left">
-            <h3>Single Page</h3>
+            <h3>房源详情</h3>
         </div>
         <div class="clearfix"> </div>
     </div>
 </div>
 <!-- //breadcrumbs -->
-<!-- single -->
 <div class="single">
     <div class="container">
         <div class="col-md-8 single-left">
             <div class="sample1">
                 <div class="carousel">
                     <ul>
-                        <li> <img src="images/13.jpg" alt="quibusdam et aut offi"> </li>
-                        <li> <img src="images/14.jpg" alt="Itaque earum rerum hic"> </li>
-                        <li> <img src="images/15.jpg" alt="doloribus asperio rep"> </li>
-                        <li> <img src="images/16.jpg" alt="maiores alias consequ"> </li>
+<%--                        <li> <img src="/static/web/images/13.jpg" alt="quibusdam et aut offi"> </li>--%>
+<%--                        <li> <img src="/static/web/images/14.jpg" alt="Itaque earum rerum hic"> </li>--%>
+<%--                        <li> <img src="/static/web/images/15.jpg" alt="doloribus asperio rep"> </li>--%>
+<%--                        <li> <img src="/static/web/images/16.jpg" alt="maiores alias consequ"> </li>--%>
+                        <li> <img <c:if test="${!empty data.snailRoom.bedroomImg1}">src="/static/web/images/${data.snailRoom.bedroomImg1}"</c:if> alt="quibusdam et aut offi"> </li>
+                        <li> <img <c:if test="${!empty data.snailRoom.bedroomImg2}">src="/static/web/images/${data.snailRoom.bedroomImg2}"</c:if> alt="Itaque earum rerum hic"> </li>
+                        <li> <img <c:if test="${!empty data.bathImg1}">src="/static/web/images/${data.bathImg1}"</c:if> alt="doloribus asperio rep"> </li>
+                        <li> <img <c:if test="${!empty data.bathImg2}">src="/static/web/images/${data.bathImg2}"</c:if> alt="maiores alias consequ"> </li>
                     </ul>
                     <div class="controls">
                         <div class="prev"></div>
@@ -143,71 +131,107 @@
                 </div>
                 <div class="thumbnails">
                     <ul>
-                        <li> <img src="images/13.jpg" alt=" "> </li>
-                        <li> <img src="images/14.jpg" alt=" "> </li>
-                        <li> <img src="images/15.jpg" alt=" "> </li>
-                        <li> <img src="images/16.jpg" alt=" "> </li>
+                        <li> <img <c:if test="${!empty data.houseImg }">src="/static/web/images/${data.houseImg}"</c:if>alt="doloribus asperio rep"> </li>
+                        <li> <img <c:if test="${!empty data.kitchenImg1 }">src="/static/web/images/${data.kitchenImg1}"</c:if> alt=" "> </li>
+                        <li> <img <c:if test="${!empty data.livingImg1 }">src="${data.livingImg1}"</c:if> alt=" "> </li>
+                        <li> <img <c:if test="${!empty data.livingImg2 }">src="${data.livingImg2}"</c:if> alt=" "> </li>
                     </ul>
                 </div>
             </div>
-            <script src="js/jquery.light-carousel.js"></script>
+            <script src="/static/web/js/jquery.light-carousel.js"></script>
             <script>
                 $('.sample1').lightCarousel();
             </script>
             <div class="single-left2">
-                <h3>vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</h3>
+                <h3>${data.address} ${data.snailRoom.name}</h3>
                 <ul class="com">
-                    <li><span class="glyphicon glyphicon-snailUser" aria-hidden="true"></span><a href="#">SnailAdmin</a></li>
-                    <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a href="#">2 Comments</a></li>
-                    <li><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a href="#">50 Likes</a></li>
-                    <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="#">3 Tags</a></li>
+                    <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a>卧室：${data.bedroom} </a></li>
+                    <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a>签约</a></li>
+                    <li><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/collection/Web_insert?id=${data.snailRoom.id}">点赞：${data.snailRoom.prasie} </a></li>
+                    <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/collection/Web_insert?id=${data.snailRoom.id}">收藏</a></li>
                 </ul>
                 <div class="single-left2-sub">
                     <ul>
-                        <li>Recent Tags: </li>
-                        <li><a href="#">Designs</a></li>
-                        <li><a href="#">Category</a></li>
-                        <li><a href="#">Packages</a></li>
+                        <li>操作选择 </li>
+                        <li><a href="${pageContext.request.contextPath }/service/Web_aftersale">预约看房</a></li>
+                        <li><a >电话咨询</a></li>
+                        <li><a href="${pageContext.request.contextPath }/order/Web_insert?id=${data.snailRoom.id}">立刻签约</a></li>
+                    </ul>
+                </div>
+                <div class="single-left2-sub">
+                    <ul>
+                        <li>房源简介 </li>
                     </ul>
                 </div>
             </div>
             <div class="single-left3">
-                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-                    praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
-                    excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui
-                    officia deserunt mollitia animi, id est laborum et dolorum fuga.
-                    <span>Et harum quidem rerum facilis est et expedita distinctio. Nam libero
-						tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus
-						id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis
-						dolor repellendus</span>. Temporibus autem quibusdam et aut officiis debitis
-                    aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et
-                    molestiae non recusandae. <span>Itaque earum rerum hic tenetur a sapiente delectus,
-						ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis
-						doloribus asperiores repellat.
-						Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</span></p>
+                <p>${data.desp}</p>
             </div>
-            <div class="single-left4">
-                <h4>Share This Post</h4>
-                <ul class="social-icons social-icons1">
-                    <li><a href="#" class="icon icon-border icon-border1 facebook"></a></li>
-                    <li><a href="#" class="icon icon-border icon-border1 twitter"></a></li>
-                    <li><a href="#" class="icon icon-border icon-border1 instagram"></a></li>
-                    <li><a href="#" class="icon icon-border icon-border1 pinterest"></a></li>
+            <div class="single-left2-sub">
+                <ul>
+                    <li>房源配置 </li>
                 </ul>
             </div>
-            <div class="snailAdmin">
-                <p>But I must explain to you how all this mistaken idea of denouncing
-                    pleasure and praising pain was born and I will give you a complete
-                    account of the system, and expound the actual teachings of the great
-                    explorer of the truth, the master-builder of human happiness.
-                    No one rejects, dislikes, or avoids pleasure itself.</p>
-                <a href="#"><i>John Frank</i></a>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><code>类型</code></td>
+                        <td><span class="badge badge-info">
+                            <c:if test="${data.type == 1 }">整租</c:if>
+                            <c:if test="${data.type == 2 }">合租</c:if></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>地址</code></td>
+                        <td><span class="badge badge-primary">${data.address}</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>开始日期</code></td>
+                        <td><span class="badge badge-success"><fmt:formatDate value="${data.createDate}" pattern="yyyy年MM月dd日" /></span></td>
+                    </tr>
+                    <tr>
+                        <td><code>截止日期</code></td>
+                        <td><span class="badge badge-danger"><fmt:formatDate value="${data.validTime}" pattern="yyyy年MM月dd日" /></span></td>
+                    </tr>
+                    <tr>
+                        <td><code>年代</code></td>
+                        <td><span class="badge badge-warning">暂无数据</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td><code>户型</code></td>
+                        <td><span class="badge badge-info">${data.bedroom}室${data.living}厅${data.kitchen}厨${data.bath}卫</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>楼层</code></td>
+                        <td><span class="badge badge-primary">1</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>电梯</code></td>
+                        <td><span class="badge badge-success">22</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>状态</code></td>
+                        <td><span class="badge badge-danger">可立即入住</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>绿化</code></td>
+                        <td><span class="badge badge-warning">暂无数据</span></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="comments">
-                <h4>Comments</h4>
+                <h4>蜗牛圈-社交</h4>
                 <div class="comments-grid">
                     <div class="comments-grid-left">
-                        <img src="images/5.png" alt=" " class="img-responsive" />
+                        <img src="/static/web/images/5.png" alt=" " class="img-responsive" />
                     </div>
                     <div class="comments-grid-right">
                         <h3><a href="#">Adam Smith</a></h3>
@@ -221,7 +245,7 @@
                 </div>
                 <div class="comments-grid">
                     <div class="comments-grid-left">
-                        <img src="images/4.png" alt=" " class="img-responsive" />
+                        <img src="/static/web/images/4.png" alt=" " class="img-responsive" />
                     </div>
                     <div class="comments-grid-right">
                         <h3><a href="#">James Rick</a></h3>
@@ -247,65 +271,41 @@
         </div>
         <div class="col-md-4 single-right">
             <div class="categories">
-                <h3>Categories</h3>
-                <ul>
-                    <li><a href="#">Aliquam dapibus tincidunt</a></li>
-                    <li><a href="#">Donec sollicitudin molestie</a></li>
-                    <li><a href="#">Fusce feugiat malesuada odio</a></li>
-                    <li><a href="#">Cum sociis natoque penatibus</a></li>
-                    <li><a href="#">Magnis dis parturient montes</a></li>
-                    <li><a href="#">Donec sollicitudin molestie</a></li>
-                </ul>
+                <h3>房源信息</h3>
+                <c:forEach items="${data.snailRooms}" var="r">
+                    <div class="related-post">
+                        <div class="related-post-left">
+                            <a href="${pageContext.request.contextPath }/house/Web_select?id=${r.id}">
+                                <img src="${r.bedroomImg1}" alt=" " class="img-responsive" /></a>
+                        </div>
+                        <div class="related-post-right">
+                            <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${r.id}">${r.name}</a></h4>
+                            <p>${r.desp}
+                                <span></span>
+                            </p>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </c:forEach>
             </div>
             <div class="categories categories-mid">
-                <h3>Archives</h3>
-                <ul>
-                    <li><a href="#">May 20,2009</a></li>
-                    <li><a href="#">July 31,2010</a></li>
-                    <li><a href="#">January 20,2012</a></li>
-                    <li><a href="#">November 2,2014</a></li>
-                    <li><a href="#">December 25,2015</a></li>
-                    <li><a href="#">May 28,2016</a></li>
-                </ul>
-            </div>
-            <div class="related-posts">
-                <h3>Related Posts</h3>
-                <div class="related-post">
-                    <div class="related-post-left">
-                        <a href="single.html"><img src="images/6.jpg" alt=" " class="img-responsive" /></a>
-                    </div>
-                    <div class="related-post-right">
-                        <h4><a href="single.html">Donec sollicitudin</a></h4>
-                        <p>Aliquam dapibus tincidunt metus.
-                            <span>Praesent justo dolor, lobortis.</span>
-                        </p>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="related-post">
-                    <div class="related-post-left">
-                        <a href="single.html"><img src="images/7.jpg" alt=" " class="img-responsive" /></a>
-                    </div>
-                    <div class="related-post-right">
-                        <h4><a href="single.html">Donec sollicitudin</a></h4>
-                        <p>Aliquam dapibus tincidunt metus.
-                            <span>Praesent justo dolor, lobortis.</span>
-                        </p>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="related-post">
-                    <div class="related-post-left">
-                        <a href="single.html"><img src="images/8.jpg" alt=" " class="img-responsive" /></a>
-                    </div>
-                    <div class="related-post-right">
-                        <h4><a href="single.html">Donec sollicitudin</a></h4>
-                        <p>Aliquam dapibus tincidunt metus.
-                            <span>Praesent justo dolor, lobortis.</span>
-                        </p>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
+                <h3>房源室友</h3>
+                <c:forEach items="${data.snailRooms}" var="r">
+                    <ul>
+                        <li><span>${r.name}</span></li>
+                    </ul>
+                    <ol class="breadcrumb">
+                        <li><a >
+                            <c:if test="${r.state == 0 }">出租中</c:if>
+                            <c:if test="${r.state == 1 }">已租</c:if>
+                            <c:if test="${r.state == 2 }">停用</c:if>
+                            <c:if test="${r.state == 3 }">审核中</c:if>
+                            <c:if test="${r.state == 4 }">装修</c:if>
+                            <c:if test="${r.state == 5 }">准备签约</c:if></a></li>
+                        <li><a>{r.sex}</a></li>
+                        <li class="active"><a><fmt:formatDate value="${r.createDate}" pattern="yyyy年MM月dd日" /></a></li>
+                    </ol>
+                </c:forEach>
             </div>
         </div>
         <div class="clearfix"> </div>
@@ -315,87 +315,38 @@
 <!-- footer -->
 <div class="footer">
     <div class="container">
-        <h2>Sign up for our newsletter</h2>
-        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus
-            tristique bibendum. Donec rutrum sed sem quis venenatis.</p>
-        <div class="footer-contact">
-            <form action="#" method="post">
-                <input type="text" name="Email" placeholder="Enter your email to update" required=" ">
-                <input type="submit" value="Subscribe">
-            </form>
-        </div>
+        <h2>让  租  房   变  得  简  单  和  快  乐 。</h2>
+        <p class="para">100%真实房源，品质房屋，优质保洁，极速维修，品质房屋，放心呼吸。</p>
         <div class="footer-grids">
             <div class="col-md-4 footer-grid">
-                <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> General Pvt 66, Dong Da
-                    Hanoi, Vietnam.</p>
-                <p><a href="mailto:contact@example.com"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> contact@example.com</a></p>
-                <p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 456 686</p>
+                <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 中国，北京市，朝阳区，
+                    三里屯，7号.</p>
+                <p><a href="mailto:contact@example.com"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> snailrenting@163.com</a></p>
+                <p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 456 789</p>
             </div>
             <div class="col-md-2 footer-grid">
                 <ul>
-                    <li><a href="mail.html">Contact</a></li>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="short-codes.html">Short Codes</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
+                    <li><a href="${pageContext.request.contextPath }/service/Web_service">服务</a></li>
+                    <li><a href="${pageContext.request.contextPath }/user/Web_login">登陆</a></li>
+                    <li><a href="${pageContext.request.contextPath }/user/Web_login">注册</a></li>
                 </ul>
             </div>
             <div class="col-md-3 footer-grid">
                 <div class="footer-grid1">
                     <div class="footer-grid1-left">
-                        <a href="single.html"><img src="images/7.jpg" alt=" " class="img-responsive"></a>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
                     </div>
-                    <div class="footer-grid1-right">
-                        <a href="single.html">eveniet ut molesti</a>
-                        <div class="m1">
-                            <a href="single.html"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></a>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
                 </div>
-                <div class="footer-grid1">
-                    <div class="footer-grid1-left">
-                        <a href="single.html"><img src="images/6.jpg" alt=" " class="img-responsive"></a>
-                    </div>
-                    <div class="footer-grid1-right">
-                        <a href="single.html">earum rerum tenet</a>
-                        <div class="m1">
-                            <a href="single.html"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></a>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="footer-grid1">
-                    <div class="footer-grid1-left">
-                        <a href="single.html"><img src="images/8.jpg" alt=" " class="img-responsive"></a>
-                    </div>
-                    <div class="footer-grid1-right">
-                        <a href="single.html">maiores alias cons</a>
-                        <div class="m1">
-                            <a href="single.html"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></a>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-            </div>
-            <div class="col-md-3 footer-grid">
-                <div class="footer-grid-instagram">
-                    <a href="single.html"><img src="images/9.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="footer-grid-instagram">
-                    <a href="single.html"><img src="images/10.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="footer-grid-instagram">
-                    <a href="single.html"><img src="images/6.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="footer-grid-instagram">
-                    <a href="single.html"><img src="images/7.jpg" alt=" " class="img-responsive" /></a>
-                </div>
-                <div class="clearfix"> </div>
             </div>
             <div class="clearfix"> </div>
         </div>
         <div class="footer-copy">
-            <p>Copyright &copy; 2016.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+            <p>Copyright &copy; 2020.Alien All rights <a href="#" target="_blank" title="Snailrenting"> Snailrenting</a></p>
         </div>
     </div>
 </div>

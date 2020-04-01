@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alien.mapper.SnailAdminMapper">
+
+    <sql id="adminColumns">
+		a.id AS "id",
+		a.username AS "username",
+		a.password AS "password",
+		a.role_id AS "roleid",
+		a.create_by AS "createBy",
+		a.update_by AS "updateBy",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+
+    <select id="select" resultType="com.alien.entity.SnailAdmin">
+        SELECT
+        <include refid="adminColumns"/>
+        FROM admin a
+        <where>
+            a.del_flag = '0'
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                AND a.username = #{username}
+            </if>
+        </where>
+    </select>
+
+</mapper>

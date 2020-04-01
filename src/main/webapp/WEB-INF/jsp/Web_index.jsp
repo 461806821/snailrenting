@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <head>
@@ -61,12 +62,12 @@
             <nav class="navbar navbar-default">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+<%--                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">--%>
+<%--                        <span class="sr-only">Toggle navigation</span>--%>
+<%--                        <span class="icon-bar"></span>--%>
+<%--                        <span class="icon-bar"></span>--%>
+<%--                        <span class="icon-bar"></span>--%>
+<%--                    </button>--%>
                     <div class="logo">
                         <h1><a class="navbar-brand" href="${pageContext.request.contextPath }/index/Web_index">蜗牛找房<span>Snail renting</span></a></h1>
                     </div>
@@ -77,10 +78,10 @@
                     <nav>
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list?locationid=${locationid}" class="hvr-bounce-to-bottom">附近房源</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list?locationid=0" class="hvr-bounce-to-bottom">全部房源</a></li>
-                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">服务</a></li>
+                            <li><a href="${pageContext.request.contextPath }/house/Web_list" class="hvr-bounce-to-bottom">房源展示</a></li>
+                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">蜗牛服务</a></li>
                             <li><a href="${pageContext.request.contextPath }/collectiom/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
+                            <li><a class="hvr-bounce-to-bottom">VR看房(未解锁)</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -100,19 +101,22 @@
         <div class="banner-right">
             <h3><span>搜索理想房源</span></h3>
             <div class="reservation">
-                <div class="section_room">
-                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-                    <select id="country" onchange="change_country(this.value)" class="frm-field required">
-                        <option value="null">位置</option>
-                        <option value="AX">Sweden</option>
-                        <option value="AX">New Zealand</option>
-                        <option value="AX">America</option>
-                        <option value="AX">Australia</option>
-                    </select>
-                </div>
+                <form action="${pageContext.request.contextPath }/house/Web_list" method="post" form="country country1 country2 country3 country4 country5">
+                <%--                <div class="section_room">--%>
+<%--                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>--%>
+<%--                    <select id="country" onchange="change_country1(this.value,${locations})" class="frm-field required">--%>
+<%--                        <option value="null">省/市</option>--%>
+<%--                        <option value="null">无限制</option>--%>
+<%--                        <c:forEach items="${locations}" var="l1">--%>
+<%--                            <c:if test="${l1.type == 1}">--%>
+<%--                                <option value="${l1.id}">${l1.name}</option>--%>
+<%--                            </c:if>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
                 <div class="section_room">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    <select id="country1" onchange="change_country(this.value)" class="frm-field required">
+                    <select name="typeVO" id="country1" onchange="change_country(this.value)" class="frm-field required">
                         <option value="null">租房类型</option>
                         <option value="1">整租</option>
                         <option value="2">合租</option>
@@ -122,26 +126,24 @@
                     <div class="reservation-grid-left">
                         <div class="section_room">
                             <span class="tent"> </span>
-                            <select id="country2" onchange="change_country(this.value)" class="frm-field required">
+                            <select name="bedroomVO" id="country2" onchange="change_country(this.value)" class="frm-field required">
                                 <option value="null">卧室</option>
                                 <option value="null">无限制</option>
-                                <option value="AX">2</option>
-                                <option value="AX">3</option>
-                                <option value="AX">4</option>
-                                <option value="AX">更多</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
                             </select>
                         </div>
                     </div>
                     <div class="reservation-grid-right">
                         <div class="section_room">
                             <span class="bath"></span>
-                            <select id="country3" onchange="change_country(this.value)" class="frm-field required">
+                            <select name="bathVO" id="country3" onchange="change_country(this.value)" class="frm-field required">
                                 <option value="null">浴室</option>
                                 <option value="null">无限制</option>
-                                <option value="AX">2</option>
-                                <option value="AX">3</option>
-                                <option value="AX">4</option>
-                                <option value="AX">更多</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -151,37 +153,38 @@
                     <div class="reservation-grid-left">
                         <div class="section_room">
                             <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>
-                            <select id="country4" onchange="change_country(this.value)" class="frm-field required">
+                            <select name="minPriceVO" id="country4" onchange="change_country(this.value)" class="frm-field required">
                                 <option value="null">最低价格</option>
                                 <option value="null">无限制</option>
-                                <option value="AX">500元</option>
-                                <option value="AX">1000元</option>
-                                <option value="AX">2000元</option>
+                                <option value="500">500元</option>
+                                <option value="1000">1000元</option>
+                                <option value="2000">2000元</option>
                             </select>
                         </div>
                     </div>
                     <div class="reservation-grid-right">
                         <div class="section_room">
                             <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>
-                            <select id="country5" onchange="change_country(this.value)" class="frm-field required">
+                            <select name="maxPriceVO" id="country5" onchange="change_country(this.value)" class="frm-field required">
                                 <option value="null">最高价格</option>
                                 <option value="null">无限制</option>
-                                <option value="AX">500元</option>
-                                <option value="AX">1000元</option>
-                                <option value="AX">2000元</option>
-                                <option value="AX">更高</option>
+                                <option value="1000.">1000元</option>
+                                <option value="1500">1500元</option>
+                                <option value="2000">2000元</option>
+                            <option value="3000">3000元</option>
+                            <option value="4000">4000元</option>
+                            <option value="5000">5000元</option>
                             </select>
                         </div>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
                 <div class="keywords">
-                    <form action="#" method="post" form="country country1 country2 country3 country4 country5">
-                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                           <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                         <input type="text" name="keyword" placeholder="其他想要搜索内容">
                         <input type="submit" value="搜索">
-                    </form>
                 </div>
+             </form>
             </div>
         </div>
         <div class="clearfix"> </div>
@@ -194,42 +197,19 @@
         <h3><span>特惠房源</span></h3>
         <p class="autem">入住免租金，短租优惠9折住。</p>
         <div class="events-grids">
+            <c:forEach items="${salehouse }" var="s">
             <div class="col-md-4 events-grid">
                 <div class="events-grid1 hvr-sweep-to-top">
-                    <a href="single.html"><img src="/static/web/images/6.jpg" alt=" " class="img-responsive" /></a>
-                    <h4><a href="single.html">oribus asperiores</a></h4>
+                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
+                    <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}">${s.name}</a></h4>
                     <ul>
-                        <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Admin</a></li>
-                        <li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>May 20, 2016</li>
+                        <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>赞：${s.prasie}</a></li>
+                        <li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>发布于：<fmt:formatDate value="${s.createDate}" pattern="yyyy年MM月dd日" /></li>
                     </ul>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                        blanditiis praesentium voluptatum deleniti atque.</p>
+                    <p>${s.desp}</p>
                 </div>
             </div>
-            <div class="col-md-4 events-grid">
-                <div class="events-grid1 hvr-sweep-to-top">
-                    <a href="single.html"><img src="/static/web/images/8.jpg" alt=" " class="img-responsive" /></a>
-                    <h4><a href="single.html">iusto odio dignissi</a></h4>
-                    <ul>
-                        <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Admin</a></li>
-                        <li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>May 25, 2016</li>
-                    </ul>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                        blanditiis praesentium voluptatum deleniti atque.</p>
-                </div>
-            </div>
-            <div class="col-md-4 events-grid">
-                <div class="events-grid1 hvr-sweep-to-top">
-                    <a href="single.html"><img src="/static/web/images/7.jpg" alt=" " class="img-responsive" /></a>
-                    <h4><a href="single.html">tatum deleniti atque</a></h4>
-                    <ul>
-                        <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Admin</a></li>
-                        <li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>May 30, 2016</li>
-                    </ul>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                        blanditiis praesentium voluptatum deleniti atque.</p>
-                </div>
-            </div>
+            </c:forEach>
             <div class="clearfix"> </div>
         </div>
     </div>
@@ -239,52 +219,21 @@
 <div class="special-services">
     <div class="container">
         <h3><span>推荐房源</span></h3>
-        <p class="autem">maiores alias consequatur aut perferendis doloribus asperiores repellat</p>
+        <p class="autem">免中介费，付款灵活，月付/季付/年付，随心选择。专属服务，贴心服务，保洁/维修/管家，即可拥有。
+        温馨小窝，拎包入住，家具/家电/WIFI，标准配置。</p>
         <div class="special-services-grids">
+            <c:forEach items="${commandhouse }" var="c">
             <div class="col-md-3 special-services-grid">
                 <div class="special-services-grid1">
-                    <img src="/static/web/images/6.jpg" alt=" " class="img-responsive" />
+                    <img src="${c.bedroomImg1}" alt=" " class="img-responsive" />
                 </div>
-                <h4><a href="single.html">earum rerum hic</a></h4>
-                <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                    impedit quo minus id quod.</p>
+                <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${c.id}">${c.name}</a></h4>
+                <p>${c.desp}</p>
                 <div class="m2">
-                    <a href="single.html" class="more-sub hvr-bounce-to-bottom hvr-bounce-to-bottom1">Read More...</a>
+                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${c.id}" class="more-sub hvr-bounce-to-bottom hvr-bounce-to-bottom1">查看详情..</a>
                 </div>
             </div>
-            <div class="col-md-3 special-services-grid">
-                <div class="special-services-grid1">
-                    <img src="/static/web/images/7.jpg" alt=" " class="img-responsive" />
-                </div>
-                <h4><a href="single.html">eligendi optio cum</a></h4>
-                <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                    impedit quo minus id quod.</p>
-                <div class="m2">
-                    <a href="single.html" class="more-sub hvr-bounce-to-bottom hvr-bounce-to-bottom1">Read More...</a>
-                </div>
-            </div>
-            <div class="col-md-3 special-services-grid">
-                <div class="special-services-grid1">
-                    <img src="/static/web/images/8.jpg" alt=" " class="img-responsive" />
-                </div>
-                <h4><a href="single.html">cum soluta nobis est</a></h4>
-                <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                    impedit quo minus id quod.</p>
-                <div class="m2">
-                    <a href="single.html" class="more-sub hvr-bounce-to-bottom hvr-bounce-to-bottom1">Read More...</a>
-                </div>
-            </div>
-            <div class="col-md-3 special-services-grid">
-                <div class="special-services-grid1">
-                    <img src="/static/web/images/9.jpg" alt=" " class="img-responsive" />
-                </div>
-                <h4><a href="single.html">quo minus id quod</a></h4>
-                <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                    impedit quo minus id quod.</p>
-                <div class="m2">
-                    <a href="single.html" class="more-sub hvr-bounce-to-bottom hvr-bounce-to-bottom1">Read More...</a>
-                </div>
-            </div>
+            </c:forEach>
             <div class="clearfix"> </div>
         </div>
     </div>
@@ -297,7 +246,10 @@
             <span> </span>
         </div>
         <h3>用心带您找到心仪的房源。根据您的找房要求，我们会尽快安排管家。</h3>
-        <p><i>前往定制</i></p>
+<%--        <p><i>前往定制</i></p>--%>
+        <div class="m2">
+            <a href="${pageContext.request.contextPath }/service/Web_aftersale" class="hvr-bounce-to-bottom hvr-bounce-to-bottom1">前往定制</a>
+        </div>
     </div>
 </div>
 <!-- //about-bottom -->
@@ -450,11 +402,11 @@
             <div class="col-md-3 footer-grid">
                 <div class="footer-grid1">
                     <div class="footer-grid1-left">
-                        <p>asdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhk</p>
-                        <p>asdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhk</p>
-                        <p>asdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhk</p>
-                        <p>asdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhk</p>
-                        <p>asdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhk</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
                     </div>
                 </div>
             </div>
@@ -480,10 +432,10 @@
             easingType: 'linear'
             };
         */
-
-        $().UItoTop({ easingType: 'easeOutQuart' });
+            $().UItoTop({ easingType: 'easeOutQuart' });
 
     });
+
 </script>
 <!-- //here ends scrolling icon -->
 </body>

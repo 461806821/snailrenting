@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alien.mapper.SnailHouseMapper">
+    <resultMap id="BaseResultMap" type="com.alien.entity.SnailHouse">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="location_id" jdbcType="INTEGER" property="locationId" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="house_price" jdbcType="DECIMAL" property="housePrice" />
+        <result column="house_img" jdbcType="VARCHAR" property="houseImg" />
+        <result column="bedroom" jdbcType="INTEGER" property="bedroom" />
+        <result column="bath" jdbcType="INTEGER" property="bath" />
+        <result column="bath_img1" jdbcType="VARCHAR" property="bathImg1" />
+        <result column="bath_img2" jdbcType="VARCHAR" property="bathImg2" />
+        <result column="kitchen" jdbcType="INTEGER" property="kitchen" />
+        <result column="kitchen_img1" jdbcType="VARCHAR" property="kitchenImg1" />
+        <result column="kitchen_img2" jdbcType="VARCHAR" property="kitchenImg2" />
+        <result column="living" jdbcType="INTEGER" property="living" />
+        <result column="living_img1" jdbcType="VARCHAR" property="livingImg1" />
+        <result column="living_img2" jdbcType="VARCHAR" property="livingImg2" />
+        <result column="valid_time" jdbcType="TIMESTAMP" property="validTime" />
+        <result column="desp" jdbcType="VARCHAR" property="desp" />
+        <result column="create_by" jdbcType="INTEGER" property="createBy" />
+        <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="del_flag" jdbcType="BIT" property="delFlag" />
+    </resultMap>
+<!--    <sql id="House_Base_Column_List">-->
+<!--    h.id , h.user_id, h.location_id, h.type, h.name, h.address, h.house_price, h.house_img, h.bedroom, h.bath,-->
+<!--    h.bath_img1, h.bath_img2, h.kitchen, h.kitchen_img1, h.kitchen_img2, h.living, h.living_img1, h.living_img2,-->
+<!--    h.valid_time, h.desp, h.create_by, h.update_by, h.create_date, h.update_date, h.del_flag-->
+<!--  </sql>-->
+<!--    <sql id="Room_Base_Column_List">-->
+<!--    r.id, r.house_id, r.name, r.price, r.sale, r.bedroom_img1, r.bedroom_img2, r.desp, r.state, r.prasie,-->
+<!--    r.create_by, r.update_by, r.create_date, r.update_date, r.del_flag-->
+<!--  </sql>-->
+
+    <sql id="House_Column_List">
+        h.id AS "hid",
+        h.user_id AS "userId",
+        h.location_id AS "locationId",
+        h.type AS "type",
+        h.name AS "hname",
+        h.address AS "address",
+        h.bedroom AS "bedroom",
+        h.bath AS "bath",
+        h.kitchen AS "kitchen",
+        h.living AS "living",
+        h.house_img AS "houseImg",
+        h.valid_time AS "validTime",
+        h.desp AS "hdesp",
+        h.create_by AS "hcreateBy",
+        h.update_by AS "hupdateBy",
+        h.create_date AS "hcreateDate",
+        h.update_date AS "hupdateDate",
+        h.del_flag AS "hdelFlag"
+  </sql>
+
+    <sql id="Room_Column_List">
+        r.id AS "rid",
+        r.house_id AS "houseId",
+        r.name AS "rname",
+        r.price AS "price",
+        r.sale AS "sale",
+        r.bedroom_img1 AS "bedroomImg1",
+        r.bedroom_img2 AS "bedroomImg2",
+        r.desp AS "rdesp",
+        r.state AS "state",
+        r.prasie AS "prasie",
+        r.create_by AS "rcreateBy",
+        r.update_by AS "rupdateBy",
+        r.create_date AS "rcreateDate",
+        r.update_date AS "rupdateDate",
+        r.del_flag AS "rdelFlag"
+  </sql>
+
+    <resultMap type="com.alien.entity.SnailHouse" id="HouseResultMap">
+        <id column="hid" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="location_id" jdbcType="INTEGER" property="locationId" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="hname" jdbcType="VARCHAR" property="name" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="house_price" jdbcType="DECIMAL" property="housePrice" />
+        <result column="house_img" jdbcType="VARCHAR" property="houseImg" />
+        <result column="bedroom" jdbcType="INTEGER" property="bedroom" />
+        <result column="bath" jdbcType="INTEGER" property="bath" />
+        <result column="bath_img1" jdbcType="VARCHAR" property="bathImg1" />
+        <result column="bath_img2" jdbcType="VARCHAR" property="bathImg2" />
+        <result column="kitchen" jdbcType="INTEGER" property="kitchen" />
+        <result column="kitchen_img1" jdbcType="VARCHAR" property="kitchenImg1" />
+        <result column="kitchen_img2" jdbcType="VARCHAR" property="kitchenImg2" />
+        <result column="living" jdbcType="INTEGER" property="living" />
+        <result column="living_img1" jdbcType="VARCHAR" property="livingImg1" />
+        <result column="living_img2" jdbcType="VARCHAR" property="livingImg2" />
+        <result column="valid_time" jdbcType="TIMESTAMP" property="validTime" />
+        <result column="hdesp" jdbcType="VARCHAR" property="desp" />
+        <result column="hcreate_by" jdbcType="INTEGER" property="createBy" />
+        <result column="hupdate_by" jdbcType="INTEGER" property="updateBy" />
+        <result column="hcreate_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="hupdate_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="hdel_flag" jdbcType="BIT" property="delFlag" />
+        <collection property="snailRooms" ofType="com.alien.entity.SnailRoom" resultMap="RoomResultMap" />
+    </resultMap>
+
+    <resultMap type="com.alien.entity.SnailRoom" id="RoomResultMap">
+        <id column="rid" jdbcType="INTEGER" property="id" />
+        <result column="house_id" jdbcType="INTEGER" property="houseId" />
+        <result column="rname" jdbcType="VARCHAR" property="name" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="sale" jdbcType="DECIMAL" property="sale" />
+        <result column="bedroom_img1" jdbcType="VARCHAR" property="bedroomImg1" />
+        <result column="bedroom_img2" jdbcType="VARCHAR" property="bedroomImg2" />
+        <result column="rdesp" jdbcType="VARCHAR" property="desp" />
+        <result column="state" jdbcType="INTEGER" property="state" />
+        <result column="prasie" jdbcType="BIGINT" property="prasie" />
+        <result column="rcreate_by" jdbcType="INTEGER" property="createBy" />
+        <result column="rupdate_by" jdbcType="INTEGER" property="updateBy" />
+        <result column="rcreate_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="rupdate_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="rdel_flag" jdbcType="BIT" property="delFlag" />
+    </resultMap>
+
+    <select id="roomList" parameterType="com.alien.entity.vo.SnailHouseVO" resultMap="RoomResultMap">
+        select
+        <include refid="Room_Column_List" />
+        from snail_room r
+        LEFT JOIN snail_house h on h.id = r.house_id
+        <where>
+            h.del_flag = '0'
+            and r.del_flag = '0'
+            <if test="id != null and id != '' ">
+                and h.id = #{id}
+            </if>
+            <if test="locationId != null and locationId != '' ">
+                and h.location_id = #{locationId}
+            </if>
+            <if test="type != null and type != '' ">
+                and h.type = #{type}
+            </if>
+            <if test="bedroom != null and bedroom != '' ">
+                and h.bedroom = #{bedroom}
+            </if>
+            <if test="bath != null and bath != '' ">
+                and h.bath = #{bath}
+            </if>
+            <if test="kitchen != null and kitchen != '' ">
+                and h.kitchen = #{kitchen}
+            </if>
+            <if test="living != null and living != '' ">
+                and h.living = #{living}
+            </if>
+            <if test="minPrice != null and minPrice != '' ">
+                and r.price <![CDATA[>=]]> #{minPrice}
+            </if>
+            <if test="maxPrice != null and maxPrice != '' ">
+                and r.price <![CDATA[<=]]> #{maxPrice}
+            </if>
+            <if test="keyword != null and keyword != '' ">
+                and r.name like concat('%',#{keyword},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectHouse" parameterType="com.alien.entity.SnailRoom" resultMap="HouseResultMap">
+        select
+        <include refid="House_Column_List"/>,
+        <include refid="Room_Column_List"/>
+        from snail_house h
+        left join snail_room r on r.house_id = h.id
+        where h.del_flag = '0' and h.id IN
+        (
+        select a.house_id
+        from snail_room a
+        where
+            a.del_flag = '0' and a.id = #{id}
+        )
+    </select>
+
+<!--    <select id="selectRooms" resultType="com.alien.entity.SnailRoom">-->
+<!--        select-->
+<!--        <include refid="Room_Column_List"/>-->
+<!--        from snail_room r-->
+<!--        LEFT JOIN snail_house h on h.id = r.house_id-->
+<!--        <where>-->
+<!--            h.del_flag = '0'-->
+<!--            and r.del_flag = '0'-->
+<!--            <if test="id != null and id != '' ">-->
+<!--                and h.id = #{id}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+    <insert id="insertSelective" parameterType="com.alien.entity.SnailHouse">
+        insert into snail_house
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="locationId != null">
+                location_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="housePrice != null">
+                house_price,
+            </if>
+            <if test="houseImg != null">
+                house_img,
+            </if>
+            <if test="bedroom != null">
+                bedroom,
+            </if>
+            <if test="bath != null">
+                bath,
+            </if>
+            <if test="bathImg1 != null">
+                bath_img1,
+            </if>
+            <if test="bathImg2 != null">
+                bath_img2,
+            </if>
+            <if test="kitchen != null">
+                kitchen,
+            </if>
+            <if test="kitchenImg1 != null">
+                kitchen_img1,
+            </if>
+            <if test="kitchenImg2 != null">
+                kitchen_img2,
+            </if>
+            <if test="living != null">
+                living,
+            </if>
+            <if test="livingImg1 != null">
+                living_img1,
+            </if>
+            <if test="livingImg2 != null">
+                living_img2,
+            </if>
+            <if test="validTime != null">
+                valid_time,
+            </if>
+            <if test="desp != null">
+                desp,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="locationId != null">
+                #{locationId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="housePrice != null">
+                #{housePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="houseImg != null">
+                #{houseImg,jdbcType=VARCHAR},
+            </if>
+            <if test="bedroom != null">
+                #{bedroom,jdbcType=INTEGER},
+            </if>
+            <if test="bath != null">
+                #{bath,jdbcType=INTEGER},
+            </if>
+            <if test="bathImg1 != null">
+                #{bathImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="bathImg2 != null">
+                #{bathImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="kitchen != null">
+                #{kitchen,jdbcType=INTEGER},
+            </if>
+            <if test="kitchenImg1 != null">
+                #{kitchenImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="kitchenImg2 != null">
+                #{kitchenImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="living != null">
+                #{living,jdbcType=INTEGER},
+            </if>
+            <if test="livingImg1 != null">
+                #{livingImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="livingImg2 != null">
+                #{livingImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="validTime != null">
+                #{validTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="desp != null">
+                #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.alien.entity.SnailHouse">
+        update snail_house
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="locationId != null">
+                location_id = #{locationId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="housePrice != null">
+                house_price = #{housePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="houseImg != null">
+                house_img = #{houseImg,jdbcType=VARCHAR},
+            </if>
+            <if test="bedroom != null">
+                bedroom = #{bedroom,jdbcType=INTEGER},
+            </if>
+            <if test="bath != null">
+                bath = #{bath,jdbcType=INTEGER},
+            </if>
+            <if test="bathImg1 != null">
+                bath_img1 = #{bathImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="bathImg2 != null">
+                bath_img2 = #{bathImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="kitchen != null">
+                kitchen = #{kitchen,jdbcType=INTEGER},
+            </if>
+            <if test="kitchenImg1 != null">
+                kitchen_img1 = #{kitchenImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="kitchenImg2 != null">
+                kitchen_img2 = #{kitchenImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="living != null">
+                living = #{living,jdbcType=INTEGER},
+            </if>
+            <if test="livingImg1 != null">
+                living_img1 = #{livingImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="livingImg2 != null">
+                living_img2 = #{livingImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="validTime != null">
+                valid_time = #{validTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="desp != null">
+                desp = #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+  <update id="delete" parameterType="com.alien.entity.SnailHouse">
+    update snail_house
+    set del_flag ='1'
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

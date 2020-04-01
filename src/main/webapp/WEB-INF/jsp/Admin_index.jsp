@@ -128,7 +128,7 @@
             <div class="sidebar-header d-flex align-items-center">
                 <div class="avatar"><img src="/static/snailAdmin/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                 <div class="title">
-                    <h1 class="h4">${admin.username}</h1>
+                    <h1 class="h4">${sessionadmin.username}</h1>
                     <p>管理员</p>
                 </div>
             </div>

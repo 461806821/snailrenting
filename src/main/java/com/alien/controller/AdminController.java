@@ -28,21 +28,20 @@ public class AdminController {
 
     @ApiOperation(value = "管理员登录页面")
     @RequestMapping("/Admin_login")
-    public ModelAndView Admin_login() {
+    public ModelAndView pAdmin_login() {
         log.info("管理员登录页面");
-        ModelAndView modelAndView = new ModelAndView("/Admin_login");//设置对应JSP的模板文件
-        return modelAndView;
+        return  new ModelAndView("/Admin_error");//设置对应JSP的模板文件
     }
 
     @ApiOperation(value = "管理员登录接口")
     @PostMapping(value = "/login")
-    private ModelAndView adminLogin(@ModelAttribute SnailAdmin snailAdmin, HttpSession httpSession){
+    private ModelAndView Admin_login(@ModelAttribute SnailAdmin snailAdmin, HttpSession httpSession){
         log.info("管理员登录接口"+ snailAdmin.getUsername());
         try {
                 return adminService.login(snailAdmin,httpSession);
         } catch (Exception e) {
             log.error("管理员登录操作失败", e);
-            return ModelAndViewResult.failed("/Admin_login",null, "no", CodeEnum.MSG_ERROR.getMsg());
+            return ModelAndViewResult.failed("/Admin_error", "no", CodeEnum.MSG_ERROR.getMsg());
         }
     }
 

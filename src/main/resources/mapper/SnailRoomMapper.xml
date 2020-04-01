@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alien.mapper.SnailRoomMapper">
+    <resultMap id="BaseResultMap" type="com.alien.entity.SnailRoom">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="house_id" jdbcType="INTEGER" property="houseId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="sale" jdbcType="DECIMAL" property="sale" />
+        <result column="bedroom_img1" jdbcType="VARCHAR" property="bedroomImg1" />
+        <result column="bedroom_img2" jdbcType="VARCHAR" property="bedroomImg2" />
+        <result column="desp" jdbcType="VARCHAR" property="desp" />
+        <result column="state" jdbcType="INTEGER" property="state" />
+        <result column="prasie" jdbcType="BIGINT" property="prasie" />
+        <result column="create_by" jdbcType="INTEGER" property="createBy" />
+        <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="del_flag" jdbcType="BIT" property="delFlag" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, house_id, name, price, sale, bedroom_img1, bedroom_img2, desp, state, prasie,
+    create_by, update_by, create_date, update_date, del_flag
+  </sql>
+    <sql id="House_Base_Column_List">
+   id, user_id, location_id, type, name, address, house_price, house_img, bedroom, bath,
+    bath_img1, bath_img2, kitchen, kitchen_img1, kitchen_img2, living, living_img1, living_img2,
+    valid_time, desp, create_by, update_by, create_date, update_date, del_flag
+  </sql>
+    <sql id="Room_Base_Column_List">
+    id, house_id, name, price, sale, bedroom_img1, bedroom_img2, desp, state, prasie,
+    create_by, update_by, create_date, update_date, del_flag
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from snail_room
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.alien.entity.SnailRoom">
+        insert into snail_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="houseId != null">
+                house_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="sale != null">
+                sale,
+            </if>
+            <if test="bedroomImg1 != null">
+                bedroom_img1,
+            </if>
+            <if test="bedroomImg2 != null">
+                bedroom_img2,
+            </if>
+            <if test="desp != null">
+                desp,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="prasie != null">
+                prasie,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="houseId != null">
+                #{houseId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="sale != null">
+                #{sale,jdbcType=DECIMAL},
+            </if>
+            <if test="bedroomImg1 != null">
+                #{bedroomImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="bedroomImg2 != null">
+                #{bedroomImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="desp != null">
+                #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="prasie != null">
+                #{prasie,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.alien.entity.SnailRoom">
+        update snail_room
+        <set>
+            <if test="houseId != null">
+                house_id = #{houseId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="sale != null">
+                sale = #{sale,jdbcType=DECIMAL},
+            </if>
+            <if test="bedroomImg1 != null">
+                bedroom_img1 = #{bedroomImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="bedroomImg2 != null">
+                bedroom_img2 = #{bedroomImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="desp != null">
+                desp = #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="prasie != null">
+                prasie = #{prasie,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.alien.entity.SnailRoom">
+    update snail_room
+    set house_id = #{houseId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      sale = #{sale,jdbcType=DECIMAL},
+      bedroom_img1 = #{bedroomImg1,jdbcType=VARCHAR},
+      bedroom_img2 = #{bedroomImg2,jdbcType=VARCHAR},
+      desp = #{desp,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      prasie = #{prasie,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

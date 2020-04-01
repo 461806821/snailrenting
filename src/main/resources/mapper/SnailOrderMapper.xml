@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alien.mapper.SnailOrderMapper">
+  <resultMap id="BaseResultMap" type="com.alien.model.SnailOrder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="house_id" jdbcType="INTEGER" property="houseId" />
+    <result column="room_id" jdbcType="INTEGER" property="roomId" />
+    <result column="pay_money" jdbcType="DECIMAL" property="payMoney" />
+    <result column="discount_money" jdbcType="DECIMAL" property="discountMoney" />
+    <result column="live_time" jdbcType="TIMESTAMP" property="liveTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="valid_time" jdbcType="TIMESTAMP" property="validTime" />
+    <result column="live_day" jdbcType="INTEGER" property="liveDay" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy" />
+    <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="BIT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, house_id, room_id, pay_money, discount_money, live_time, pay_time, valid_time, 
+    live_day, create_by, update_by, create_date, update_date, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from snail_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from snail_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.alien.model.SnailOrder">
+    insert into snail_order (id, user_id, house_id, 
+      room_id, pay_money, discount_money, 
+      live_time, pay_time, valid_time, 
+      live_day, create_by, update_by, 
+      create_date, update_date, del_flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{houseId,jdbcType=INTEGER}, 
+      #{roomId,jdbcType=INTEGER}, #{payMoney,jdbcType=DECIMAL}, #{discountMoney,jdbcType=DECIMAL}, 
+      #{liveTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{validTime,jdbcType=TIMESTAMP}, 
+      #{liveDay,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, #{updateBy,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.alien.model.SnailOrder">
+    insert into snail_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="houseId != null">
+        house_id,
+      </if>
+      <if test="roomId != null">
+        room_id,
+      </if>
+      <if test="payMoney != null">
+        pay_money,
+      </if>
+      <if test="discountMoney != null">
+        discount_money,
+      </if>
+      <if test="liveTime != null">
+        live_time,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="validTime != null">
+        valid_time,
+      </if>
+      <if test="liveDay != null">
+        live_day,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="houseId != null">
+        #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="payMoney != null">
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="discountMoney != null">
+        #{discountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="liveTime != null">
+        #{liveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validTime != null">
+        #{validTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveDay != null">
+        #{liveDay,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alien.model.SnailOrder">
+    update snail_order
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="houseId != null">
+        house_id = #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        room_id = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="payMoney != null">
+        pay_money = #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="discountMoney != null">
+        discount_money = #{discountMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="liveTime != null">
+        live_time = #{liveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validTime != null">
+        valid_time = #{validTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveDay != null">
+        live_day = #{liveDay,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alien.model.SnailOrder">
+    update snail_order
+    set user_id = #{userId,jdbcType=INTEGER},
+      house_id = #{houseId,jdbcType=INTEGER},
+      room_id = #{roomId,jdbcType=INTEGER},
+      pay_money = #{payMoney,jdbcType=DECIMAL},
+      discount_money = #{discountMoney,jdbcType=DECIMAL},
+      live_time = #{liveTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      valid_time = #{validTime,jdbcType=TIMESTAMP},
+      live_day = #{liveDay,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

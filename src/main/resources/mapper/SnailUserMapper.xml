@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alien.mapper.SnailUserMapper">
+  <resultMap id="BaseResultMap" type="com.alien.entity.SnailUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="identity" jdbcType="VARCHAR" property="identity" />
+    <result column="certificate" jdbcType="INTEGER" property="certificate" />
+    <result column="login_num" jdbcType="INTEGER" property="loginNum" />
+    <result column="logint_ime" jdbcType="TIMESTAMP" property="logintIme" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy" />
+    <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="BIT" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, email, password, name, phone, address, identity, certificate, login_num, 
+    logint_ime, create_by, update_by, create_date, update_date, del_flag
+  </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM snail_user
+        WHERE 	del_flag = '0'
+    </select>
+
+    <select id="select" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM snail_user
+        <where>
+            del_flag = '0'
+            <if test="id != null and id != '' ">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != '' ">
+                and username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.alien.entity.SnailUser">
+        insert into snail_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="identity != null">
+                identity,
+            </if>
+            <if test="certificate != null">
+                certificate,
+            </if>
+            <if test="loginNum != null">
+                login_num,
+            </if>
+            <if test="logintIme != null">
+                logint_ime,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="identity != null">
+                #{identity,jdbcType=VARCHAR},
+            </if>
+            <if test="certificate != null">
+                #{certificate,jdbcType=INTEGER},
+            </if>
+            <if test="loginNum != null">
+                #{loginNum,jdbcType=INTEGER},
+            </if>
+            <if test="logintIme != null">
+                #{logintIme,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.alien.entity.SnailUser">
+        update snail_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="identity != null">
+                identity = #{identity,jdbcType=VARCHAR},
+            </if>
+            <if test="certificate != null">
+                certificate = #{certificate,jdbcType=INTEGER},
+            </if>
+            <if test="loginNum != null">
+                login_num = #{loginNum,jdbcType=INTEGER},
+            </if>
+            <if test="logintIme != null">
+                logint_ime = #{logintIme,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="delete">
+		UPDATE snail_user a SET
+			 a.del_flag = '1'
+		WHERE  a.id = #{id}
+	</update>
+
+<!--    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List" />-->
+<!--        from snail_user-->
+<!--        where id = #{id,jdbcType=INTEGER}-->
+<!--    </select>-->
+<!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+<!--    delete from snail_user-->
+<!--    where id = #{id,jdbcType=INTEGER}-->
+<!--  </delete>-->
+<!--  <insert id="insert" parameterType="com.alien.entity.SnailUser">-->
+<!--    insert into snail_user (id, username, email, -->
+<!--      password, name, phone, -->
+<!--      address, identity, certificate, -->
+<!--      login_num, logint_ime, create_by, -->
+<!--      update_by, create_date, update_date, -->
+<!--      del_flag)-->
+<!--    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, -->
+<!--      #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, -->
+<!--      #{address,jdbcType=VARCHAR}, #{identity,jdbcType=VARCHAR}, #{certificate,jdbcType=INTEGER}, -->
+<!--      #{loginNum,jdbcType=INTEGER}, #{logintIme,jdbcType=TIMESTAMP}, #{createBy,jdbcType=INTEGER}, -->
+<!--      #{updateBy,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, -->
+<!--      #{delFlag,jdbcType=BIT})-->
+<!--  </insert>-->
+
+</mapper>

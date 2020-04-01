@@ -14,7 +14,7 @@
 		a.del_flag AS "delFlag"
 	</sql>
 
-	<select id="list" resultType="com.alien.entity.SnailCollect">
+	<select id="list" resultType="com.alien.entity.SnailCollection">
 		SELECT
 		<include refid="collectColumns"/>
 		FROM snailUser a
@@ -29,7 +29,7 @@
 		</where>
 	</select>
 
-    <select id="select" resultType="com.alien.entity.SnailCollect">
+    <select id="select" resultType="com.alien.entity.SnailCollection">
         SELECT
         <include refid="collectColumns"/>
         FROM snailUser a
