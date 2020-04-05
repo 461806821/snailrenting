@@ -14,6 +14,10 @@ public class SessionAdmin {
 
     private Integer id;
 
+    private Integer role;//0超级管理员，1管理员，2管家：预约看房，定制房源，3审核员，4维修
+
+    private String rolename;
+
     private String username;
 
 }

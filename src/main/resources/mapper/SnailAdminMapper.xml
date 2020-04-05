@@ -6,7 +6,7 @@
 		a.id AS "id",
 		a.username AS "username",
 		a.password AS "password",
-		a.role_id AS "roleid",
+		a.role AS "role",
 		a.create_by AS "createBy",
 		a.update_by AS "updateBy",
 		a.create_date AS "createDate",
@@ -17,7 +17,7 @@
     <select id="select" resultType="com.alien.entity.SnailAdmin">
         SELECT
         <include refid="adminColumns"/>
-        FROM admin a
+        FROM snail_admin a
         <where>
             a.del_flag = '0'
             <if test="id != null and id != ''">

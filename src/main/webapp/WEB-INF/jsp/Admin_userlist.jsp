@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
     <meta charset="utf-8">
@@ -127,45 +128,43 @@
             <div class="sidebar-header d-flex align-items-center">
                 <div class="avatar"><img src="/static/snailAdmin/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                 <div class="title">
-                    <h1 class="h4">${username}</h1>
+                    <h1 class="h4">${sessionuser.username}</h1>
                     <p>管理员</p>
                 </div>
             </div>
             <!-- Sidebar Navidation Menus--><span class="heading">菜单栏</span>
             <ul class="list-unstyled">
-                <li class="active"><a href="${pageContext.request.contextPath }/admin/Admin_index"> <i class="icon-home"></i>主页 </a></li>
+                <li class="active"><a href="${pageContext.request.contextPath }/index/Admin_index"> <i class="icon-home"></i>主页 </a></li>
                 <li><a href="${pageContext.request.contextPath }/admin/Admin_message"> <i class="icon-mail"></i>消息 </a></li>
-                <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
-                <li><a href="charts.html"> <i class="icon-picture"></i>Charts </a></li>
-                <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=1&pageSize=6"> <i class="icon-interface-windows"></i>售后服务</a></li>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=3&pageSize=6"> <i class="icon-interface-windows"></i>预约看房</a></li>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=4&pageSize=6"> <i class="icon-interface-windows"></i>定制房源</a></li>
                 <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>用户管理 </a>
                     <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/user/Admin_list">用户列表</a></li>
-                        <li><a href="${pageContext.request.contextPath }/user/Admin_userinsert">添加用户</a></li>
+                        <li><a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6">用户列表</a></li>
+                        <li><a href="${pageContext.request.contextPath }/user/Admin_insert">添加用户</a></li>
                     </ul>
                 </li>
                 <li><a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>房源管理 </a>
                     <ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/house/Admin_list">房源列表</a></li>
-                        <li><a href="${pageContext.request.contextPath }/house/Admin_update">修改房源</a></li>
+                        <li><a href="${pageContext.request.contextPath }/house/Admin_list?pageSize=6">房源列表</a></li>
                         <li><a href="${pageContext.request.contextPath }/house/Admin_insert">添加房源</a></li>
                     </ul>
                 </li>
                 <li><a href="#exampledropdownDropdown3" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>订单管理 </a>
                     <ul id="exampledropdownDropdown3" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderlist">订单列表</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderpass">审核订单</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderupdate">修改订单</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderadd">添加订单</a></li>
+                        <li><a href="${pageContext.request.contextPath }/order/Admin_list?pageSize=6">订单列表</a></li>
+                        <li><a href="${pageContext.request.contextPath }/order/Admin_insert">添加订单</a></li>
                     </ul>
                 </li>
-                <li><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>售后服务 </a>
+                <li><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>业务办理管理 </a>
                     <ul id="exampledropdownDropdown4" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/admin/Admin_index">售后</a></li>
+                        <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=2&pageSize=6">退租</a></li>
+                        <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=5&pageSize=6">其他问题</a></li>
                     </ul>
                 </li>
-<%--                <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>--%>
-            </ul><span class="heading">数据</span>
+            </ul>
+            <span class="heading">数据</span>
             <ul class="list-unstyled">
                 <li> <a href="#"> <i class="fa fa-bar-chart"></i>数据统计 </a></li>
                 <li> <a href="#"> <i class="icon-screen"></i>数据分析 </a></li>
@@ -193,12 +192,25 @@
                                     </div>
                                 </div>
                                 <div class="card-header d-flex align-items-center">
-                                    <h3 class="h4">用户管理  （${userListNum}）条</h3>
+                                    <h3 class="h4">用户管理  （${total}）条</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <a href="${pageContext.request.contextPath }/user/Admin_userinsert" type="button" class="btn btn-primary">添加用户</a>
-<%--                                        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">添加用户</button>--%>
+                                        <a href="${pageContext.request.contextPath }/user/Admin_insert" type="button" class="btn btn-primary">添加用户</a>
+                                        <h3 class="h4"></h3>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=0" type="button" class="btn btn-primary">普通</a>
+                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=1" type="button" class="btn btn-primary">租户</a>
+                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=2" type="button" class="btn btn-primary">房东</a>
+                                                <label class="col-sm-3 form-control-label"></label>
+                                                <input type="text" name="keyword" class="form-control">
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-primary">搜索！</button>
+                                                </div>
+                                            </div>
+                                        </div>
+<%--                                        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">添加用户</button>&ndash;%&gt;--%>
                                         <!-- Modal-->
                                         <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
                                             <div role="document" class="modal-dialog">
@@ -227,39 +239,65 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <table class="table table-striped table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                                <th>First Name</th>
-                                                <th>操作</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <c:forEach items="${data}" var="u">
-                                                <tr>
-                                                    <th scope="row">${u.id}</th>
-                                                    <td>${u.username}</td>
-                                                    <td>Otto${msg}</td>
-                                                    <td>@mdo</td>
-                                                    <td>@mdo</td>
-                                                    <td>@mdo</td>
-                                                    <td>@mdo</td>
-                                                    <td>@mdo</td>
-                                                    <td>
-                                                        <a class="btn btn-primary" href="${pageContext.request.contextPath }/user/Admin_select?id=${u.id}">修改</a>
-                                                        <a class="btn btn-primary" href="${pageContext.request.contextPath }/user/Admin_delete?id=${u.id}">删除</a>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                            </tbody>
-                                        </table>
+                                        <c:choose>
+                                            <c:when test="${total==0}">
+                                                <div class="container-fluid">
+                                                    <h3 class="h4"></h3>
+                                                    <h2 class="no-margin-bottom">查询到的数据暂时为空！</h2>
+                                                    <h3 class="h4"></h3>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <table class="table table-striped table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>姓名</th>
+                                                        <th>手机号</th>
+                                                        <th>地址</th>
+                                                        <th>身份证</th>
+                                                        <th>角色</th>
+                                                        <th>登录时间</th>
+                                                        <th>创建时间</th>
+                                                        <th>收藏房源编号</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <c:forEach items="${data}" var="u">
+                                                        <tr>
+                                                            <th scope="row">${u.id}</th>
+                                                            <td>${u.name}</td>
+                                                            <td>${u.phone}</td>
+                                                            <td>${u.address}</td>
+                                                            <td>${u.identity}</td>
+                                                            <td>${u.certificate}</td>
+                                                            <td><fmt:formatDate value="${u.loginTime}" pattern="yyyy年MM月dd日hh分mm秒" /></td>
+                                                            <td><fmt:formatDate value="${u.createDate}" pattern="yyyy年MM月dd日hh分mm秒" /></td>
+                                                            <td>
+                                                                <c:forEach items="${u.roomIds}" var="roomid">
+                                                                    # ${roomid}，<br>
+                                                                </c:forEach>
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="${pageContext.request.contextPath }/user/Admin_select?id=${u.id}">修改</a>
+                                                                <a class="btn btn-primary" href="${pageContext.request.contextPath }/user/Admin_delete?id=${u.id}">删除</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                                <!-- page -->
+                                                <ul class="pagination pagination-lg">
+                                                    <li <c:if test="${pageNum-1 <=0}">class="disabled"</c:if>> <a <c:if test="${pageNum-1 >0}" >href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${pageNum-1}"</c:if> type="button" class="btn btn-primary"><i>上一页</i></a></li>
+                                                    <c:forEach var="prePageNum" begin="1" end="${total/pageSize+1}">
+                                                        <li <c:if test="${prePageNum == pageNum}" >class="active" </c:if> ><a href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${prePageNum}" type="button" class="btn btn-primary">${prePageNum}</a></li>
+                                                    </c:forEach>
+                                                    <li><a <c:if test="${pageNum+1 < total/pageSize+1}" >href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${pageNum+1}"</c:if> type="button" class="btn btn-primary"><i>下一页</i></a></li>
+                                                </ul>
+                                                <!-- //page -->
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>

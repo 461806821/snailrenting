@@ -21,16 +21,25 @@ public class SnailOrder extends BaseEntity<SnailOrder> {
 
     private Integer roomId;
 
+    private String contract;//合同号
+
+    private Integer state;//状态（0审核中，1通过，2未通过）
+
+    private Integer payState;//支付状态(0未支付，1已支付）
+
     private Short payMoney;
 
     private Short discountMoney;
 
-    private Date liveTime;
+    private Date liveTime;//入住日期
 
-    private Date payTime;
+    private Date payTime;//支付日期
 
-    private Date validTime;
+    private Date payValidTime;//支付截止日期
 
-    private Integer liveDay;
+    private Date validTime;//预计截止日期
+
+    //vo
+    private Integer liveDay;//
 }
 

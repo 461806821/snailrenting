@@ -24,6 +24,22 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/index")
 public class AdminIndexController {
 
+    /**
+     * 网站浏览量 访问index页面数量+1 表记录
+     * 用户登录量 用户登陆 次数+1 用户表记录
+     * 房屋浏览量 房屋详情+1 房屋总浏览量 计算count
+     */
+
+    /**
+     * 用户申请房东审核（实名认证）
+     * 用户成为租客身份变更
+     */
+
+    /**
+     * 首页 未处理业务总数 右上角
+     * @return
+     */
+
     @ApiOperation(value = "管理员首页页面")
     @RequestMapping("/Admin_index")
     public ModelAndView Admin_index() {

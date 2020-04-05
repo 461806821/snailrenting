@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <head>
@@ -111,11 +112,16 @@
     <div class="container">
         <h3 class="bars animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">我的签约</h3>
             <ul class="list-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-                <li class="list-group-item">房源：${data.signing}</li>
-                <li class="list-group-item">合同号：${data.contract}</li>
-                <li class="list-group-item">合同期：${data.startTime}至${data.endTime}</li>
-                <li class="list-group-item">签约日：${data.payTime}</li>
-                <li class="list-group-item">租金：${data.price}</li>
+                <li class="list-group-item">房源： 房源编码#${data.houseId}，房屋编码#${data.roomId}</li>
+                <li class="list-group-item">合同号： ${data.contract}</li>
+                <li class="list-group-item">合同期： <fmt:formatDate value="${data.payTime}" pattern="yyyy年MM月dd日" /> 至 <fmt:formatDate value="${data.validTime}" pattern="yyyy年MM月dd日" /></li>
+                <li class="list-group-item">签约日： <fmt:formatDate value="${data.payTime}" pattern="yyyy年MM月dd日" /></li>
+                <li class="list-group-item">租金： ￥${data.payMoney}元</li>
+                <li class="list-group-item">折扣： ￥${data.discountMoney}元</li>
+                <li class="list-group-item">支付状态 ：
+                    <c:if test="${data.payState == 0}">未支付</c:if>
+                    <c:if test="${data.payState == 1}">已支付</c:if></li>
+                <li class="list-group-item">支付截止日期 ：<fmt:formatDate value="${data.payValidTime}" pattern="yyyy年MM月dd日" /></li>
             </ul>
     </div>
 </div>

@@ -32,15 +32,15 @@ public class SnailUser extends BaseEntity<SnailUser> {
 
     private String identity;
 
-    private Integer certificate;
+    private Integer certificate;//认证（0普通，1租客，2房东，3已租）
 
     private Integer loginNum;
 
-    private Date logintIme;
+    private Date loginTime;
 
     private String password1;
     private String repassword;
     private String webidentity;
-    private List<String> ids;
+    private List<Integer> roomIds;//收藏房源
 }
 

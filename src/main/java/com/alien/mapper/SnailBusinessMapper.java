@@ -18,15 +18,8 @@ public interface SnailBusinessMapper {
 
     void delete(SnailBusiness record);
 
-    int deleteByPrimaryKey(Integer id);
+    Long count(SnailBusiness record);
 
-//    int insert(SnailBusiness record);
+    void updateState(SnailBusiness record);
 
-    int insertSelective(SnailBusiness record);
-
-    SnailBusiness selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(SnailBusiness record);
-
-    int updateByPrimaryKey(SnailBusiness record);
 }

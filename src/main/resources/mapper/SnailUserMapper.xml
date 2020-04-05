@@ -12,23 +12,59 @@
     <result column="identity" jdbcType="VARCHAR" property="identity" />
     <result column="certificate" jdbcType="INTEGER" property="certificate" />
     <result column="login_num" jdbcType="INTEGER" property="loginNum" />
-    <result column="logint_ime" jdbcType="TIMESTAMP" property="logintIme" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
     <result column="create_by" jdbcType="INTEGER" property="createBy" />
     <result column="update_by" jdbcType="INTEGER" property="updateBy" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
+
+    <resultMap id="UserResultMap" type="com.alien.entity.SnailUser">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="identity" jdbcType="VARCHAR" property="identity" />
+        <result column="certificate" jdbcType="INTEGER" property="certificate" />
+        <result column="login_num" jdbcType="INTEGER" property="loginNum" />
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+        <result column="create_by" jdbcType="INTEGER" property="createBy" />
+        <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="del_flag" jdbcType="BIT" property="delFlag" />
+        <collection property="roomIds" ofType="Integer" resultMap="RoomResultMap" />
+    </resultMap>
+  <resultMap type="Integer" id="RoomResultMap">
+    <id column="room_id" jdbcType="INTEGER" property="roomId" />
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, username, email, password, name, phone, address, identity, certificate, login_num, 
-    logint_ime, create_by, update_by, create_date, update_date, del_flag
+    login_time, create_by, update_by, create_date, update_date, del_flag
   </sql>
+    <sql id="User_Column_List">
+    u.id, u.username, u.email, u.password, u.name, u.phone, u.address, u.identity, u.certificate, u.login_num,
+    u.login_time, u.create_by, u.update_by, u.create_date, u.update_date, u.del_flag
+    </sql>
 
-    <select id="list" resultMap="BaseResultMap">
+    <select id="list" resultMap="UserResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
-        FROM snail_user
-        WHERE 	del_flag = '0'
+        <include refid="User_Column_List"/>,
+        a.room_id
+        FROM snail_user u
+        LEFT join snail_collection a on a.user_id = u.id
+        <where>
+            u.del_flag = '0'
+            and a.del_flag = '0'
+            <if test="certificate != null and certificate != ''">
+                AND u.certificate =  #{certificate}
+            </if>
+        </where>
     </select>
 
     <select id="select" resultMap="BaseResultMap">
@@ -46,7 +82,7 @@
         </where>
     </select>
 
-    <insert id="insert" parameterType="com.alien.entity.SnailUser">
+    <insert id="insert" parameterType="com.alien.entity.SnailUser" useGeneratedKeys="true" keyProperty="id">
         insert into snail_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -79,8 +115,8 @@
             <if test="loginNum != null">
                 login_num,
             </if>
-            <if test="logintIme != null">
-                logint_ime,
+            <if test="loginTime != null">
+                login_time,
             </if>
             <if test="createBy != null">
                 create_by,
@@ -129,8 +165,8 @@
             <if test="loginNum != null">
                 #{loginNum,jdbcType=INTEGER},
             </if>
-            <if test="logintIme != null">
-                #{logintIme,jdbcType=TIMESTAMP},
+            <if test="loginTime != null">
+                #{login_time,jdbcType=TIMESTAMP},
             </if>
             <if test="createBy != null">
                 #{createBy,jdbcType=INTEGER},
@@ -149,6 +185,7 @@
             </if>
         </trim>
     </insert>
+
     <update id="update" parameterType="com.alien.entity.SnailUser">
         update snail_user
         <set>
@@ -179,8 +216,8 @@
             <if test="loginNum != null">
                 login_num = #{loginNum,jdbcType=INTEGER},
             </if>
-            <if test="logintIme != null">
-                logint_ime = #{logintIme,jdbcType=TIMESTAMP},
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP},
             </if>
             <if test="createBy != null">
                 create_by = #{createBy,jdbcType=INTEGER},

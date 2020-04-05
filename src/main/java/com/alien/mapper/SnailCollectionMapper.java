@@ -1,31 +1,19 @@
 package com.alien.mapper;
 
 import com.alien.entity.SnailCollection;
+import com.alien.entity.SnailRoom;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
 public interface SnailCollectionMapper {
 
-    SnailCollection select(SnailCollection record);
-
-    List<SnailCollection> list(SnailCollection record);
-
-    void update(SnailCollection record);
+    List<SnailRoom> list(SnailCollection record);
 
     void insert(SnailCollection record);
 
     void delete(SnailCollection record);
 
-    int deleteByPrimaryKey(Integer id);
+    Integer count(SnailCollection record);
 
-//    int insert(SnailCollection record);
-
-    int insertSelective(SnailCollection record);
-
-    SnailCollection selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(SnailCollection record);
-
-    int updateByPrimaryKey(SnailCollection record);
 }

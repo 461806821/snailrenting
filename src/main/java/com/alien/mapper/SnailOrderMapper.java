@@ -7,9 +7,9 @@ import java.util.List;
 @Repository
 public interface SnailOrderMapper {
 
-    SnailOrder select(SnailOrder record);
-
     List<SnailOrder> list(SnailOrder record);
+
+    SnailOrder select(SnailOrder record);
 
     void update(SnailOrder record);
 
@@ -17,15 +17,8 @@ public interface SnailOrderMapper {
 
     void delete(SnailOrder record);
 
-    int deleteByPrimaryKey(Integer id);
+    void updateState(SnailOrder record);
 
-//    int insert(SnailOrder record);
+    void updatePayState(SnailOrder record);
 
-    int insertSelective(SnailOrder record);
-
-    SnailOrder selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(SnailOrder record);
-
-    int updateByPrimaryKey(SnailOrder record);
 }

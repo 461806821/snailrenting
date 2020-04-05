@@ -80,36 +80,43 @@ public class BusinessService {
     }
 
     public ModelAndView admin_list(SnailBusiness snailBusiness,HttpSession httpSession){
-        SessionUser sessionuser=(SessionUser) httpSession.getAttribute("sessionuser");
-        if(sessionuser == null){
-            return new ModelAndView("redirect:/user/Web_login");
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
         }
-        snailBusiness.setUserId(sessionuser.getId());
         PageHelper.startPage(snailBusiness.getPageNum(), snailBusiness.getPageSize());
         List<SnailBusiness> list= businessMapper.list(snailBusiness);
         PageInfo<SnailBusiness> pageInfo = new PageInfo<>(list);
-        return ModelAndViewResult.succeedPage("/Web_businesslist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
+        return ModelAndViewResult.succeedPage("/Admin_businesslist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
     }
 
     public ModelAndView admin_select(SnailBusiness snailUser, HttpSession httpSession){
         SnailBusiness u=businessMapper.select(snailUser);
-        return ModelAndViewResult.succeed("/Admin_houseupdate",u, null, CodeEnum.MSG_SUCCES.getMsg());
+        return ModelAndViewResult.succeed("/Admin_businessu",u, null, CodeEnum.MSG_SUCCES.getMsg());
     }
 
     @Transactional(readOnly = false)
     public ModelAndView admin_insert(SnailBusiness snailUser, HttpSession httpSession){
-        snailUser.preInsert(101);
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        snailUser.preInsert(sessionadmin.getId());
         businessMapper.insert(snailUser);
         SnailBusiness u=businessMapper.select(snailUser);
-        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
+        return ModelAndViewResult.succeed("/Admin_businessu",u, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
     @Transactional(readOnly = false)
     public ModelAndView admin_update(SnailBusiness snailUser, HttpSession httpSession){
-        snailUser.preUpdate(101);
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        snailUser.preUpdate(sessionadmin.getId());
         businessMapper.update(snailUser);
         SnailBusiness u=businessMapper.select(snailUser);
-        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
+        return ModelAndViewResult.succeed("/Admin_businessu",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
     @Transactional(readOnly = false)
@@ -120,6 +127,18 @@ public class BusinessService {
         }
         snailUser.preUpdate(sessionadmin.getId());
         businessMapper.delete(snailUser);
+
+        return admin_list(snailUser,httpSession);
+    }
+
+    @Transactional(readOnly = false)
+    public ModelAndView admin_update_state(SnailBusiness snailUser, HttpSession httpSession){
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        snailUser.preUpdate(sessionadmin.getId());
+        businessMapper.updateState(snailUser);
 
         return admin_list(snailUser,httpSession);
     }

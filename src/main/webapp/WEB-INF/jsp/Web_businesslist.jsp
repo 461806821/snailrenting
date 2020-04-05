@@ -155,14 +155,23 @@
                             已解决
                         </c:if>
                     </td>
-                    <td><h4><a href="${pageContext.request.contextPath }/business/Web_delete?id=${b.id}"><span class="label label-primary">取消</span></a></h4></td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${b.state == 2}">
+                                <h4><a href="${pageContext.request.contextPath }/business/Web_delete?id=${b.id}"><span class="label label-primary">删除</span></a></h4>
+                            </c:when>
+                            <c:otherwise>
+                                <h4><a href="${pageContext.request.contextPath }/business/Web_delete?id=${b.id}"><span class="label label-primary">取消</span></a></h4>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </tr>
                 </c:forEach>
                 </tbody>
             </table>
             <!-- page -->
             <ul class="pagination pagination-lg">
-                <li class="disabled"><a <c:if test="${pageNum-1 >0}" >href="${pageContext.request.contextPath }/service/Web_businesslist?pageNum=${pageNum-1}"</c:if>><i class="fa fa-angle-left">&laquo;</i></a></li>
+                <li <c:if test="${pageNum-1 <=0}">class="disabled"</c:if>> <a <c:if test="${pageNum-1 >0}" >href="${pageContext.request.contextPath }/service/Web_businesslist?pageNum=${pageNum-1}"</c:if>><i class="fa fa-angle-left">&laquo;</i></a></li>
                 <c:forEach var="prePageNum" begin="1" end="${total/pageSize+1}">
                     <li <c:if test="${prePageNum == pageNum}" >class="active" </c:if> ><a href="${pageContext.request.contextPath }/service/Web_businesslist?pageNum=${prePageNum}">${prePageNum}</a></li>
                 </c:forEach>

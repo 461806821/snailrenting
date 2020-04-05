@@ -10,25 +10,10 @@ public interface SnailBannerMapper {
 
     List<SnailRoom> getBannerHouses();
 
-    SnailBanner select(SnailBanner record);
-
     List<SnailBanner> list(SnailBanner record);
-
-    void update(SnailBanner record);
 
     void insert(SnailBanner record);
 
     void delete(SnailBanner record);
 
-    int deleteByPrimaryKey(Integer id);
-
-//    int insert(SnailBanner record);
-
-    int insertSelective(SnailBanner record);
-
-    SnailBanner selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(SnailBanner record);
-
-    int updateByPrimaryKey(SnailBanner record);
 }

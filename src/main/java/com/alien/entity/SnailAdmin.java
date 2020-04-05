@@ -19,9 +19,18 @@ public class SnailAdmin extends BaseEntity<SnailAdmin> {
 
     private String password;
 
-    private String roleId;
+    private Integer role;//0超级管理员，1管理员，2管家：预约看房，定制房源，3审核员，4维修
+
+    private String name;
+
+    private String phone;
+
+    private String address;
 
     private String avatar;
+
+    private String identity;
+
 
     private String password1;
 }

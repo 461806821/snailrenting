@@ -126,15 +126,25 @@ public class UserService {
 
     @Transactional(readOnly = false)
     public ModelAndView admin_insert(SnailUser snailUser,HttpSession httpSession){
-        snailUser.preInsert(101);
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        if(snailUser.getPassword()!=snailUser.getRepassword())
+            return ModelAndViewResult.succeed("/Admin_userinsert","两次输入的密码不一致，请重新输入！", CodeEnum.MSG_ERROR.getMsg());
+        snailUser.preInsert(sessionadmin.getId());
         userMapper.insert(snailUser);
         SnailUser u=userMapper.select(snailUser);
-        return ModelAndViewResult.succeed("/Admin_userupdate",u, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
+        return ModelAndViewResult.succeed("/Admin_userupdate",u, "添加用户信息成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
     @Transactional(readOnly = false)
     public ModelAndView admin_update(SnailUser snailUser,HttpSession httpSession){
-        snailUser.preUpdate(101);
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        snailUser.preUpdate(sessionadmin.getId());
         userMapper.update(snailUser);
         SnailUser u=userMapper.select(snailUser);
         return ModelAndViewResult.succeed("/Admin_userupdate",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
@@ -144,7 +154,7 @@ public class UserService {
     public ModelAndView admin_delete(SnailUser snailUser,HttpSession httpSession){
         SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
         if(sessionadmin == null){
-            return new ModelAndView("redirect:/user/Web_login");
+            return new ModelAndView("redirect:/admin/Admin_login");
         }
         snailUser.preUpdate(sessionadmin.getId());
         userMapper.delete(snailUser);

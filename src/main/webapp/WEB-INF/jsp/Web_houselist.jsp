@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <head>
@@ -96,12 +97,14 @@
         <div class="services-top-breadcrumbs-right">
             <ul>
                 <li><a href="${pageContext.request.contextPath }/index/Web_index">主页</a> <i>/</i></li>
-                <li>房源列表 <strong>（共${total}条）</strong></li>
+                <li>房源列表 </li>
             </ul>
         </div>
         <div class="services-top-breadcrumbs-left">
-            <h3>房源列表</h3>
+            <h3>共（${total}）条</h3>
         </div>
+    </div>
+</div>
 <!-- //breadcrumbs -->
 <!-- gallery -->
 <div class="gallery">
@@ -111,7 +114,7 @@
         <c:forEach items="${data }" var="s">
             <div class="col-md-4 gallery-grid">
                 <div class="events-grid1 hvr-sweep-to-top">
-                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
+                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${pageContext.request.contextPath }/static/web/images/${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
                     <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}">${s.name}</a></h4>
                     <ul>
                         <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>赞：${s.prasie}</a></li>

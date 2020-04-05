@@ -33,8 +33,30 @@ public class AdminService {
             if(snailAdmin.getPassword().equals(a.getPassword())){
                 SessionAdmin sessionadmin =new SessionAdmin();
                 sessionadmin.setId(a.getId());
+                sessionadmin.setRole(a.getRole());
+                switch(a.getRole())
+                {
+                    case 0:
+                        sessionadmin.setRolename("超级管理员");
+                        break;
+                    case 1:
+                        sessionadmin.setRolename("管理员");
+                        break;
+                    case 2:
+                        sessionadmin.setRolename("管家");
+                        break;
+                    case 3:
+                        sessionadmin.setRolename("审核员");
+                        break;
+                    case 4:
+                        sessionadmin.setRolename("维修");
+                        break;
+                    default:
+                        sessionadmin.setRolename("null");
+                        break;
+                }
                 sessionadmin.setUsername(a.getUsername());
-                httpSession.setAttribute("sessionuser", sessionadmin);
+                httpSession.setAttribute("sessionadmin", sessionadmin);
                 return new ModelAndView("redirect:/index/Admin_index");
             }
             modelAndView.addObject("msg", "密码不正确！");
@@ -44,5 +66,9 @@ public class AdminService {
         return modelAndView;
     }
 
+    public ModelAndView logout(SnailAdmin snailAdmin, HttpSession httpSession){
+        httpSession.removeAttribute("sessionadmin");
+        return new ModelAndView("redirect:/admin/Admin_login");
+    }
 
 }

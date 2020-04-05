@@ -15,6 +15,10 @@ spring:
       enabled: true
       force: true
       charset: UTF-8
+#时区问题：从数据库取出的时间和本地不一致
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 #指定mybatis映射文件的地址
 mybatis:
   #配置文件的路径

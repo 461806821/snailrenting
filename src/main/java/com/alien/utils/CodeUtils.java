@@ -3,7 +3,7 @@ package com.alien.utils;
 import java.util.Random;
 
 /**
- * 激活码生产规则
+ * 码生产规则
  */
 public class CodeUtils {
 
@@ -73,37 +73,24 @@ public class CodeUtils {
     }
 
 /**
- * 会员激活码生成规则:
- * 原有学习卡的激活码是10位
- * 新开发会员卡的激活码是9位
+ *合同生成规则:
  *
- * 1. 通过位数去区分当前会员卡和之前已存在的学习卡
- * 2.会员卡激活码生成规则区分vip和svip
- * 比如:
- * VIP会员卡激活码规则—首位字母是V；
- * SVIP会员卡激活码规则—首位字母是S；
  * （其中数字去除0、2、6、1、8；英文字母去除掉O，Z， Y，G，I，B）
  */
     /** 自定义进制（其中数字去除0、2、6、1、8；英文字母去除掉O，Z， Y，G，I，B) */
     private static final char[] member_r=new char[]{'3','4','5','7','9','Z','Q','W','E','R','T','U','P','A','D','F','H','J','K','L','X','N','M'};
 
     /** (不能与自定义进制有重复) */
-    private static final char vip='V';
+    private static final char c='V';
 
-    /** (不能与自定义进制有重复) */
-    private static final char svip='S';
     /** 序列最小长度 */
     private static final int member_length=8;
 
-    public static String createMemberCode(int type) {
+    public static String createCode(String date) {
         int i;
         int count = 0;
         StringBuffer sb = new StringBuffer();
-        if(type == 1){
-            sb.append(vip);
-        }else if(type == 2 ){
-            sb.append(svip);
-        }
+        sb.append(date);
         Random rnd = new Random();
         while (count < member_length) {
             i = Math.abs(rnd.nextInt(binLen));

@@ -11,6 +11,10 @@ public class SnailOrder {
 
     private Integer roomId;
 
+    private String contract;
+
+    private Integer payState;
+
     private Short payMoney;
 
     private Short discountMoney;
@@ -19,9 +23,9 @@ public class SnailOrder {
 
     private Date payTime;
 
-    private Date validTime;
+    private Date payValidTime;
 
-    private Integer liveDay;
+    private Date validTime;
 
     private Integer createBy;
 
@@ -65,6 +69,22 @@ public class SnailOrder {
         this.roomId = roomId;
     }
 
+    public String getContract() {
+        return contract;
+    }
+
+    public void setContract(String contract) {
+        this.contract = contract == null ? null : contract.trim();
+    }
+
+    public Integer getPayState() {
+        return payState;
+    }
+
+    public void setPayState(Integer payState) {
+        this.payState = payState;
+    }
+
     public Short getPayMoney() {
         return payMoney;
     }
@@ -97,20 +117,20 @@ public class SnailOrder {
         this.payTime = payTime;
     }
 
+    public Date getPayValidTime() {
+        return payValidTime;
+    }
+
+    public void setPayValidTime(Date payValidTime) {
+        this.payValidTime = payValidTime;
+    }
+
     public Date getValidTime() {
         return validTime;
     }
 
     public void setValidTime(Date validTime) {
         this.validTime = validTime;
-    }
-
-    public Integer getLiveDay() {
-        return liveDay;
-    }
-
-    public void setLiveDay(Integer liveDay) {
-        this.liveDay = liveDay;
     }
 
     public Integer getCreateBy() {

@@ -115,14 +115,18 @@
             <div class="sample1">
                 <div class="carousel">
                     <ul>
-<%--                        <li> <img src="/static/web/images/13.jpg" alt="quibusdam et aut offi"> </li>--%>
-<%--                        <li> <img src="/static/web/images/14.jpg" alt="Itaque earum rerum hic"> </li>--%>
-<%--                        <li> <img src="/static/web/images/15.jpg" alt="doloribus asperio rep"> </li>--%>
-<%--                        <li> <img src="/static/web/images/16.jpg" alt="maiores alias consequ"> </li>--%>
-                        <li> <img <c:if test="${!empty data.snailRoom.bedroomImg1}">src="/static/web/images/${data.snailRoom.bedroomImg1}"</c:if> alt="quibusdam et aut offi"> </li>
-                        <li> <img <c:if test="${!empty data.snailRoom.bedroomImg2}">src="/static/web/images/${data.snailRoom.bedroomImg2}"</c:if> alt="Itaque earum rerum hic"> </li>
-                        <li> <img <c:if test="${!empty data.bathImg1}">src="/static/web/images/${data.bathImg1}"</c:if> alt="doloribus asperio rep"> </li>
-                        <li> <img <c:if test="${!empty data.bathImg2}">src="/static/web/images/${data.bathImg2}"</c:if> alt="maiores alias consequ"> </li>
+                        <c:if test="${!empty data.snailRoom.bedroomImg1}">
+                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.snailRoom.bedroomImg1}" alt="quibusdam et aut offi"> </li>
+                        </c:if>
+                        <c:if test="${!empty data.snailRoom.bedroomImg2}">
+                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.snailRoom.bedroomImg2}" alt="Itaque earum rerum hic"> </li>
+                        </c:if>
+                        <c:if test="${!empty data.bathImg1}">
+                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.bathImg1}" alt="doloribus asperio rep"> </li>
+                        </c:if>
+                        <c:if test="${!empty data.bathImg2}">
+                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.bathImg2}" alt="maiores alias consequ"> </li>
+                        </c:if>
                     </ul>
                     <div class="controls">
                         <div class="prev"></div>
@@ -131,10 +135,18 @@
                 </div>
                 <div class="thumbnails">
                     <ul>
-                        <li> <img <c:if test="${!empty data.houseImg }">src="/static/web/images/${data.houseImg}"</c:if>alt="doloribus asperio rep"> </li>
-                        <li> <img <c:if test="${!empty data.kitchenImg1 }">src="/static/web/images/${data.kitchenImg1}"</c:if> alt=" "> </li>
-                        <li> <img <c:if test="${!empty data.livingImg1 }">src="${data.livingImg1}"</c:if> alt=" "> </li>
-                        <li> <img <c:if test="${!empty data.livingImg2 }">src="${data.livingImg2}"</c:if> alt=" "> </li>
+                        <c:if test="${!empty data.houseImg}">
+                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.houseImg}"alt="doloribus asperio rep"> </li>
+                        </c:if>
+                        <c:if test="${!empty data.kitchenImg1}">
+                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.kitchenImg1}" alt=" "> </li>
+                        </c:if>
+                        <c:if test="${!empty data.livingImg1}">
+                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.livingImg1}" alt=" "> </li>
+                        </c:if>
+                        <c:if test="${!empty data.livingImg2}">
+                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.livingImg2}" alt=" "> </li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
@@ -144,11 +156,25 @@
             </script>
             <div class="single-left2">
                 <h3>${data.address} ${data.snailRoom.name}</h3>
+                <c:if test="${!empty msg}">
+                    <c:choose>
+                        <c:when test="${success == true}">
+                            <div class="alert alert-info" role="alert">
+                                <strong>操作提示：</strong>${msg}
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="alert alert-danger" role="alert">
+                                <strong>操作警告：</strong>${msg}
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
                 <ul class="com">
                     <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a>卧室：${data.bedroom} </a></li>
                     <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a>签约</a></li>
                     <li><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/collection/Web_insert?id=${data.snailRoom.id}">点赞：${data.snailRoom.prasie} </a></li>
-                    <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/collection/Web_insert?id=${data.snailRoom.id}">收藏</a></li>
+                    <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/collection/Web_insert?roomId=${data.snailRoom.id}">收藏</a></li>
                 </ul>
                 <div class="single-left2-sub">
                     <ul>
@@ -276,7 +302,10 @@
                     <div class="related-post">
                         <div class="related-post-left">
                             <a href="${pageContext.request.contextPath }/house/Web_select?id=${r.id}">
-                                <img src="${r.bedroomImg1}" alt=" " class="img-responsive" /></a>
+                                <c:if test="${!empty r.bedroomImg1}">
+                                    <img src="${pageContext.request.contextPath }/static/web/images/${r.bedroomImg1}" alt=" " class="img-responsive" />
+                                </c:if>
+                            </a>
                         </div>
                         <div class="related-post-right">
                             <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${r.id}">${r.name}</a></h4>

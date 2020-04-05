@@ -11,7 +11,15 @@ public class SnailAdmin {
 
     private String roleId;
 
+    private String name;
+
+    private String phone;
+
+    private String address;
+
     private String avatar;
+
+    private String identity;
 
     private Integer createBy;
 
@@ -55,12 +63,44 @@ public class SnailAdmin {
         this.roleId = roleId == null ? null : roleId.trim();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
     public String getAvatar() {
         return avatar;
     }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar == null ? null : avatar.trim();
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity == null ? null : identity.trim();
     }
 
     public Integer getCreateBy() {

@@ -18,10 +18,10 @@ public class SnailBusiness extends BaseEntity<SnailBusiness> {
 
     private Integer userId;
 
-    private Integer type;
+    private Integer type;//1报修,2退租,3预约看房,4定制房源,5其他问题
 
     private String desp;
 
-    private Integer state;
+    private Integer state;//状态（0待解决，1处理中，2已解决）
 }
 

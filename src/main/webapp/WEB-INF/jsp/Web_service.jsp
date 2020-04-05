@@ -79,7 +79,7 @@
                             <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
                             <li><a href="${pageContext.request.contextPath }/house/Web_list" class="hvr-bounce-to-bottom">全部房源</a></li>
                             <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">蜗牛服务</a></li>
-                            <li><a href="${pageContext.request.contextPath }/collectiom/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
+                            <li><a href="${pageContext.request.contextPath }/collection/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
                             <li><a class="hvr-bounce-to-bottom">VR看房(未解锁)</a></li>
                         </ul>
                     </nav>

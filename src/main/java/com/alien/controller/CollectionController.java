@@ -29,8 +29,8 @@ public class CollectionController {
     private CollectionService collectionService;
 
     @ApiOperation(value = "我的收藏列表")
-    @RequestMapping("/Admin_list")
-    private ModelAndView Admin_list(@ModelAttribute SnailCollection snailUser) {
+    @RequestMapping("/Web_list")
+    private ModelAndView Web_list(@ModelAttribute SnailCollection snailUser) {
         try {
             log.info("我的收藏列表");
             return collectionService.list(snailUser);
@@ -42,11 +42,11 @@ public class CollectionController {
     }
 
     @ApiOperation(value = "收藏添加")
-    @RequestMapping("/Admin_insert")
-    private ModelAndView Admin_insert(@ModelAttribute SnailCollection snailUser) {
+    @RequestMapping("/Web_insert")
+    private ModelAndView Web_insert(@ModelAttribute SnailCollection snailUser,HttpSession httpSession) {
         try {
             log.info("收藏添加");
-            return collectionService.insert(snailUser);
+            return collectionService.insert(snailUser,httpSession);
         }
         catch (Exception e) {
             log.error("收藏添加操作失败", e);
@@ -55,8 +55,8 @@ public class CollectionController {
     }
 
     @ApiOperation(value = "收藏删除")
-    @RequestMapping("/Admin_delete")
-    private ModelAndView Admin_delete(@ModelAttribute SnailCollection snailUser,HttpSession httpSession) {
+    @RequestMapping("/Web_delete")
+    private ModelAndView Web_delete(@ModelAttribute SnailCollection snailUser,HttpSession httpSession) {
         try {
             log.info("收藏删除"+snailUser.getId()+"==");
             return collectionService.delete(snailUser,httpSession);

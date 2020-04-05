@@ -28,7 +28,7 @@ public class SnailHouseVO extends BaseEntity<SnailHouseVO> {
 
     private String address;
 
-    private String housePrice;
+    private Long housePrice;
 
     private String houseImg;
 
@@ -65,9 +65,9 @@ public class SnailHouseVO extends BaseEntity<SnailHouseVO> {
     private String keyword;
 
     private String maxPriceVO;
-    private Integer maxPrice;
+    private Long maxPrice;
 
     private String minPriceVO;
-    private Integer minPrice;
+    private Long minPrice;
 }
 

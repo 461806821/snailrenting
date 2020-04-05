@@ -3,10 +3,13 @@ package com.alien.service;
 import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
 import com.alien.entity.SnailBanner;
+import com.alien.entity.SnailHouse;
 import com.alien.entity.SnailLocation;
 import com.alien.entity.SnailRoom;
 import com.alien.entity.vo.SessionAdmin;
+import com.alien.entity.vo.SnailHouseVO;
 import com.alien.mapper.SnailBannerMapper;
+import com.alien.mapper.SnailHouseMapper;
 import com.alien.mapper.SnailLocationMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,6 +34,10 @@ public class BannerService {
     private SnailBannerMapper bannerMapper;
     @Autowired
     private SnailLocationMapper locationMapper;
+    @Autowired
+    private SnailHouseMapper houseMapper;
+    @Autowired
+    private HouseService houseService;
 
     public ModelAndView web_list(HttpSession httpSession){
         List<SnailLocation> location =locationMapper.list();
@@ -64,16 +71,31 @@ public class BannerService {
         PageHelper.startPage(snailUser.getPageNum(), snailUser.getPageSize());
         List<SnailBanner> list= bannerMapper.list(snailUser);
         PageInfo<SnailBanner> pageInfo = new PageInfo<>(list);
-        return ModelAndViewResult.succeedPage("/Admin_houselist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
+        return ModelAndViewResult.succeedPage("/Admin_bannerlist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
     }
 
     @Transactional(readOnly = false)
-    public ModelAndView admin_insert(SnailBanner snailUser, HttpSession httpSession){
-        //salehouse max 3,commandhouse max 4
-        snailUser.preInsert(101);
+    public ModelAndView admin_insert(SnailBanner snailUser, HttpSession httpSession) {
+        SessionAdmin sessionadmin = (SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if (sessionadmin == null) {
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        List<SnailBanner> blist = bannerMapper.list(snailUser);
+        PageHelper.startPage(snailUser.getPageNum(), snailUser.getPageSize());
+        List<SnailHouse> hlist = houseMapper.houseList(new SnailHouseVO());
+        PageInfo<SnailHouse> pageInfo = new PageInfo<>(hlist);
+        if (snailUser.getType() == 1) {//1优惠salehouse max 3
+            if (blist.size() >= 3)
+                return ModelAndViewResult.succeedPage("/Admin_houselist", hlist, "广告位已满！优惠房源最大广告位数为3，请将广告位的房屋移除后再添加。", CodeEnum.MSG_ERROR.getMsg(), pageInfo.getTotal(), pageInfo.getPageNum(), pageInfo.getPageSize());
+        }
+        if (snailUser.getType() == 2) {//2推荐commandhouse max 4
+            if (blist.size() >= 4)
+                return ModelAndViewResult.succeedPage("/Admin_houselist", hlist, "广告位已满！推荐房源最大广告位数为4，请将广告位的房屋移除后再添加。", CodeEnum.MSG_ERROR.getMsg(), pageInfo.getTotal(), pageInfo.getPageNum(), pageInfo.getPageSize());
+        }
+        snailUser.preInsert(sessionadmin.getId());
         bannerMapper.insert(snailUser);
-        SnailBanner u=bannerMapper.select(snailUser);
-        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
+
+        return ModelAndViewResult.succeedPage("/Admin_houselist", hlist, "添加房屋到网站广告位成功！", CodeEnum.MSG_SUCCES.getMsg(), pageInfo.getTotal(), pageInfo.getPageNum(), pageInfo.getPageSize());
     }
 
     @Transactional(readOnly = false)
@@ -85,7 +107,10 @@ public class BannerService {
         snailUser.preUpdate(sessionadmin.getId());
         bannerMapper.delete(snailUser);
 
-        return admin_list(snailUser,httpSession);
+        SnailHouseVO snailHouseVO =new SnailHouseVO();
+        snailHouseVO.setPageSize(snailUser.getPageSize());
+        snailHouseVO.setPageNum(snailUser.getPageNum());
+        return houseService.admin_list(snailHouseVO,httpSession);
     }
 
 }

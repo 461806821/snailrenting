@@ -134,39 +134,40 @@
             </div>
             <!-- Sidebar Navidation Menus--><span class="heading">菜单栏</span>
             <ul class="list-unstyled">
-                <li class="active"><a href="${pageContext.request.contextPath }/admin/Admin_index"> <i class="icon-home"></i>主页 </a></li>
-                <li><a href="${pageContext.request.contextPath }/admin/Admin_message"> <i class="icon-mail"></i>消息 </a></li>
-                <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
-                <li><a href="charts.html"> <i class="icon-picture"></i>Charts </a></li>
-                <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
+                <li class="active"><a href="${pageContext.request.contextPath }/index/Admin_index"> <i class="icon-home"></i>主页 </a></li>
+                <li><a > <i class="icon-mail"></i>消息 </a></li>
+                <%--                <li><a href="${pageContext.request.contextPath }/admin/Admin_message"> <i class="icon-mail"></i>消息 </a></li>--%>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=1&pageSize=6"> <i class="icon-interface-windows"></i>售后服务</a></li>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=3&pageSize=6"> <i class="icon-interface-windows"></i>预约看房</a></li>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=4&pageSize=6"> <i class="icon-interface-windows"></i>定制房源</a></li>
                 <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>用户管理 </a>
                     <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/user/Admin_list">用户列表</a></li>
+                        <li><a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6">用户列表</a></li>
                         <li><a href="${pageContext.request.contextPath }/user/Admin_userinsert">添加用户</a></li>
                     </ul>
                 </li>
                 <li><a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>房源管理 </a>
                     <ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/house/Admin_list">房源列表</a></li>
-                        <li><a href="${pageContext.request.contextPath }/house/Admin_update">修改房源</a></li>
-                        <li><a href="${pageContext.request.contextPath }/house/Admin_insert">添加房源</a></li>
+                        <li><a href="${pageContext.request.contextPath }/house/Admin_list?pageSize=6">房源列表</a></li>
+                        <li><a href="${pageContext.request.contextPath }/house/Admin_houseinsert">添加房源</a></li>
                     </ul>
                 </li>
                 <li><a href="#exampledropdownDropdown3" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>订单管理 </a>
                     <ul id="exampledropdownDropdown3" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderlist">订单列表</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderpass">审核订单</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderupdate">修改订单</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderadd">添加订单</a></li>
+                        <li><a href="${pageContext.request.contextPath }/order/Admin_list?pageSize=6">订单列表</a></li>
+                        <li><a href="${pageContext.request.contextPath }/order/Admin_orderinsert">添加订单</a></li>
                     </ul>
                 </li>
-                <li><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>售后服务 </a>
+                <li><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>业务办理管理 </a>
                     <ul id="exampledropdownDropdown4" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/admin/Admin_index">售后</a></li>
+                        <li><a href="${pageContext.request.contextPath }/business/Admin_businessinsert">添加业务</a></li>
+                        <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=2&pageSize=6">退租</a></li>
+                        <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=5&pageSize=6">其他问题</a></li>
                     </ul>
                 </li>
-                <%--                <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>--%>
-            </ul><span class="heading">数据</span>
+                <li><a href="${pageContext.request.contextPath }/banner/Admin_list"> <i class="icon-interface-windows"></i>网站广告 </a></li>
+            </ul>
+            <span class="heading">数据</span>
             <ul class="list-unstyled">
                 <li> <a href="#"> <i class="fa fa-bar-chart"></i>数据统计 </a></li>
                 <li> <a href="#"> <i class="icon-screen"></i>数据分析 </a></li>
@@ -204,6 +205,20 @@
                                     <h3 class="h4">用户信息</h3>
                                 </div>
                                 <div class="card-body">
+                                    <c:if test="${!empty msg}">
+                                        <c:choose>
+                                            <c:when test="${success == true}">
+                                                <div class="alert alert-info" role="alert">
+                                                    <strong>操作提示：</strong>${msg}
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>操作警告：</strong>${msg}
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
                                     <form class="form-horizontal" action="${pageContext.request.contextPath }/user/Admin_insert" method="post">
                                         <div class="form-group row">
                                             <label class="col-sm-3 form-control-label">用户名</label>
@@ -222,7 +237,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 form-control-label">确认密码</label>
                                             <div class="col-sm-9">
-                                                <input type="password" name="password1" class="form-control"><small class="help-block-none">请再次输入密码.</small>
+                                                <input type="password" name="repassword" class="form-control"><small class="help-block-none">请再次输入密码.</small>
                                             </div>
                                         </div>
                                         <div class="line"></div>

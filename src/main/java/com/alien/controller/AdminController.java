@@ -30,7 +30,7 @@ public class AdminController {
     @RequestMapping("/Admin_login")
     public ModelAndView pAdmin_login() {
         log.info("管理员登录页面");
-        return  new ModelAndView("/Admin_error");//设置对应JSP的模板文件
+        return new ModelAndView("/Admin_login");//设置对应JSP的模板文件
     }
 
     @ApiOperation(value = "管理员登录接口")
@@ -41,6 +41,18 @@ public class AdminController {
                 return adminService.login(snailAdmin,httpSession);
         } catch (Exception e) {
             log.error("管理员登录操作失败", e);
+            return ModelAndViewResult.failed("/Admin_error", "no", CodeEnum.MSG_ERROR.getMsg());
+        }
+    }
+
+    @ApiOperation(value = "管理员退出接口")
+    @RequestMapping(value = "/logout")
+    private ModelAndView Admin_logout(@ModelAttribute SnailAdmin snailAdmin, HttpSession httpSession){
+        log.info("管理员退出接口"+ snailAdmin.getUsername());
+        try {
+            return adminService.logout(snailAdmin,httpSession);
+        } catch (Exception e) {
+            log.error("管理员退出操作失败", e);
             return ModelAndViewResult.failed("/Admin_error", "no", CodeEnum.MSG_ERROR.getMsg());
         }
     }

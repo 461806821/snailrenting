@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alien.mapper.SnailBannerMapper">
-  <resultMap id="BaseResultMap" type="com.alien.model.SnailBanner">
+  <resultMap id="BaseResultMap" type="com.alien.entity.SnailBanner">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -15,7 +15,6 @@
   <sql id="Base_Column_List">
     id, type, name, room_id, create_by, update_by, create_date, update_date, del_flag
   </sql>
-
     <sql id="Room_Column_List">
         a.id AS "id",
         a.house_id AS "houseId",
@@ -40,16 +39,21 @@
         <include refid="Room_Column_List"/>
         from snail_banner b
         LEFT JOIN snail_room a on a.id = b.room_id
+        where b.del_flag = '0' and a.del_flag = '0'
     </select>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="list" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from snail_banner
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+    <where> del_flag = '0'
+        <if test="type != null and type != ''">
+            and type = #{type}
+        </if>
+    </where>
+    </select>
 
-  <insert id="insert" parameterType="com.alien.model.SnailBanner">
+  <insert id="insert" parameterType="com.alien.entity.SnailBanner">
     insert into snail_banner
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -110,48 +114,10 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.alien.model.SnailBanner">
-    update snail_banner
-    <set>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="roomId != null">
-        room_id = #{roomId,jdbcType=INTEGER},
-      </if>
-      <if test="createBy != null">
-        create_by = #{createBy,jdbcType=INTEGER},
-      </if>
-      <if test="updateBy != null">
-        update_by = #{updateBy,jdbcType=INTEGER},
-      </if>
-      <if test="createDate != null">
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null">
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        del_flag = #{delFlag,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.alien.model.SnailBanner">
-    update snail_banner
-    set type = #{type,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      room_id = #{roomId,jdbcType=INTEGER},
-      create_by = #{createBy,jdbcType=INTEGER},
-      update_by = #{updateBy,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      del_flag = #{delFlag,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 
+    <delete id="delete">
+        delete from snail_banner
+		WHERE  room_id = #{roomId}
+	</delete>
 
 </mapper>

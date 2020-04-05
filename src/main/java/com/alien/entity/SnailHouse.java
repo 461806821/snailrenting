@@ -21,7 +21,7 @@ public class SnailHouse extends BaseEntity<SnailHouse> {
 
     private Integer locationId;
 
-    private Integer type;
+    private Integer type;//租房类型（1合租，2整租）
 
     private String name;
 

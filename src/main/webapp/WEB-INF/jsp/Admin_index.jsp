@@ -115,7 +115,7 @@
 <%--                            </ul>--%>
 <%--                        </li>--%>
                         <!-- Logout    -->
-                        <li class="nav-item"><a href="${pageContext.request.contextPath }/admin/Admin_login" class="nav-link logout"> <span class="d-none d-sm-inline">退出</span><i class="fa fa-sign-out"></i></a></li>
+                        <li class="nav-item"><a href="${pageContext.request.contextPath }/admin/logout" class="nav-link logout"> <span class="d-none d-sm-inline">退出</span><i class="fa fa-sign-out"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -128,43 +128,41 @@
             <div class="sidebar-header d-flex align-items-center">
                 <div class="avatar"><img src="/static/snailAdmin/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                 <div class="title">
-                    <h1 class="h4">${sessionadmin.username}</h1>
+                    <h1 class="h4">${sessionuser.username}</h1>
                     <p>管理员</p>
                 </div>
             </div>
             <!-- Sidebar Navidation Menus--><span class="heading">菜单栏</span>
             <ul class="list-unstyled">
                 <li class="active"><a href="${pageContext.request.contextPath }/index/Admin_index"> <i class="icon-home"></i>主页 </a></li>
-                <li><a href="${pageContext.request.contextPath }/messge/Admin_list"> <i class="icon-mail"></i>消息 </a></li>
+                <li><a > <i class="icon-mail"></i>消息 </a></li>
+<%--                <li><a href="${pageContext.request.contextPath }/admin/Admin_message"> <i class="icon-mail"></i>消息 </a></li>--%>
+                <li><a href="${pageContext.request.contextPath }/order/Admin_list?pageSize=6"><i class="icon-interface-windows"></i>租户签约 查看 / 审核 </a></li>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=1&pageSize=6"> <i class="icon-interface-windows"></i>售后服务</a></li>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=3&pageSize=6"> <i class="icon-interface-windows"></i>预约看房</a></li>
+                <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=4&pageSize=6"> <i class="icon-interface-windows"></i>定制房源</a></li>
                 <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>用户管理 </a>
                     <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/user/Admin_list">用户列表</a></li>
-                        <li><a href="${pageContext.request.contextPath }/user/Admin_update">修改用户</a></li>
-                        <li><a href="${pageContext.request.contextPath }/user/Admin_insert">添加用户</a></li>
+                        <li><a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6">用户列表</a></li>
+                        <li><a href="${pageContext.request.contextPath }/user/Admin_userinsert">添加用户</a></li>
                     </ul>
                 </li>
                 <li><a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>房源管理 </a>
                     <ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/house/Admin_list">房源列表</a></li>
-                        <li><a href="${pageContext.request.contextPath }/house/Admin_update">修改房源</a></li>
-                        <li><a href="${pageContext.request.contextPath }/house/Admin_insert">添加房源</a></li>
+                        <li><a href="${pageContext.request.contextPath }/house/Admin_list?pageSize=6">房源列表</a></li>
+                        <li><a href="${pageContext.request.contextPath }/house/Admin_houseinsert">添加房源</a></li>
                     </ul>
                 </li>
-                <li><a href="#exampledropdownDropdown3" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>订单管理 </a>
-                    <ul id="exampledropdownDropdown3" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_list">订单列表</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_pass">审核订单</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_update">修改订单</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Admin_insert">添加订单</a></li>
-                    </ul>
-                </li>
-                <li><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>售后服务 </a>
+                <li><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>业务办理管理 </a>
                     <ul id="exampledropdownDropdown4" class="collapse list-unstyled ">
-                        <li><a href="${pageContext.request.contextPath }/snailAdmin/Admin_list">售后</a></li>
+                        <li><a href="${pageContext.request.contextPath }/business/Admin_businessinsert">添加业务</a></li>
+                        <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=2&pageSize=6">退租</a></li>
+                        <li><a href="${pageContext.request.contextPath }/business/Admin_list?type=5&pageSize=6">其他问题</a></li>
                     </ul>
                 </li>
-<%--                <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>--%>
-            </ul><span class="heading">数据</span>
+                <li><a href="${pageContext.request.contextPath }/banner/Admin_list"> <i class="icon-interface-windows"></i>网站广告 </a></li>
+            </ul>
+            <span class="heading">数据</span>
             <ul class="list-unstyled">
                 <li> <a href="#"> <i class="fa fa-bar-chart"></i>数据统计 </a></li>
                 <li> <a href="#"> <i class="icon-screen"></i>数据分析 </a></li>

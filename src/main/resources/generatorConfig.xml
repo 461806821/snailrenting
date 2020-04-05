@@ -92,20 +92,36 @@
 <!--               enableSelectByExample="false"-->
 <!--               selectByExampleQueryId="false">-->
 <!--        </table>-->
-        <table tableName="snail_house" domainObjectName="SnailHouse"
+<!--        <table tableName="snail_inform" domainObjectName="SnailInform"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false"-->
+<!--               enableDeleteByPrimaryKey="false">-->
+<!--        </table>-->
+        <table tableName="snail_message" domainObjectName="SnailMessage"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
-               selectByExampleQueryId="false">
+               selectByExampleQueryId="false"
+               enableDeleteByPrimaryKey="false">
         </table>
-        <table tableName="snail_room" domainObjectName="SnailRoom"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
+<!--        <table tableName="snail_house" domainObjectName="SnailHouse"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--        </table>-->
+<!--        <table tableName="snail_room" domainObjectName="SnailRoom"-->
+<!--               enableCountByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--        </table>-->
 <!--        <table tableName="snail_collection" domainObjectName="SnailCollection"-->
 <!--               enableCountByExample="false"-->
 <!--               enableUpdateByExample="false"-->
@@ -139,19 +155,20 @@
 <!--               enableUpdateByExample="false"-->
 <!--               enableDeleteByExample="false"-->
 <!--               enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="false">-->
+<!--               selectByExampleQueryId="false"-->
+<!--               enableDeleteByPrimaryKey="false">-->
 <!--        </table>-->
-        <table tableName="snail_business" domainObjectName="SnailBusiness"
-               enableInsert="true"
-               enableSelectByPrimaryKey="false"
-               enableUpdateByPrimaryKey="false"
-               enableDeleteByPrimaryKey="false"
-               enableSelectByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="false"
-               selectByExampleQueryId="false"
-               enableCountByExample="true">
-        </table>
+<!--        <table tableName="snail_business" domainObjectName="SnailBusiness"-->
+<!--               enableInsert="true"-->
+<!--               enableSelectByPrimaryKey="false"-->
+<!--               enableUpdateByPrimaryKey="false"-->
+<!--               enableDeleteByPrimaryKey="false"-->
+<!--               enableSelectByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="false"-->
+<!--               selectByExampleQueryId="false"-->
+<!--               enableCountByExample="true">-->
+<!--        </table>-->
         <!-- geelynote mybatis插件的搭建 -->
     </context>
 </generatorConfiguration>

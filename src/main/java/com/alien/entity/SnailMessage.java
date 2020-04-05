@@ -12,7 +12,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SnailMessage extends BaseEntity<SnailMessage> {
-    private String name;
+
+    private Integer userId;
+
     private Integer type;
+
+    private String content;
+
+    private Long praise;
+
 }
 

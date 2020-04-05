@@ -27,7 +27,7 @@ public class SnailRoomVO extends BaseEntity<SnailRoomVO> {
 
     private String desp;
 
-    private Integer state;
+    private Integer state;////状态（0出租中，1已租，2停用，3审核中，4装修，5准备签约）
 
     private Long prasie;
 

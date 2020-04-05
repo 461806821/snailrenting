@@ -32,7 +32,7 @@
                 AND type = #{type}
             </if>
             <if test="state != null and state != ''">
-                AND password = #{state}
+                AND state = #{state}
             </if>
         </where>
     </select>
@@ -43,6 +43,9 @@
         FROM snail_business
         <where>
             del_flag = '0'
+            <if test="id != null and id != ''">
+                AND id = #{id}
+            </if>
             <if test="userId != null and userId != ''">
                 AND user_id = #{userId}
             </if>
@@ -55,7 +58,7 @@
         </where>
     </select>
 
-  <insert id="insert" parameterType="com.alien.entity.SnailBusiness">
+  <insert id="insert" parameterType="com.alien.entity.SnailBusiness" useGeneratedKeys="true" keyProperty="id">
     insert into snail_business
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -86,7 +89,7 @@
         update_date,
       </if>
       <if test="delFlag != null">
-        del_flag,
+        del_flag
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -118,54 +121,60 @@
         #{updateDate,jdbcType=TIMESTAMP},
       </if>
       <if test="delFlag != null">
-        #{delFlag,jdbcType=BIT},
+        #{delFlag,jdbcType=BIT}
       </if>
     </trim>
   </insert>
 
-  <select id="countByExample" parameterType="com.alien.entity.SnailBusiness" resultType="java.lang.Long">
-    select count(*) from snail_business
-  </select>
-
   <update id="update" parameterType="com.alien.entity.SnailBusiness">
     update snail_business
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="record.type != null">
-        type = #{record.type,jdbcType=INTEGER},
+      <if test="desp != null">
+        desp = #{desp,jdbcType=VARCHAR},
       </if>
-      <if test="record.desp != null">
-        desp = #{record.desp,jdbcType=VARCHAR},
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
       </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=INTEGER},
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=INTEGER},
       </if>
-      <if test="record.createBy != null">
-        create_by = #{record.createBy,jdbcType=INTEGER},
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=INTEGER},
       </if>
-      <if test="record.updateBy != null">
-        update_by = #{record.updateBy,jdbcType=INTEGER},
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.createDate != null">
-        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateDate != null">
-        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.delFlag != null">
-        del_flag = #{record.delFlag,jdbcType=BIT},
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=BIT}
       </if>
     </set>
+      where id = #{id,jdbcType=INTEGER}
   </update>
 
     <update id="delete" parameterType="com.alien.entity.SnailBusiness">
     update snail_business
     set del_flag ='1'
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="count" parameterType="com.alien.entity.SnailBusiness" resultType="java.lang.Long">
+    select count(*) from snail_business
+    where  del_flag = '0'
+  </select>
+
+
+    <update id="updateState" parameterType="com.alien.entity.SnailBusiness">
+    update snail_business
+    set state = #{state}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

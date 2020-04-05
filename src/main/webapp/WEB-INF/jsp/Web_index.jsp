@@ -78,9 +78,9 @@
                     <nav>
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list" class="hvr-bounce-to-bottom">房源展示</a></li>
+                            <li><a href="${pageContext.request.contextPath }/house/Web_list?pageSize=9" class="hvr-bounce-to-bottom">房源展示</a></li>
                             <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">蜗牛服务</a></li>
-                            <li><a href="${pageContext.request.contextPath }/collectiom/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
+                            <li><a href="${pageContext.request.contextPath }/collection/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
                             <li><a class="hvr-bounce-to-bottom">VR看房(未解锁)</a></li>
                         </ul>
                     </nav>
@@ -101,7 +101,7 @@
         <div class="banner-right">
             <h3><span>搜索理想房源</span></h3>
             <div class="reservation">
-                <form action="${pageContext.request.contextPath }/house/Web_list" method="post" form="country country1 country2 country3 country4 country5">
+                <form form="country1 country2 country3 country4 country5" action="${pageContext.request.contextPath }/house/Web_list" method="post" >
                 <%--                <div class="section_room">--%>
 <%--                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>--%>
 <%--                    <select id="country" onchange="change_country1(this.value,${locations})" class="frm-field required">--%>
@@ -116,8 +116,8 @@
 <%--                </div>--%>
                 <div class="section_room">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    <select name="typeVO" id="country1" onchange="change_country(this.value)" class="frm-field required">
-                        <option value="null">租房类型</option>
+                    <select id="country1" name="typeVO" onchange="change_country(this.value)" class="frm-field required">
+                        <option value=null>租房类型</option>
                         <option value="1">整租</option>
                         <option value="2">合租</option>
                     </select>
@@ -126,9 +126,9 @@
                     <div class="reservation-grid-left">
                         <div class="section_room">
                             <span class="tent"> </span>
-                            <select name="bedroomVO" id="country2" onchange="change_country(this.value)" class="frm-field required">
-                                <option value="null">卧室</option>
-                                <option value="null">无限制</option>
+                            <select id="country2" name="bedroomVO"  onchange="change_country(this.value)" class="frm-field required">
+                                <option value=null>卧室</option>
+                                <option value=null >无限制</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -139,9 +139,9 @@
                     <div class="reservation-grid-right">
                         <div class="section_room">
                             <span class="bath"></span>
-                            <select name="bathVO" id="country3" onchange="change_country(this.value)" class="frm-field required">
-                                <option value="null">浴室</option>
-                                <option value="null">无限制</option>
+                            <select id="country3" name="bathVO" onchange="change_country(this.value)" class="frm-field required">
+                                <option value=null>浴室</option>
+                                <option value=null>无限制</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             </select>
@@ -153,9 +153,9 @@
                     <div class="reservation-grid-left">
                         <div class="section_room">
                             <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>
-                            <select name="minPriceVO" id="country4" onchange="change_country(this.value)" class="frm-field required">
-                                <option value="null">最低价格</option>
-                                <option value="null">无限制</option>
+                            <select id="country4" name="minPriceVO" onchange="change_country(this.value)" class="frm-field required">
+                                <option value=null>最低价格</option>
+                                <option value=null>无限制</option>
                                 <option value="500">500元</option>
                                 <option value="1000">1000元</option>
                                 <option value="2000">2000元</option>
@@ -165,10 +165,10 @@
                     <div class="reservation-grid-right">
                         <div class="section_room">
                             <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>
-                            <select name="maxPriceVO" id="country5" onchange="change_country(this.value)" class="frm-field required">
-                                <option value="null">最高价格</option>
-                                <option value="null">无限制</option>
-                                <option value="1000.">1000元</option>
+                            <select  id="country5" name="maxPriceVO" onchange="change_country(this.value)" class="frm-field required">
+                                <option value=null>最高价格</option>
+                                <option value=null>无限制</option>
+                                <option value="1000">1000元</option>
                                 <option value="1500">1500元</option>
                                 <option value="2000">2000元</option>
                             <option value="3000">3000元</option>
@@ -180,9 +180,9 @@
                     <div class="clearfix"> </div>
                 </div>
                 <div class="keywords">
-                           <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                        <input type="text" name="keyword" placeholder="其他想要搜索内容">
-                        <input type="submit" value="搜索">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                    <input type="text" name="keyword" placeholder="其他想要搜索内容">
+                    <input type="submit" value="搜索">
                 </div>
              </form>
             </div>
@@ -200,7 +200,7 @@
             <c:forEach items="${salehouse }" var="s">
             <div class="col-md-4 events-grid">
                 <div class="events-grid1 hvr-sweep-to-top">
-                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
+                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${pageContext.request.contextPath }/static/web/images/${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
                     <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}">${s.name}</a></h4>
                     <ul>
                         <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>赞：${s.prasie}</a></li>
@@ -225,7 +225,7 @@
             <c:forEach items="${commandhouse }" var="c">
             <div class="col-md-3 special-services-grid">
                 <div class="special-services-grid1">
-                    <img src="${c.bedroomImg1}" alt=" " class="img-responsive" />
+                    <img src="${pageContext.request.contextPath }/static/web/images/${c.bedroomImg1}" alt=" " class="img-responsive" />
                 </div>
                 <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${c.id}">${c.name}</a></h4>
                 <p>${c.desp}</p>

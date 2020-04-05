@@ -5,8 +5,10 @@ import com.alien.common.ModelAndViewResult;
 import com.alien.entity.SnailHouse;
 import com.alien.entity.SnailRoom;
 import com.alien.entity.SnailUser;
+import com.alien.entity.vo.SessionAdmin;
 import com.alien.entity.vo.SessionUser;
 import com.alien.entity.vo.SnailHouseVO;
+import com.alien.entity.vo.SnailRoomVO;
 import com.alien.mapper.SnailHouseMapper;
 import com.alien.mapper.SnailUserMapper;
 import com.github.pagehelper.PageHelper;
@@ -37,10 +39,10 @@ public class HouseService {
         PageHelper.startPage(snailHouseVO.getPageNum(), snailHouseVO.getPageSize());
         List<SnailRoom> list= houseMapper.roomList(snailHouseVO);
         PageInfo<SnailRoom> pageInfo = new PageInfo<>(list);
-        return ModelAndViewResult.succeedPage("/Web_houselist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
+        return ModelAndViewResult.succeedPage("/Web_houselist",list, null, CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
     }
 
-    public ModelAndView web_select(SnailRoom snailRoom, HttpSession httpSession){
+    public ModelAndView web_select(SnailRoomVO snailRoom, HttpSession httpSession){
         SnailHouse h=houseMapper.selectHouse(snailRoom);
         log.info(h.toString());
         log.info(h.getSnailRooms().size()+h.getSnailRooms().toString());
@@ -91,19 +93,21 @@ public class HouseService {
             return new ModelAndView("redirect:/user/Web_login");
         }
         //构造house类
-        SnailHouse snailHouse=new SnailHouse();
+        SnailHouseVO snailHouse=new SnailHouseVO();
         snailHouse.setUserId(sessionuser.getId());
         snailHouse.preInsert(sessionuser.getId());
         houseMapper.insertHouse(snailHouse);
         //构造room类
-        List<SnailRoom> snailRooms =new ArrayList<>();
-        SnailRoom snailRoom =new SnailRoom();
-//        for (){
-//
-//        }
-        snailRoom.preInsert(sessionuser.getId());
-        houseMapper.insertRoom(snailRoom);
-        SnailHouse h=houseMapper.selectHouse(snailRoom);
+        List<SnailRoomVO> snailRooms =new ArrayList<>();
+        for(int i=0;i<snailHouse.getBedroom();i++){
+            SnailRoomVO snailRoom =new SnailRoomVO();
+            /////
+            snailRoom.preInsert(sessionuser.getId());
+            snailRooms.add(snailRoom);
+        }
+        houseMapper.insertRooms(snailRooms);
+
+        SnailHouse h=houseMapper.selectRoom(snailHouseVO);
         return ModelAndViewResult.succeed("/Web_houseinsert",h, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
@@ -123,48 +127,117 @@ public class HouseService {
     }
 
 
-//    public ModelAndView admin_list(SnailHouseVO snailUser, HttpSession httpSession){
-//        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
-//        if(sessionadmin == null){
-//            return new ModelAndView("redirect:/admin/Admin_login");
-//        }
-//        PageHelper.startPage(snailUser.getPageNum(), snailUser.getPageSize());
-//        List<SnailHouseVO> list= houseMapper.selectHouse(snailUser);
-//        PageInfo<SnailHouseVO> pageInfo = new PageInfo<>(list);
-//        return ModelAndViewResult.succeedPage("/Admin_houselist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
-//    }
-//
-//    public ModelAndView admin_select(SnailHouse snailUser, HttpSession httpSession){
-//        SnailHouseVO u=houseMapper.selectHouse(snailUser);
-//        return ModelAndViewResult.succeed("/Admin_houseupdate",u, null, CodeEnum.MSG_SUCCES.getMsg());
-//    }
-//
-//    @Transactional(readOnly = false)
-//    public ModelAndView admin_insert(SnailHouse snailUser, HttpSession httpSession){
-//        snailUser.preInsert(101);
-//        houseMapper.insert(snailUser);
-//        SnailHouseVO u=houseMapper.selectHouse(snailUser);
-//        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
-//    }
-//
-//    @Transactional(readOnly = false)
-//    public ModelAndView admin_update(SnailHouse snailUser, HttpSession httpSession){
-//        snailUser.preUpdate(101);
-//        houseMapper.update(snailUser);
-//        SnailHouseVO u=houseMapper.selectHouse(snailUser);
-//        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
-//    }
-//
-//    @Transactional(readOnly = false)
-//    public ModelAndView admin_delete(SnailHouse snailUser, HttpSession httpSession){
-//        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
-//        if(sessionadmin == null){
-//            return new ModelAndView("redirect:/admin/Admin_login");
-//        }
-//        snailUser.preUpdate(sessionadmin.getId());
-//        houseMapper.delete(snailUser);
-//
-//        return admin_list(snailUser,httpSession);
-//    }
+    public ModelAndView admin_list(SnailHouseVO snailUser, HttpSession httpSession){
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        PageHelper.startPage(snailUser.getPageNum(), snailUser.getPageSize());
+        List<SnailHouse> list= houseMapper.houseList(snailUser);
+        PageInfo<SnailHouse> pageInfo = new PageInfo<>(list);
+        return ModelAndViewResult.succeedPage("/Admin_houselist",list, null, CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
+    }
+
+    public ModelAndView admin_select(SnailHouseVO snailUser, HttpSession httpSession){
+        SnailHouse u=houseMapper.selectRoom(snailUser);
+        return ModelAndViewResult.succeed("/Admin_houseupdate",u, null, CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+    @Transactional(readOnly = false)
+    public ModelAndView admin_insert(SnailHouseVO snailHouseVO, HttpSession httpSession){
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        /////
+        SnailHouse h=houseMapper.selectRoom(snailHouseVO);
+        return ModelAndViewResult.succeed("/Admin_houseupdate",h, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+    @Transactional(readOnly = false)
+    public ModelAndView admin_update_house(SnailHouseVO snailHouseVO, HttpSession httpSession){
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        snailHouseVO.preUpdate(sessionadmin.getId());
+        houseMapper.updateHouse(snailHouseVO);
+        SnailHouse u=houseMapper.selectRoom(snailHouseVO);
+        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+    @Transactional(readOnly = false)
+    public ModelAndView admin_update_room(SnailRoomVO snailRoomVO, HttpSession httpSession){
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        snailRoomVO.preUpdate(sessionadmin.getId());
+        houseMapper.updateRoom(snailRoomVO);
+        SnailHouseVO snailHouseVO =new SnailHouseVO();
+        snailHouseVO.setId(snailRoomVO.getHouseId());
+        SnailHouse u=houseMapper.selectRoom(snailHouseVO);
+        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+
+    @Transactional(readOnly = false)
+    public ModelAndView admin_delete(SnailHouseVO snailHouseVO, HttpSession httpSession){
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        snailHouseVO.preUpdate(sessionadmin.getId());
+        houseMapper.delete(snailHouseVO);
+
+        return admin_list(snailHouseVO,httpSession);
+    }
+
+
+    @Transactional(readOnly = false)
+    public ModelAndView admin_updateState(SnailRoomVO snailRoomVO, HttpSession httpSession){
+        SessionAdmin sessionadmin=(SessionAdmin) httpSession.getAttribute("sessionadmin");
+        if(sessionadmin == null){
+            return new ModelAndView("redirect:/admin/Admin_login");
+        }
+        snailRoomVO.preUpdate(sessionadmin.getId());
+        houseMapper.updateState(snailRoomVO);
+
+        SnailHouseVO snailHouseVO =new SnailHouseVO();
+        snailHouseVO.setId(snailRoomVO.getHouseId());
+        snailHouseVO.setPageNum(snailRoomVO.getPageNum());
+        snailHouseVO.setPageSize(snailRoomVO.getPageSize());
+        PageHelper.startPage(snailRoomVO.getPageNum(), snailRoomVO.getPageSize());
+        List<SnailHouse> list= houseMapper.houseList(snailHouseVO);
+        PageInfo<SnailHouse> pageInfo = new PageInfo<>(list);
+        String msg;
+        switch(snailRoomVO.getState())//状态（0出租中，1已租，2停用，3审核中，4装修，5准备签约）
+        {
+            case 0:
+                msg="出租中";
+                break;
+            case 1:
+                msg="已租";
+                break;
+            case 2:
+                msg="停用";
+                break;
+            case 3:
+                msg="审核中";
+                break;
+            case 4:
+                msg="装修";
+            break;
+            case 5:
+                msg="准备签约";
+                break;
+            default:
+                msg=null;
+                break;
+        }
+        return ModelAndViewResult.succeedPage("/Admin_houselist",list, msg="成功修改房屋当前状态为"+msg, CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
+
+//        return admin_list(snailHouseVO,httpSession);
+    }
 
 }

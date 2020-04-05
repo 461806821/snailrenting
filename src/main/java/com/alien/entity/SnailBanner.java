@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SnailBanner extends BaseEntity<SnailBanner> {
 
-    private Integer type;
+    private Integer type;//1优惠房源，2推荐房源
 
     private String name;
 
