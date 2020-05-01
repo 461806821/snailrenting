@@ -43,52 +43,7 @@
 
 <body>
 <!-- header -->
-<div class="header">
-    <div class="header-top">
-        <div class="container">
-            <div class="header-top-left">
-                <ul>
-                    <%--                    <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 345 569</li>--%>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border pinterest" aria-hidden="true"></span>登录</a></li>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border twitter" aria-hidden="true"></span>注册</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-    <div class="header-bottom">
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="logo">
-                        <h1><a class="navbar-brand" href="${pageContext.request.contextPath }/index/Web_index">蜗牛找房<span>Snail renting</span></a></h1>
-                    </div>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-                    <nav>
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list" class="hvr-bounce-to-bottom">全部房源</a></li>
-                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">蜗牛服务</a></li>
-                            <li><a href="${pageContext.request.contextPath }/collection/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
-                            <li><a class="hvr-bounce-to-bottom">VR看房(未解锁)</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-        </div>
-    </div>
-</div>
+<%@ include file="Web_header.jsp"%>
 <!-- //header -->
 <!-- breadcrumbs -->
 <div class="services-top-breadcrumbs">
@@ -143,7 +98,7 @@
                     <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
                 </div>
                 <div class="col-xs-10 services-grid-right">
-                    <h4><a href="${pageContext.request.contextPath }/service/Web_houseinsert">发布房源</a></h4>
+                    <h4><a href="${pageContext.request.contextPath }/house/Web_houseinsert">发布房源</a></h4>
                     <p>添加房源的真实有效信息，管理员审核后会将您的发布的房源信息展示在该网站上。</p>
                     <div class="more">
                         <a href="${pageContext.request.contextPath }/service/Web_houseinsert"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></a>

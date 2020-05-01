@@ -24,6 +24,8 @@ public class SnailUser extends BaseEntity<SnailUser> {
 
     private String name;
 
+    private Integer sex;//性别（0.女，1男）
+
     private String headImg;
 
     private String phone;
@@ -42,5 +44,6 @@ public class SnailUser extends BaseEntity<SnailUser> {
     private String repassword;
     private String webidentity;
     private List<Integer> roomIds;//收藏房源
+    private String keyword;
 }
 

@@ -14,6 +14,6 @@ public interface SnailCollectionMapper {
 
     void delete(SnailCollection record);
 
-    Integer count(SnailCollection record);
+    Long count(SnailCollection record);
 
 }

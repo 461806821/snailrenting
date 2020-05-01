@@ -44,52 +44,7 @@
 
 <body>
 <!-- header -->
-<div class="header">
-    <div class="header-top">
-        <div class="container">
-            <div class="header-top-left">
-                <ul>
-                    <%--                    <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 345 569</li>--%>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border pinterest" aria-hidden="true"></span>登录</a></li>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border twitter" aria-hidden="true"></span>注册</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-    <div class="header-bottom">
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="logo">
-                        <h1><a class="navbar-brand" href="${pageContext.request.contextPath }/index/Web_index">蜗牛找房<span>Snail renting</span></a></h1>
-                    </div>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-                    <nav>
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list" class="hvr-bounce-to-bottom">房源展示</a></li>
-                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">蜗牛服务</a></li>
-                            <li><a href="${pageContext.request.contextPath }/collectiom/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
-                            <li><a class="hvr-bounce-to-bottom">VR看房(未解锁)</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-        </div>
-    </div>
-</div>
+<%@ include file="Web_header.jsp"%>
 <!-- //header -->
 <!-- breadcrumbs -->
 <div class="services-top-breadcrumbs">
@@ -114,12 +69,15 @@
         <c:forEach items="${data }" var="s">
             <div class="col-md-4 gallery-grid">
                 <div class="events-grid1 hvr-sweep-to-top">
-                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${pageContext.request.contextPath }/static/web/images/${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
+                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${pageContext.request.contextPath }/static/picture/${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
                     <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}">${s.name}</a></h4>
                     <ul>
-                        <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>赞：${s.prasie}</a></li>
+                        <li><a href="${pageContext.request.contextPath }/house/Web_praise?id=${s.id}"><span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>赞：${s.praise}</a></li>
+                        <li><a href="${pageContext.request.contextPath }/collection/Web_insert?roomId=${s.id}"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>收藏</a></li>
                         <li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>发布于：<fmt:formatDate value="${s.createDate}" pattern="yyyy年MM月dd日" /></li>
-                    </ul>
+                        <li><span class="glyphicon glyphicon-yen" aria-hidden="true"></span>价格：${s.price}元/月</li>
+                        <li><span class="glyphicon glyphicon-yen" aria-hidden="true"></span>优惠价格：${s.sale}元/月</li>
+                   </ul>
                     <p>${s.desp}</p>
                 </div>
             </div>

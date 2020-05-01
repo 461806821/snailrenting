@@ -4,6 +4,7 @@ import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
 import com.alien.entity.SnailMessage;
 import com.alien.entity.SnailOrder;
+import com.alien.entity.SnailReply;
 import com.alien.service.MessageService;
 import com.alien.service.OrderService;
 import io.swagger.annotations.Api;
@@ -56,12 +57,33 @@ public class MessageController {
         }
     }
 
+    @ApiOperation(value = "消息回复页面")
+    @RequestMapping("/Web_reply")
+    private ModelAndView pWeb_reply(@ModelAttribute SnailReply snailHouse, HttpSession httpSession) {
+        log.info("消息回复页面"+snailHouse.getMessageId());
+        return ModelAndViewResult.succeed("/Web_reply",snailHouse, CodeEnum.MSG_SUCCES.getMsg());
+
+    }
+
+    @ApiOperation(value = "消息回复")
+    @RequestMapping("/Web_reply/insert")
+    private ModelAndView Web_reply(@ModelAttribute SnailReply snailHouse, HttpSession httpSession) {
+        try {
+            log.info("消息回复"+snailHouse.getId());
+            return messageService.reply(snailHouse,httpSession);
+        }
+        catch (Exception e) {
+            log.error("消息回复操作失败", e);
+            return ModelAndViewResult.failed("/Web_error", "no", CodeEnum.MSG_ERROR.getMsg());
+        }
+    }
+
     @ApiOperation(value = "消息点赞")
     @RequestMapping("/Web_update")
     private ModelAndView Web_update(@ModelAttribute SnailMessage snailUser,HttpSession httpSession) {
         try {
             log.info("消息点赞");
-            return messageService.updatePrise(snailUser,httpSession);
+            return messageService.updatePraise(snailUser,httpSession);
         }
         catch (Exception e) {
             log.error("消息点赞操作失败", e);
@@ -69,9 +91,22 @@ public class MessageController {
         }
     }
 
+    @ApiOperation(value = "后台消息列表")
+    @RequestMapping("/Admin_list")
+    private ModelAndView Admin_list(@ModelAttribute SnailMessage snailHouse) {
+        try {
+            log.info("后台消息列表"+snailHouse.getId());
+            return messageService.Admin_list(snailHouse);
+        }
+        catch (Exception e) {
+            log.error("后台消息列表操作失败", e);
+            return ModelAndViewResult.failed("/Admin_error", "no", CodeEnum.MSG_ERROR.getMsg());
+        }
+    }
+
     @ApiOperation(value = "消息删除")
-    @RequestMapping("/Web_delete")
-    private ModelAndView Web_delete(@ModelAttribute SnailMessage snailUser, HttpSession httpSession) {
+    @RequestMapping("/Admin_delete")
+    private ModelAndView Admin_delete(@ModelAttribute SnailMessage snailUser, HttpSession httpSession) {
         try {
             log.info("消息删除"+snailUser.getId()+"==");
             return messageService.delete(snailUser,httpSession);
@@ -81,5 +116,6 @@ public class MessageController {
             return ModelAndViewResult.failed("/Web_error","no", CodeEnum.MSG_ERROR.getMsg());
         }
     }
+
 
 }

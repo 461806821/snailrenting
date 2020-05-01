@@ -30,10 +30,10 @@ public class CollectionController {
 
     @ApiOperation(value = "我的收藏列表")
     @RequestMapping("/Web_list")
-    private ModelAndView Web_list(@ModelAttribute SnailCollection snailUser) {
+    private ModelAndView Web_list(@ModelAttribute SnailCollection snailUser,HttpSession httpSession) {
         try {
             log.info("我的收藏列表");
-            return collectionService.list(snailUser);
+            return collectionService.list(snailUser,httpSession);
         }
         catch (Exception e) {
             log.error("我的收藏列表操作失败", e);

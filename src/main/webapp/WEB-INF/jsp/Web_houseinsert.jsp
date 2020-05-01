@@ -43,52 +43,7 @@
 
 <body>
 <!-- header -->
-<div class="header">
-    <div class="header-top">
-        <div class="container">
-            <div class="header-top-left">
-                <ul>
-<%--                                        <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 345 569</li>--%>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border pinterest" aria-hidden="true"></span>登录</a></li>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border twitter" aria-hidden="true"></span>注册</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-    <div class="header-bottom">
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="logo">
-                        <h1><a class="navbar-brand" href="${pageContext.request.contextPath }/index/Web_index">蜗牛找房<span>Snail renting</span></a></h1>
-                    </div>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-                    <nav>
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list?locationid=${locationid}" class="hvr-bounce-to-bottom">附近房源</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list?locationid=0" class="hvr-bounce-to-bottom">全部房源</a></li>
-                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">服务</a></li>
-                            <li><a href="${pageContext.request.contextPath }/collectiom/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-        </div>
-    </div>
-</div>
+<%@ include file="Web_header.jsp"%>
 <!-- //header -->
 <!-- breadcrumbs -->
 <div class="services-top-breadcrumbs">
@@ -128,22 +83,17 @@
                 <div class="col-lg-6 in-gp-tl">
                     <div class="input-group">
                         <span class="input-group-addon" id="sizing-addon1">名称：</span>
-                        <input type="text" name="name" value="${data.username}" class="form-control"  placeholder="请输入关于房源的关键字" aria-describedby="sizing-addon1">
+                        <input type="text"  name="house_name"  class="form-control"  placeholder="请输入关于房源的关键字" aria-describedby="sizing-addon1">
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon2">环境图片：</span>
-                        <input type="file" name="houseImg" value="${data.username}" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
+
                 <div class="col-md-6 contact-grid-left">
                     <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-                        <span class="input-group-addon" id="basic-addon3">房源区域：</span>
-                        <select id="country1" name="locationId" onchange="change_country(this.value)" class="frm-field required">
+                        <span class="input-group-addon" id="basic-addon3">租房类型：</span>
+                        <select id="country1" name="type" class="form-control mb-3">
                             <option value="null">请选择</option>
-                            <option value="1">西城区</option>
-                            <option value="2">东城区</option>
+                            <option value="1">合租</option>
+                            <option value="2">整租</option>
                         </select>
                     </div>
                 </div>
@@ -189,7 +139,7 @@
                 <div class="col-lg-6 in-gp-tl">
                     <div class="input-group">
                         <span class="input-group-addon" id="sizing-addon10">厨房图片：</span>
-                        <input type="file"  multiple="multiple" name="username" value="${data.username}" class="form-control" aria-describedby="sizing-addon2">
+                        <input type="file"  multiple="multiple" name="username" class="form-control" aria-describedby="sizing-addon2">
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
                 <div class="col-lg-6 in-gp-tl">

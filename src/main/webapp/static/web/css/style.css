@@ -465,8 +465,11 @@ select#country,select#country1,select#country2,select#country3,select#country4,s
 }
 /*-- //banner --*/
 /*-- about --*/
-.about,.testimonials,.events,.services,.special-services,.gallery,.typo,.contact,.single{
+.about,.testimonials,.events,.services,.special-services,.gallery,.typo,.contact{
 	padding:5em 0;
+}
+.single{
+    padding:2em 0;
 }
 .about h3,.testimonials h3,.events h3,.services h3,.special-services h3,.gallery h3,h3.title,.contact h3{
 	text-align:center;
@@ -1923,7 +1926,8 @@ ul.com,.single-left4{
 	line-height:1.5em;
 }
 .comments {
-    margin:5em 0;
+    /*margin:5em 0;*/
+    margin:0 0;
 }
 .comments-grid-left{
 	float:left;
@@ -2076,7 +2080,7 @@ ul.com,.single-left4{
 		padding: 26px 25px;
 	}
 	.about, .testimonials, .events, .services, .special-services, .gallery, .typo, .contact, .single {
-		padding: 4em 0;
+		padding: 2em 0;
 	}
 	.about h3, .testimonials h3, .events h3, .services h3, .special-services h3, .gallery h3, h3.title, .contact h3 {
 		font-size: 2.7em;

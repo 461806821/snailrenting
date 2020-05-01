@@ -17,6 +17,8 @@ public interface SnailOrderMapper {
 
     void delete(SnailOrder record);
 
+    Long count(SnailOrder record);
+
     void updateState(SnailOrder record);
 
     void updatePayState(SnailOrder record);

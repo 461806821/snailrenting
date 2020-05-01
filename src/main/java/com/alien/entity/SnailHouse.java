@@ -1,6 +1,7 @@
 package com.alien.entity;
 
 import com.alien.common.BaseEntity;
+import com.alien.entity.vo.SnailRoomVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -51,14 +52,27 @@ public class SnailHouse extends BaseEntity<SnailHouse> {
 
     private String livingImg2;
 
+    private String vrImg1;
+
+    private String vrImg2;
+
+    private String vrImg3;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date validTime;
 
     private String desp;
 
     private SnailRoom snailRoom;
-
     private List<SnailRoom> snailRooms;
+    private List<SnailRoomVO> snailRoomVOS;
+    private String keyword;
+
+    private String maxPriceVO;
+    private Long maxPrice;
+
+    private String minPriceVO;
+    private Long minPrice;
 
 }
 

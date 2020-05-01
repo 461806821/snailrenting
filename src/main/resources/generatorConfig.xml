@@ -108,6 +108,14 @@
                selectByExampleQueryId="false"
                enableDeleteByPrimaryKey="false">
         </table>
+        <table tableName="snail_reply" domainObjectName="SnailReply"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"
+               enableDeleteByPrimaryKey="false">
+        </table>
 <!--        <table tableName="snail_house" domainObjectName="SnailHouse"-->
 <!--               enableCountByExample="false"-->
 <!--               enableUpdateByExample="false"-->

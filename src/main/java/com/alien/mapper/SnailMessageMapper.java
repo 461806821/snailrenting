@@ -1,6 +1,7 @@
 package com.alien.mapper;
 
 import com.alien.entity.SnailMessage;
+import com.alien.entity.SnailReply;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -11,11 +12,10 @@ public interface SnailMessageMapper {
 
 //    SnailMessage select(SnailMessage record);
 
-//    void update(SnailMessage record);
+    void updatePraise(SnailMessage record);
 
-    void updatePrise(SnailMessage record);
-
-    void insert(SnailMessage record);
+    void insertMessage(SnailMessage record);
+    void insertReply(SnailReply record);
 
     void delete(SnailMessage record);
 

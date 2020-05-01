@@ -143,4 +143,13 @@ public class BusinessService {
         return admin_list(snailUser,httpSession);
     }
 
+    public Long count(SnailBusiness snailBusiness){
+        return businessMapper.count(snailBusiness);
+    }
+
+    public List<SnailBusiness> list(SnailBusiness snailBusiness){
+        return businessMapper.list(snailBusiness);
+    }
+
+
 }

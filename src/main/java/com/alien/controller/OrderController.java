@@ -6,6 +6,7 @@ import com.alien.entity.SnailOrder;
 import com.alien.entity.vo.SnailHouseVO;
 import com.alien.entity.vo.SnailRoomVO;
 import com.alien.service.OrderService;
+import com.alien.utils.DateUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
@@ -43,37 +44,32 @@ public class OrderController {
         }
     }
 
-    @ApiOperation(value = "签约添加")
-    @RequestMapping("/Web_insert_pre")
-    private ModelAndView Web_insert_pre(@ModelAttribute SnailOrder snailHouse, HttpSession httpSession) {
+    @ApiOperation(value = "签约页面")
+    @RequestMapping("/Web_orderinsert")
+    public ModelAndView pWeb_insert(@ModelAttribute SnailOrder snailHouse, HttpSession httpSession) {
         try {
-            log.info("签约添加"+snailHouse.getId());
+            log.info("签约页面"+snailHouse.getRoomId());
             return orderService.web_insert_pre(snailHouse,httpSession);
+        }
+        catch (Exception e) {
+            log.error("签约页面操作失败", e);
+            return ModelAndViewResult.failed("/Web_error", "no", CodeEnum.MSG_ERROR.getMsg());
+        }
+    }
+
+    @ApiOperation(value = "签约添加")
+    @RequestMapping("/Web_insert")
+    private ModelAndView web_insert(@ModelAttribute SnailOrder snailHouse, HttpSession httpSession) {
+        try {
+            log.info("签约添加"+snailHouse.getRoomId());
+            snailHouse.setValidTime(DateUtils.strToDate(snailHouse.getValidTime1()));
+            snailHouse.setLiveTime(DateUtils.strToDate(snailHouse.getLiveTime1()));
+            return orderService.web_insert(snailHouse,httpSession);
         }
         catch (Exception e) {
             log.error("签约添加操作失败", e);
             return ModelAndViewResult.failed("/Web_error", "no", CodeEnum.MSG_ERROR.getMsg());
         }
-    }
-
-    @ApiOperation(value = "订单添加")
-    @RequestMapping("/Web_insert")
-    private ModelAndView Web_insert(@ModelAttribute SnailOrder snailHouse, HttpSession httpSession) {
-        try {
-            log.info("订单添加"+snailHouse.getId());
-            return orderService.web_insert(snailHouse,httpSession);
-        }
-        catch (Exception e) {
-            log.error("订单添加操作失败", e);
-            return ModelAndViewResult.failed("/Web_error", "no", CodeEnum.MSG_ERROR.getMsg());
-        }
-    }
-
-
-    @ApiOperation(value = "添加页面")
-    @RequestMapping("/Admin_orderinsert")
-    public ModelAndView pAdmin_insert() {
-        return  new ModelAndView("/Admin_orderinsert");
     }
 
     @ApiOperation(value = "订单列表")

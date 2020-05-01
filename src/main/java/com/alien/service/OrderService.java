@@ -2,12 +2,10 @@ package com.alien.service;
 
 import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
-import com.alien.entity.SnailAdmin;
-import com.alien.entity.SnailHouse;
-import com.alien.entity.SnailOrder;
-import com.alien.entity.SnailUser;
+import com.alien.entity.*;
 import com.alien.entity.vo.SessionAdmin;
 import com.alien.entity.vo.SessionUser;
+import com.alien.entity.vo.SnailRoomVO;
 import com.alien.mapper.SnailHouseMapper;
 import com.alien.mapper.SnailOrderMapper;
 import com.alien.utils.CodeUtils;
@@ -34,6 +32,8 @@ public class OrderService {
 
     @Autowired
     private SnailOrderMapper orderMapper;
+    @Autowired
+    private SnailHouseMapper houseMapper;
 
     public ModelAndView web_select(SnailOrder snailOrder,HttpSession httpSession){
         SessionUser sessionuser=(SessionUser) httpSession.getAttribute("sessionuser");
@@ -51,10 +51,25 @@ public class OrderService {
         if(sessionuser == null){
             return new ModelAndView("redirect:/user/Web_login");
         }
+        SnailRoomVO rvo =new SnailRoomVO();
+        rvo.setId(snailOrder.getRoomId());
+        SnailHouse h =houseMapper.selectHouse(rvo);
+        if(!h.getSnailRooms().isEmpty()){
+            for (SnailRoom r:h.getSnailRooms()){
+                if(r.getId() == snailOrder.getRoomId()){
+                    h.setSnailRoom(r);
+                }
+            }
+        }
+        snailOrder.setHouseId(h.getId());
         //根据日期自动生成唯一合同号
         String date =DateUtils.convertDateToStr(new Date());
         String contract =CodeUtils.createCode(date);
         snailOrder.setContract(contract);
+        //h.type checkType payMoney //checkType payMoney
+        snailOrder.setPayMoney(h.getSnailRoom().getPrice());
+        snailOrder.setDiscountMoney(h.getSnailRoom().getSale());
+        snailOrder.setPayTime(new Date());
         return ModelAndViewResult.succeed("/Web_orderinsert",snailOrder, CodeEnum.MSG_SUCCES.getMsg());
     }
 
@@ -64,6 +79,11 @@ public class OrderService {
         if(sessionuser == null){
             return new ModelAndView("redirect:/user/Web_login");
         }
+        snailOrder.setUserId(sessionuser.getId());
+        //payValidTime1 payType
+        snailOrder.setPayValidTime(snailOrder.getValidTime());
+        snailOrder.setPayState(0);
+        //checkType payMoney
         snailOrder.preInsert(sessionuser.getId());
         orderMapper.insert(snailOrder);
         SnailOrder u=orderMapper.select(snailOrder);
@@ -137,6 +157,10 @@ public class OrderService {
 
     public List<SnailOrder> list() {
         return orderMapper.list(new SnailOrder());
+    }
+
+    public Long count(SnailOrder snailUser){
+        return orderMapper.count(snailUser);
     }
 
     /**

@@ -71,7 +71,7 @@ public class BannerService {
         PageHelper.startPage(snailUser.getPageNum(), snailUser.getPageSize());
         List<SnailBanner> list= bannerMapper.list(snailUser);
         PageInfo<SnailBanner> pageInfo = new PageInfo<>(list);
-        return ModelAndViewResult.succeedPage("/Admin_bannerlist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
+        return ModelAndViewResult.succeedPage("/Admin_bannerlist",list, null, CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
     }
 
     @Transactional(readOnly = false)

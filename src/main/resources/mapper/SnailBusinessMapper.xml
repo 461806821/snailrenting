@@ -35,6 +35,7 @@
                 AND state = #{state}
             </if>
         </where>
+        order by create_date DESC
     </select>
 
     <select id="select" resultMap="BaseResultMap">
@@ -168,7 +169,12 @@
 
     <select id="count" parameterType="com.alien.entity.SnailBusiness" resultType="java.lang.Long">
     select count(*) from snail_business
-    where  del_flag = '0'
+    <where>
+        del_flag = '0'
+        <if test="type != null">
+            and type = #{type}
+        </if>
+    </where>
   </select>
 
 

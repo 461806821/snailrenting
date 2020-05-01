@@ -38,58 +38,42 @@
             });
         });
     </script>
-    <!-- start-smoth-scrolling -->
-
+    <!-- start-pannellum -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/static/pannellum/pannellum.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/static/pannellum/pannellum.css">
+    <style>
+        #panorama {
+            width: 1200px;
+            height: 600px;
+        }
+        #controls {
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            padding-bottom: 3px;
+        }
+        .ctrl {
+            padding: 8px 5px;
+            width: 30px;
+            text-align: center;
+            background: rgba(200, 200, 200, 0.8);
+            display: inline-block;
+            cursor: pointer;
+        }
+        .ctrl:hover {
+            background: rgba(200, 200, 200, 1);
+        }
+    </style>
+    <!-- //start-pannellum -->
 </head>
 
 <body>
 <!-- header -->
-<div class="header">
-    <div class="header-top">
-        <div class="container">
-            <div class="header-top-left">
-                <ul>
-<%--                    <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 345 569</li>--%>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border pinterest" aria-hidden="true"></span>登录</a></li>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border twitter" aria-hidden="true"></span>注册</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-    <div class="header-bottom">
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-<%--                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">--%>
-<%--                        <span class="sr-only">Toggle navigation</span>--%>
-<%--                        <span class="icon-bar"></span>--%>
-<%--                        <span class="icon-bar"></span>--%>
-<%--                        <span class="icon-bar"></span>--%>
-<%--                    </button>--%>
-                    <div class="logo">
-                        <h1><a class="navbar-brand" href="${pageContext.request.contextPath }/index/Web_index">蜗牛找房<span>Snail renting</span></a></h1>
-                    </div>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-                    <nav>
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list?pageSize=9" class="hvr-bounce-to-bottom">房源展示</a></li>
-                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">蜗牛服务</a></li>
-                            <li><a href="${pageContext.request.contextPath }/collection/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
-                            <li><a class="hvr-bounce-to-bottom">VR看房(未解锁)</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-        </div>
-    </div>
-</div>
+<%@ include file="Web_header.jsp"%>
 <!-- //header -->
 <!-- banner -->
 <div class="banner">
@@ -98,6 +82,10 @@
             <h3>让  租  房   变  得  简  单  和  快  乐 。</h3>
             <p>100%真实房源，品质房屋，优质保洁，极速维修，品质房屋，放心呼吸。</p>
         </div>
+<%--        <a-scene>--%>
+<%--            <a-sky src="/static/picture/1587129668947.png" rotation="0 -130 0"></a-sky>--%>
+<%--        </a-scene>--%>
+<%--        <div id="panorama"></div>--%>
         <div class="banner-right">
             <h3><span>搜索理想房源</span></h3>
             <div class="reservation">
@@ -181,7 +169,7 @@
                 </div>
                 <div class="keywords">
                     <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                    <input type="text" name="keyword" placeholder="其他想要搜索内容">
+                    <input type="text" name="keyword" placeholder="其他想要搜索内容如：地址,小区名称，房屋关键字等">
                     <input type="submit" value="搜索">
                 </div>
              </form>
@@ -200,11 +188,13 @@
             <c:forEach items="${salehouse }" var="s">
             <div class="col-md-4 events-grid">
                 <div class="events-grid1 hvr-sweep-to-top">
-                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${pageContext.request.contextPath }/static/web/images/${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
+                    <a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}"><img src="${pageContext.request.contextPath }/static/picture/${s.bedroomImg1}" alt=" " class="img-responsive" /></a>
                     <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${s.id}">${s.name}</a></h4>
                     <ul>
-                        <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>赞：${s.prasie}</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>赞：${s.praise}</a></li>
                         <li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>发布于：<fmt:formatDate value="${s.createDate}" pattern="yyyy年MM月dd日" /></li>
+                        <li><span class="glyphicon glyphicon-yen" aria-hidden="true"></span>价格：${s.price}元/月</li>
+                        <li><span class="glyphicon glyphicon-yen" aria-hidden="true"></span>优惠价格：${s.sale}元/月</li>
                     </ul>
                     <p>${s.desp}</p>
                 </div>
@@ -225,7 +215,7 @@
             <c:forEach items="${commandhouse }" var="c">
             <div class="col-md-3 special-services-grid">
                 <div class="special-services-grid1">
-                    <img src="${pageContext.request.contextPath }/static/web/images/${c.bedroomImg1}" alt=" " class="img-responsive" />
+                    <img src="${pageContext.request.contextPath }/static/picture/${c.bedroomImg1}" alt=" " class="img-responsive" />
                 </div>
                 <h4><a href="${pageContext.request.contextPath }/house/Web_select?id=${c.id}">${c.name}</a></h4>
                 <p>${c.desp}</p>
@@ -256,123 +246,39 @@
 <!-- gallery -->
 <div class="gallery">
     <div class="container">
-        <h3><span>VR</span></h3>
-        <p class="autem">maiores alias consequatur aut perferendis doloribus asperiores repellat</p>
+        <h3><span>VR看房</span></h3>
+        <p class="autem">本平台提供VR实景看房，让您身临其境感受真实环境。</p>
         <div class="gallery-grids carouselGallery-grid hidden-xs">
-            <div class="col-md-4 gallery-grid">
-                <div class="carouselGallery-col-1 carouselGallery-carousel" data-likes="3144" data-index="0" data-username=" " data-imagetext="At vero eos et accusamus et iusto odio
-						 dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-						 et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui
-						 officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio."
-                     data-location="Temporibus" data-imagepath="/static/web/images/7.jpg" data-posturl="#"
-                     style="background-image:url(/static/web/images/7.jpg);">
-                    <div class="carouselGallery-item">
-                        <div class="carouselGallery-item-meta">
-								<span class="carouselGallery-item-meta-user">
-									Temporibus
-								</span>
-                            <span class="carouselGallery-item-meta-likes">
-									<span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>4535
-								</span>
-                        </div>
-                    </div>
+            <div id="panorama">
+                <div id="controls">
+                    <div class="ctrl" id="pan-up">&#9650;</div>
+                    <div class="ctrl" id="pan-down">&#9660;</div>
+                    <div class="ctrl" id="pan-left">&#9664;</div>
+                    <div class="ctrl" id="pan-right">&#9654;</div>
+                    <div class="ctrl" id="zoom-in">&plus;</div>
+                    <div class="ctrl" id="zoom-out">&minus;</div>
+                    <div class="ctrl" id="fullscreen">&#x2922;</div>
                 </div>
             </div>
-            <div class="col-md-4 gallery-grid">
-                <div class="carouselGallery-col-1 carouselGallery-carousel" data-likes="3144" data-index="1" data-username=" " data-imagetext="At vero eos et accusamus et iusto odio
-						 dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-						 et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui
-						 officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio."
-                     data-location="Temporibus" data-imagepath="/static/web/images/9.jpg" data-posturl="#"
-                     style="background-image:url(/static/web/images/9.jpg);">
-                    <div class="carouselGallery-item">
-                        <div class="carouselGallery-item-meta">
-								<span class="carouselGallery-item-meta-user">
-									Temporibus
-								</span>
-                            <span class="carouselGallery-item-meta-likes">
-									<span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>3144
-								</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 gallery-grid">
-                <div class="carouselGallery-col-1 carouselGallery-carousel" data-likes="3144" data-index="2" data-username=" " data-imagetext="At vero eos et accusamus et iusto odio
-						 dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-						 et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui
-						 officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio."
-                     data-location="Temporibus" data-imagepath="/static/web/images/8.jpg" data-posturl="#"
-                     style="background-image:url(/static/web/images/8.jpg);">
-                    <div class="carouselGallery-item">
-                        <div class="carouselGallery-item-meta">
-								<span class="carouselGallery-item-meta-user">
-									Temporibus
-								</span>
-                            <span class="carouselGallery-item-meta-likes">
-									<span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>5345
-								</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 gallery-grid">
-                <div class="carouselGallery-col-1 carouselGallery-carousel" data-likes="3144" data-index="3" data-username=" " data-imagetext="At vero eos et accusamus et iusto odio
-						 dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-						 et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui
-						 officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio."
-                     data-location="Temporibus" data-imagepath="/static/web/images/6.jpg" data-posturl="#"
-                     style="background-image:url(/static/web/images/6.jpg);">
-                    <div class="carouselGallery-item">
-                        <div class="carouselGallery-item-meta">
-								<span class="carouselGallery-item-meta-user">
-									Temporibus
-								</span>
-                            <span class="carouselGallery-item-meta-likes">
-									<span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>1233
-								</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 gallery-grid">
-                <div class="carouselGallery-col-1 carouselGallery-carousel" data-likes="3144" data-index="4" data-username=" " data-imagetext="At vero eos et accusamus et iusto odio
-						 dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-						 et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui
-						 officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio."
-                     data-location="Temporibus" data-imagepath="/static/web/images/10.jpg" data-posturl="#"
-                     style="background-image:url(/static/web/images/10.jpg);">
-                    <div class="carouselGallery-item">
-                        <div class="carouselGallery-item-meta">
-								<span class="carouselGallery-item-meta-user">
-									Temporibus
-								</span>
-                            <span class="carouselGallery-item-meta-likes">
-									<span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>9896
-								</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 gallery-grid">
-                <div class="carouselGallery-col-1 carouselGallery-carousel" data-likes="3144" data-index="8" data-username=" " data-imagetext="At vero eos et accusamus et iusto odio
-						 dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-						 et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui
-						 officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio."
-                     data-location="Temporibus" data-imagepath="/static/web/images/6.jpg" data-posturl="#"
-                     style="background-image:url(/static/web/images/6.jpg);">
-                    <div class="carouselGallery-item">
-                        <div class="carouselGallery-item-meta">
-								<span class="carouselGallery-item-meta-user">
-									Temporibus
-								</span>
-                            <span class="carouselGallery-item-meta-likes">
-									<span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>2544
-								</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<%--            <div class="col-md-4 gallery-grid">--%>
+<%--                <div class="carouselGallery-col-1 carouselGallery-carousel" data-likes="3144" data-index="0" data-username=" " data-imagetext="At vero eos et accusamus et iusto odio--%>
+<%--						 dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores--%>
+<%--						 et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui--%>
+<%--						 officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio."--%>
+<%--                     data-location="Temporibus" data-imagepath="/static/web/images/7.jpg" data-posturl="#"--%>
+<%--                     style="background-image:url(/static/web/images/7.jpg);">--%>
+<%--                    <div class="carouselGallery-item">--%>
+<%--                        <div class="carouselGallery-item-meta">--%>
+<%--								<span class="carouselGallery-item-meta-user">--%>
+<%--									Temporibus--%>
+<%--								</span>--%>
+<%--                            <span class="carouselGallery-item-meta-likes">--%>
+<%--									<span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>4535--%>
+<%--								</span>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
             <div class="clearfix"> </div>
             <script src="/static/web/js/main.js"></script>
         </div>
@@ -438,5 +344,132 @@
 
 </script>
 <!-- //here ends scrolling icon -->
+<!-- here stars vr frame -->
+<script>
+    window.addEventListener('load', bodyLoad);
+    // let vrimg1 = document.getElementById('vrimg1').value;
+    // let vrimg2 = document.getElementById('vrimg2').value;
+    // let vrimg3 = document.getElementById('vrimg3').value;
+    let vrimg1 = "vrimg1.jpg";
+    let vrimg2 = "vrimg2.jpg";
+    let vrimg3 = "vrimg3.jpg";
+    function bodyLoad(){
+        // 多场景配置
+        viewer = pannellum.viewer('panorama', {
+            "default": {
+                "firstScene": "living",//首次加载那个图片
+                "author": "snailrenting",//作者
+                "sceneFadeDuration": 1000,//全景图场景切换时的持续时间
+                "autoLoad": true,//自动加载
+                "orientationOnByDefault": true,//是否开启重力感应查看全景图，默认false
+                "showControls": false,//是否显示控制按钮，默认true；
+                "autoRotate": -2,//是否自动旋转，在加载之后，全景图会水平旋转显示，负数为往右边旋转，整数为往左边旋转，值为数字类型；
+                "autoRotateInactivityDelay": 2000//在autoRotate设定的情况下，用户停止操作多长时间后继续自动旋转，单位为毫秒；
+            },
+//场景，值为对象，其属性名代表着场景的id（sceneId），属性值为viewer的配置参数，其参数会覆盖默认（上述中的default对象）设置的参数；
+            "scenes": {
+                "living": {
+                    "title": "客厅全景展示",
+                    "hfov": 110,
+                    "pitch": -3,
+                    "yaw": 117,
+                    "type": "equirectangular",
+                    "panorama":  "/static/picture/"+vrimg1,//图片路径
+                    "hotSpots": [  //热点，以全景为坐标系的固定点，可以设置链接跳转和点击事件，也可以跳转到不同的场景，该属性的值为对象
+                        {
+                            "pitch": -13.1,//定位参数， 单位：角度
+                            "yaw": -8.9,//定位参数， 单位：角度 y轴，空间中的纵轴
+                            "type": "scene", //热点类型，scene 场景切换热点； info 信息展示；URL 以热点为链接，跳转到其他页面的`url
+                            "text": "前往卧室",
+                            // "cssClass":" pnlm-hotspot pnlm-sprite pnlm-scene1",//自定义样式
+                            "sceneId": "house"//sceneId 需要切换的场景id，当 type 为 scene使用；
+                        },{
+                            "pitch": -0.9,
+                            "yaw": 6.9,
+                            "type": "scene",
+                            "text": "前往卧室",
+                            "sceneId": "bedroom",
+                            "targetYaw": -23,
+                            "targetPitch": 2
+                        }
+                    ]
+                },
+
+                "house": {
+                    "title": "卧室全景展示",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "/static/picture/"+vrimg3,//图片路径
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,//定位参数， 单位：角度
+                            "yaw": 248,//定位参数， 单位：角度 y轴，空间中的纵轴
+                            "type": "scene", //热点类型，scene 场景切换热点； info 信息展示；URL 以热点为链接，跳转到其他页面的`url
+                            "text": "查看客厅",
+                            "sceneId": "living"//sceneId 需要切换的场景id，当 type 为 scene使用；
+                        },{
+                            "pitch": -0.9,
+                            "yaw": 6.9,
+                            "type": "scene",
+                            "text": "前往另一卧室",
+                            "sceneId": "bedroom",
+                            "targetYaw": -23,
+                            "targetPitch": 2
+                        }
+                    ]
+                },
+
+                "bedroom": {
+                    "title": "全景照片",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama":  "/static/picture/"+vrimg2,//图片路径
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,//定位参数， 单位：角度
+                            "yaw": 218.9,//定位参数， 单位：角度 y轴，空间中的纵轴
+                            "type": "scene", //热点类型，scene 场景切换热点； info 信息展示；URL 以热点为链接，跳转到其他页面的`url
+                            "text": "查看客厅",
+                            "sceneId": "living"//sceneId 需要切换的场景id，当 type 为 scene使用；
+                        },{
+                            "pitch": -0.9,
+                            "yaw": 6.9,
+                            "type": "scene",
+                            "text": "前往另一卧室",
+                            "sceneId": "house",
+                            "targetYaw": -23,
+                            "targetPitch": 2
+                        }
+                    ]
+                }
+            }
+        });
+    }
+
+    document.getElementById('pan-up').addEventListener('click', function(e) {
+        viewer.setPitch(viewer.getPitch() + 10);
+    });
+    document.getElementById('pan-down').addEventListener('click', function(e) {
+        viewer.setPitch(viewer.getPitch() - 10);
+    });
+    document.getElementById('pan-left').addEventListener('click', function(e) {
+        viewer.setYaw(viewer.getYaw() - 10);
+    });
+    document.getElementById('pan-right').addEventListener('click', function(e) {
+        viewer.setYaw(viewer.getYaw() + 10);
+    });
+    document.getElementById('zoom-in').addEventListener('click', function(e) {
+        viewer.setHfov(viewer.getHfov() - 10);
+    });
+    document.getElementById('zoom-out').addEventListener('click', function(e) {
+        viewer.setHfov(viewer.getHfov() + 10);
+    });
+    document.getElementById('fullscreen').addEventListener('click', function(e) {
+        viewer.toggleFullscreen();
+    });
+</script>
+<!-- //here ends vr frame -->
 </body>
 </html>

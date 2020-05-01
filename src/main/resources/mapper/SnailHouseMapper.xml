@@ -31,10 +31,10 @@
     <sql id="House_Base_Column_List">
     h.id , h.user_id, h.location_id, h.type, h.name, h.address, h.house_price, h.house_img, h.bedroom, h.bath,
     h.bath_img1, h.bath_img2, h.kitchen, h.kitchen_img1, h.kitchen_img2, h.living, h.living_img1, h.living_img2,
-    h.valid_time, h.desp, h.create_by, h.update_by, h.create_date, h.update_date, h.del_flag
+    h.vr_img1,h.vr_img2,h.vr_img3,h.valid_time, h.desp, h.create_by, h.update_by, h.create_date, h.update_date, h.del_flag
   </sql>
     <sql id="Room_Base_Column_List">
-    r.id, r.house_id, r.name, r.price, r.sale, r.bedroom_img1, r.bedroom_img2, r.desp, r.state, r.prasie,
+    r.id, r.house_id, r.name, r.price, r.sale, r.bedroom_img1, r.bedroom_img2, r.desp, r.state, r.praise,
     r.create_by, r.update_by, r.create_date, r.update_date, r.del_flag
   </sql>
 
@@ -43,15 +43,24 @@
         h.user_id AS "user_id",
         h.location_id AS "location_id",
         h.type AS "type",
-        h.name AS "name",
+        h.name AS "hname",
         h.address AS "address",
         h.house_price AS "house_price",
+          h.house_img AS "house_img",
         h.bedroom AS "bedroom",
         h.bath AS "bath",
+           h.bath_img1 AS "bath_img1",
+              h.bath_img2 AS "bath_img2",
         h.kitchen AS "kitchen",
+            h.kitchen_img1 AS "kitchen_img1",
+          h.kitchen_img2 AS "kitchen_img2",
         h.living AS "living",
-        h.house_img AS "house_img",
-        h.valid_time AS "validTime",
+        h.living_img1 AS "living_img1",
+           h.living_img2 AS "living_img2",
+            h.vr_img1 AS "vr_img1",
+            h.vr_img2 AS "vr_img2",
+            h.vr_img3 AS "vr_img3",
+        h.valid_time AS "valid_time",
         h.desp AS "hdesp",
         h.create_by AS "hcreate_by",
         h.update_by AS "hupdate_by",
@@ -69,13 +78,21 @@
         r.bedroom_img2 AS "bedroom_img2",
         r.desp AS "rdesp",
         r.state AS "state",
-        r.prasie AS "prasie",
+        r.praise AS "praise",
         r.create_by AS "rcreate_by",
         r.update_by AS "rupdate_by",
         r.create_date AS "rcreate_date",
         r.update_date AS "rupdate_date",
         r.del_flag AS "rdel_flag"
   </sql>
+    <sql id="User_Column_List">
+    u.id AS "uid",
+    u.sex AS "sex",
+    u.username AS "username",
+    u.email AS "email",
+    u.address AS "address",
+    u.certificate AS "certificate"
+    </sql>
 
     <resultMap type="com.alien.entity.SnailHouse" id="HouseResultMap">
         <id column="hid" jdbcType="INTEGER" property="id" />
@@ -96,6 +113,9 @@
         <result column="living" jdbcType="INTEGER" property="living" />
         <result column="living_img1" jdbcType="VARCHAR" property="livingImg1" />
         <result column="living_img2" jdbcType="VARCHAR" property="livingImg2" />
+        <result column="vr_img1" jdbcType="VARCHAR" property="vrImg1" />
+        <result column="vr_img2" jdbcType="VARCHAR" property="vrImg2" />
+        <result column="vr_img3" jdbcType="VARCHAR" property="vrImg3" />
         <result column="valid_time" jdbcType="TIMESTAMP" property="validTime" />
         <result column="hdesp" jdbcType="VARCHAR" property="desp" />
         <result column="hcreate_by" jdbcType="INTEGER" property="createBy" />
@@ -115,13 +135,21 @@
         <result column="bedroom_img2" jdbcType="VARCHAR" property="bedroomImg2" />
         <result column="rdesp" jdbcType="VARCHAR" property="desp" />
         <result column="state" jdbcType="INTEGER" property="state" />
-        <result column="prasie" jdbcType="BIGINT" property="prasie" />
+        <result column="praise" jdbcType="BIGINT" property="praise" />
         <result column="rcreate_by" jdbcType="INTEGER" property="createBy" />
         <result column="rupdate_by" jdbcType="INTEGER" property="updateBy" />
         <result column="rcreate_date" jdbcType="TIMESTAMP" property="createDate" />
         <result column="rupdate_date" jdbcType="TIMESTAMP" property="updateDate" />
         <result column="rdel_flag" jdbcType="BIT" property="delFlag" />
         <result column="bannerType" jdbcType="INTEGER" property="bannerType" />
+    </resultMap>
+    <resultMap id="UserResultMap" type="com.alien.entity.SnailUser">
+        <id column="uid" jdbcType="INTEGER" property="id" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="certificate" jdbcType="INTEGER" property="certificate" />
     </resultMap>
 
     <select id="houseList" parameterType="com.alien.entity.vo.SnailHouseVO" resultMap="HouseResultMap">
@@ -132,8 +160,60 @@
         from snail_house h
         left join snail_room r on r.house_id = h.id
         left join snail_banner b on r.id = b.room_id
-        where h.del_flag = '0'
-        and r.del_flag = '0'
+        <where>
+            h.del_flag = '0'
+            and r.del_flag = '0'
+            <if test="type != null and type != '' ">
+                and h.type = #{type}
+            </if>
+        </where>
+        order by h.create_date DESC
+    </select>
+    <select id="webhouseList" parameterType="com.alien.entity.vo.SnailHouseVO" resultMap="HouseResultMap">
+        select
+        <include refid="House_Column_List"/>,
+        <include refid="Room_Column_List"/>,
+        b.type AS "bannerType"
+        from snail_house h
+        left join snail_room r on r.house_id = h.id
+        left join snail_banner b on r.id = b.room_id
+        <where>
+            h.del_flag = '0'
+            and r.del_flag = '0'
+            and r.state = '0'
+            <if test="id != null and id != '' ">
+                and h.id = #{id}
+            </if>
+            <if test="locationId != null and locationId != '' ">
+                and h.location_id = #{locationId}
+            </if>
+            <if test="type != null and type != '' ">
+                and h.type = #{type}
+            </if>
+            <if test="bedroom != null and bedroom != '' ">
+                and h.bedroom = #{bedroom}
+            </if>
+            <if test="bath != null and bath != '' ">
+                and h.bath = #{bath}
+            </if>
+            <if test="kitchen != null and kitchen != '' ">
+                and h.kitchen = #{kitchen}
+            </if>
+            <if test="living != null and living != '' ">
+                and h.living = #{living}
+            </if>
+            <if test="minPrice != null and minPrice != '' ">
+                and r.price <![CDATA[>=]]> #{minPrice}
+            </if>
+            <if test="maxPrice != null and maxPrice != '' ">
+                and r.price <![CDATA[<=]]> #{maxPrice}
+            </if>
+            <if test="keyword != null and keyword != '' ">
+                or r.name like concat('%',#{keyword},'%')
+                or r.address like concat('%',#{keyword},'%')
+            </if>
+        </where>
+        order by h.create_date DESC
     </select>
     <select id="roomList" parameterType="com.alien.entity.vo.SnailHouseVO" resultMap="RoomResultMap">
         select
@@ -171,9 +251,11 @@
                 and r.price <![CDATA[<=]]> #{maxPrice}
             </if>
             <if test="keyword != null and keyword != '' ">
-                and r.name like concat('%',#{keyword},'%')
+                or r.name like concat('%',#{keyword},'%')
+                or r.address like concat('%',#{keyword},'%')
             </if>
         </where>
+        order by h.create_date DESC
     </select>
 
     <select id="selectHouse" parameterType="com.alien.entity.vo.SnailRoomVO" resultMap="HouseResultMap">
@@ -182,7 +264,7 @@
         <include refid="Room_Column_List"/>
         from snail_house h
         left join snail_room r on r.house_id = h.id
-        where h.del_flag = '0' and h.id IN
+        where h.del_flag = '0' and  h.id IN
         (
         select a.house_id
         from snail_room a
@@ -211,6 +293,7 @@
                 and h.id = #{id}
             </if>
         </where>
+        order by h.create_date DESC
     </select>
 
     <insert id="insertHouse" parameterType="com.alien.entity.vo.SnailHouseVO" useGeneratedKeys="true" keyProperty="id">
@@ -269,6 +352,15 @@
             </if>
             <if test="livingImg2 != null">
                 living_img2,
+            </if>
+            <if test="vrImg1 != null">
+                vrImg1,
+            </if>
+            <if test="vrImg2 != null">
+                vrImg2,
+            </if>
+            <if test="vrImg3 != null">
+                vrImg3,
             </if>
             <if test="validTime != null">
                 valid_time,
@@ -370,6 +462,103 @@
             </if>
         </trim>
     </insert>
+    <insert id="insertRoom" parameterType="com.alien.entity.vo.SnailRoomVO" useGeneratedKeys="true" keyProperty="id">
+            insert into snail_room
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">
+                    id,
+                </if>
+                <if test="houseId != null">
+                    house_id,
+                </if>
+                <if test="name != null">
+                    name,
+                </if>
+                <if test="price != null">
+                    price,
+                </if>
+                <if test="sale != null">
+                    sale,
+                </if>
+                <if test="bedroomImg1 != null">
+                    bedroom_img1,
+                </if>
+                <if test="bedroomImg2 != null">
+                    bedroom_img2,
+                </if>
+                <if test="desp != null">
+                    desp,
+                </if>
+                <if test="state != null">
+                    state,
+                </if>
+                <if test="praise != null">
+                    praise,
+                </if>
+                <if test="createBy != null">
+                    create_by,
+                </if>
+                <if test="updateBy != null">
+                    update_by,
+                </if>
+                <if test="createDate != null">
+                    create_date,
+                </if>
+                <if test="updateDate != null">
+                    update_date,
+                </if>
+                <if test="delFlag != null">
+                    del_flag,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">
+                    #{id,jdbcType=INTEGER},
+                </if>
+                <if test="houseId != null">
+                    #{houseId,jdbcType=INTEGER},
+                </if>
+                <if test="name != null">
+                    #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="price != null">
+                    #{price,jdbcType=DECIMAL},
+                </if>
+                <if test="sale != null">
+                    #{sale,jdbcType=DECIMAL},
+                </if>
+                <if test="bedroomImg1 != null">
+                    #{bedroomImg1,jdbcType=VARCHAR},
+                </if>
+                <if test="bedroomImg2 != null">
+                    #{bedroomImg2,jdbcType=VARCHAR},
+                </if>
+                <if test="desp != null">
+                    #{desp,jdbcType=VARCHAR},
+                </if>
+                <if test="state != null">
+                    #{state,jdbcType=INTEGER},
+                </if>
+                <if test="praise != null">
+                    #{praise,jdbcType=BIGINT},
+                </if>
+                <if test="createBy != null">
+                    #{createBy,jdbcType=INTEGER},
+                </if>
+                <if test="updateBy != null">
+                    #{updateBy,jdbcType=INTEGER},
+                </if>
+                <if test="createDate != null">
+                    #{createDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateDate != null">
+                    #{updateDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="delFlag != null">
+                    #{delFlag,jdbcType=BIT},
+                </if>
+            </trim>
+    </insert>
     <insert id="insertRooms" parameterType="com.alien.entity.vo.SnailRoomVO">
         <foreach item="item" collection="list" separator=";">
         insert into snail_room
@@ -401,8 +590,8 @@
             <if test="state != null">
                 state,
             </if>
-            <if test="prasie != null">
-                prasie,
+            <if test="praise != null">
+                praise,
             </if>
             <if test="createBy != null">
                 create_by,
@@ -448,8 +637,8 @@
             <if test="state != null">
                 #{state,jdbcType=INTEGER},
             </if>
-            <if test="prasie != null">
-                #{prasie,jdbcType=BIGINT},
+            <if test="praise != null">
+                #{praise,jdbcType=BIGINT},
             </if>
             <if test="createBy != null">
                 #{createBy,jdbcType=INTEGER},
@@ -524,6 +713,15 @@
             <if test="livingImg2 != null">
                 living_img2 = #{livingImg2,jdbcType=VARCHAR},
             </if>
+            <if test="vrImg1 != null">
+                vr_img1 = #{vrImg1,jdbcType=VARCHAR},
+            </if>
+            <if test="vrImg2 != null">
+                vr_img2 = #{vrImg2,jdbcType=VARCHAR},
+            </if>
+            <if test="vrImg3 != null">
+                vr_img3 = #{vrImg3,jdbcType=VARCHAR},
+            </if>
             <if test="validTime != null">
                 valid_time = #{validTime,jdbcType=TIMESTAMP},
             </if>
@@ -576,8 +774,8 @@
             <if test="state != null">
                 state = #{state,jdbcType=INTEGER},
             </if>
-            <if test="prasie != null">
-                prasie = #{prasie,jdbcType=BIGINT},
+            <if test="praise != null">
+                praise = #{praise,jdbcType=BIGINT},
             </if>
             <if test="createBy != null">
                 create_by = #{createBy,jdbcType=INTEGER},
@@ -615,6 +813,17 @@
         </if>
     </where>
   </update>
+
+    <update id="updatePraise" parameterType="com.alien.entity.vo.SnailRoomVO">
+        update snail_room
+        set praise = praise + 1
+        <where>
+            del_flag = '0'
+            <if test="id != null and id != '' ">
+                and id = #{id}
+            </if>
+        </where>
+    </update>
 
 <!--    &lt;!&ndash; 批量导出 &ndash;&gt;-->
 <!--    <select id="selectExportList" >-->

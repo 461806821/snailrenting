@@ -2,9 +2,7 @@ package com.alien.service;
 
 import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
-import com.alien.entity.SnailHouse;
-import com.alien.entity.SnailRoom;
-import com.alien.entity.SnailUser;
+import com.alien.entity.*;
 import com.alien.entity.vo.SessionAdmin;
 import com.alien.entity.vo.SessionUser;
 import com.alien.entity.vo.SnailHouseVO;
@@ -39,13 +37,13 @@ public class HouseService {
         PageHelper.startPage(snailHouseVO.getPageNum(), snailHouseVO.getPageSize());
         List<SnailRoom> list= houseMapper.roomList(snailHouseVO);
         PageInfo<SnailRoom> pageInfo = new PageInfo<>(list);
+//        List<SnailHouse> list= houseMapper.webhouseList(snailHouseVO);
+//        PageInfo<SnailHouse> pageInfo = new PageInfo<>(list);
         return ModelAndViewResult.succeedPage("/Web_houselist",list, null, CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
     }
 
     public ModelAndView web_select(SnailRoomVO snailRoom, HttpSession httpSession){
         SnailHouse h=houseMapper.selectHouse(snailRoom);
-        log.info(h.toString());
-        log.info(h.getSnailRooms().size()+h.getSnailRooms().toString());
         if(!h.getSnailRooms().isEmpty()){
             for (SnailRoom r:h.getSnailRooms()){
                 if(r.getId() == snailRoom.getId()){
@@ -53,37 +51,13 @@ public class HouseService {
                 }
             }
         }
-
-//        List<SnailRoom> snailRooms = houseMapper.selectRooms(h);
-//        for (SnailRoom r:snailRooms){
-//            if(r.getId() == snailRoom.getId()){
-//                h.setSnailRoom(r);
-//                snailRooms.remove(r);
-//            }
-//        }
-//        h.setSnailRooms(snailRooms);
-
-//        ModelAndView modelAndView =new ModelAndView();
-//        SnailHouseVO h=new SnailHouseVO();
-//        h.setId(1);
-//        h.setAddress("地址");
-//        List<SnailRoomVO> snailRoomVOS=new ArrayList<>();
-//        SnailRoomVO r1=new SnailRoomVO();
-//        SnailRoomVO r2=new SnailRoomVO();
-//        r1.setHouseId(1);
-//        r2.setHouseId(1);
-//        r1.setId(1);
-//        r2.setId(2);
-//        r1.setSale(Integer.toUnsignedLong(1991));
-//        r1.setSale(Integer.toUnsignedLong(1992));
-//        snailRoomVOS.add(r1);
-//        snailRoomVOS.add(r2);
-//        h.setSnailRoomVOs(snailRoomVOS);
-//        modelAndView.addObject("house",h);
-//        modelAndView.addObject("rooms",snailRooms);
-//        modelAndView.setViewName("/Web_detail");
-//        return modelAndView;
         return ModelAndViewResult.succeed("/Web_detail",h,CodeEnum.MSG_SUCCES.getMsg());
+    }
+
+    @Transactional(readOnly = false)
+    public ModelAndView updatePraise(SnailRoomVO snailUser, HttpSession httpSession){
+        houseMapper.updatePraise(snailUser);
+        return web_select(snailUser,httpSession);
     }
 
     @Transactional(readOnly = false)
@@ -92,20 +66,14 @@ public class HouseService {
         if(sessionuser == null){
             return new ModelAndView("redirect:/user/Web_login");
         }
-        //构造house类
-        SnailHouseVO snailHouse=new SnailHouseVO();
-        snailHouse.setUserId(sessionuser.getId());
-        snailHouse.preInsert(sessionuser.getId());
-        houseMapper.insertHouse(snailHouse);
-        //构造room类
-        List<SnailRoomVO> snailRooms =new ArrayList<>();
-        for(int i=0;i<snailHouse.getBedroom();i++){
-            SnailRoomVO snailRoom =new SnailRoomVO();
-            /////
-            snailRoom.preInsert(sessionuser.getId());
-            snailRooms.add(snailRoom);
+        snailHouseVO.setUserId(sessionuser.getId());
+        snailHouseVO.preInsert(sessionuser.getId());
+        houseMapper.insertHouse(snailHouseVO);
+        for (int i=0;i<snailHouseVO.getBedroom();i++){
+            snailHouseVO.getSnailRoomVOS().get(i).setHouseId(snailHouseVO.getId());
+            snailHouseVO.getSnailRoomVOS().get(i).preInsert(sessionuser.getId());
+            houseMapper.insertRoom(snailHouseVO.getSnailRoomVOS().get(i));
         }
-        houseMapper.insertRooms(snailRooms);
 
         SnailHouse h=houseMapper.selectRoom(snailHouseVO);
         return ModelAndViewResult.succeed("/Web_houseinsert",h, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
@@ -149,8 +117,16 @@ public class HouseService {
         if(sessionadmin == null){
             return new ModelAndView("redirect:/admin/Admin_login");
         }
-        /////
+        snailHouseVO.preInsert(sessionadmin.getId());
+        houseMapper.insertHouse(snailHouseVO);
+        for (int i=0;i<snailHouseVO.getBedroom();i++){
+            snailHouseVO.getSnailRoomVOS().get(i).setHouseId(snailHouseVO.getId());
+            snailHouseVO.getSnailRoomVOS().get(i).preInsert(sessionadmin.getId());
+            houseMapper.insertRoom(snailHouseVO.getSnailRoomVOS().get(i));
+        }
+
         SnailHouse h=houseMapper.selectRoom(snailHouseVO);
+
         return ModelAndViewResult.succeed("/Admin_houseupdate",h, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
@@ -162,8 +138,14 @@ public class HouseService {
         }
         snailHouseVO.preUpdate(sessionadmin.getId());
         houseMapper.updateHouse(snailHouseVO);
-        SnailHouse u=houseMapper.selectRoom(snailHouseVO);
-        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
+        for (int i=0;i<snailHouseVO.getBedroom();i++){
+            snailHouseVO.getSnailRoomVOS().get(i).preUpdate(sessionadmin.getId());
+            houseMapper.updateRoom(snailHouseVO.getSnailRoomVOS().get(i));
+        }
+
+        SnailHouse h=houseMapper.selectRoom(snailHouseVO);
+
+        return ModelAndViewResult.succeed("/Admin_houseupdate",h, "修改房源成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
     @Transactional(readOnly = false)
@@ -177,7 +159,7 @@ public class HouseService {
         SnailHouseVO snailHouseVO =new SnailHouseVO();
         snailHouseVO.setId(snailRoomVO.getHouseId());
         SnailHouse u=houseMapper.selectRoom(snailHouseVO);
-        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "修改成功！", CodeEnum.MSG_SUCCES.getMsg());
+        return ModelAndViewResult.succeed("/Admin_houseupdate",u, "修改房屋成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
 
 
@@ -236,8 +218,6 @@ public class HouseService {
                 break;
         }
         return ModelAndViewResult.succeedPage("/Admin_houselist",list, msg="成功修改房屋当前状态为"+msg, CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
-
-//        return admin_list(snailHouseVO,httpSession);
     }
 
 }

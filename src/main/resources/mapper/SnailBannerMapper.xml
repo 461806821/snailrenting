@@ -25,7 +25,7 @@
         a.bedroom_img2 AS "bedroomImg2",
         a.desp AS "desp",
         a.state AS "state",
-        a.prasie AS "prasie",
+        a.praise AS "praise",
         a.create_by AS "createBy",
         a.update_by AS "updateBy",
         a.create_date AS "createDate",

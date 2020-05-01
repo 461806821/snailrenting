@@ -29,15 +29,13 @@ public class SnailRoom extends BaseEntity<SnailRoom> {
 
     private Integer state;//状态（0出租中，1已租，2停用，3审核中，4装修，5准备签约）
 
-    private Long prasie;
+    private Long praise;
 
 
     private Integer bannerType;//广告位类型（1优惠房源，2推荐房源）
-
-    private String username;
-
-    private String sex;
-
+//    private String username;
+//    private String sex;
     private Integer collectionId;
+    private SnailUser snailUser;
 }
 

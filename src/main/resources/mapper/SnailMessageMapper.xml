@@ -1,105 +1,245 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alien.mapper.SnailMessageMapper">
-  <resultMap id="BaseResultMap" type="com.alien.entity.SnailMessage">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="praise" jdbcType="BIGINT" property="praise" />
-    <result column="create_by" jdbcType="INTEGER" property="createBy" />
-    <result column="update_by" jdbcType="INTEGER" property="updateBy" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-    <result column="del_flag" jdbcType="BIT" property="delFlag" />
-  </resultMap>
-    <sql id="Base_Column_List">
-    id, user_id, type, content, praise, create_by, update_by, create_date, update_date,
-    del_flag
+
+    <sql id="Message_Column_List">
+    m.id AS "mid",
+    m.user_id AS "muser_id",
+    m.type AS "type",
+    m.content AS "mcontent",
+    m.praise AS "mpraise",
+    m.create_by AS "mcreate_by",
+    m.update_by AS "mupdate_by",
+    m.create_date AS "mcreate_date",
+    m.update_date AS "mupdate_date",
+    m.del_flag AS "mdel_flag"
   </sql>
-
-    <select id="list" resultMap="BaseResultMap">
+    <sql id="Reply_Column_List">
+    r.id AS "rid",
+    r.message_id AS "message_id",
+    r.user_id AS "ruser_id",
+    r.content AS "rcontent",
+    r.praise AS "rpraise",
+    r.create_by AS "rcreate_by",
+    r.update_by AS "rupdate_by",
+    r.create_date AS rcreate_date,
+    r.update_date AS "rupdate_date",
+    r.del_flag AS "rdel_flag"
+    </sql>
+    <sql id="mUser_Column_List">
+    um.id AS "muid",
+    um.username AS "username",
+    um.email AS "email",
+    um.address AS "address",
+    um.certificate AS "certificate"
+    </sql>
+    <sql id="rUser_Column_List">
+    ur.id AS "ruid",
+    ur.username AS "username",
+    ur.email AS "email",
+    ur.address AS "address",
+    ur.certificate AS "certificate"
+    </sql>
+    <resultMap id="MessageResultMap" type="com.alien.entity.SnailMessage">
+        <id column="mid" jdbcType="INTEGER" property="id" />
+        <result column="muser_id" jdbcType="INTEGER" property="userId" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="mcontent" jdbcType="VARCHAR" property="content" />
+        <result column="mpraise" jdbcType="BIGINT" property="praise" />
+        <result column="mcreate_by" jdbcType="INTEGER" property="createBy" />
+        <result column="mupdate_by" jdbcType="INTEGER" property="updateBy" />
+        <result column="mcreate_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="mupdate_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="mdel_flag" jdbcType="BIT" property="delFlag" />
+        <collection property="snailUser" ofType="com.alien.entity.SnailUser" resultMap="mUserResultMap" />
+        <collection property="snailReplys" ofType="com.alien.entity.SnailReply" resultMap="ReplyResultMap" />
+    </resultMap>
+    <resultMap id="ReplyResultMap" type="com.alien.entity.SnailReply">
+        <id column="rid" jdbcType="INTEGER" property="id" />
+        <result column="message_id" jdbcType="INTEGER" property="messageId" />
+        <result column="ruser_id" jdbcType="INTEGER" property="userId" />
+        <result column="rcontent" jdbcType="VARCHAR" property="content" />
+        <result column="rpraise" jdbcType="BIGINT" property="praise" />
+        <result column="rcreate_by" jdbcType="INTEGER" property="createBy" />
+        <result column="rupdate_by" jdbcType="INTEGER" property="updateBy" />
+        <result column="rcreate_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="rupdate_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="rdel_flag" jdbcType="BIT" property="delFlag" />
+        <collection property="snailUser" ofType="com.alien.entity.SnailUser" resultMap="rUserResultMap" />
+    </resultMap>
+    <resultMap id="mUserResultMap" type="com.alien.entity.SnailUser">
+        <id column="muid" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="certificate" jdbcType="INTEGER" property="certificate" />
+    </resultMap>
+    <resultMap id="rUserResultMap" type="com.alien.entity.SnailUser">
+        <id column="ruid" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="certificate" jdbcType="INTEGER" property="certificate" />
+    </resultMap>
+    <select id="list" parameterType="java.lang.Integer" resultMap="MessageResultMap">
         select
-        <include refid="Base_Column_List" />
-        from snail_message
+        <include refid="Message_Column_List" />,
+        <include refid="Reply_Column_List" />,
+        <include refid="mUser_Column_List" />,
+        <include refid="rUser_Column_List" />
+        from snail_message m
+        left join snail_reply r on r.message_id = m.id
+        left join snail_user um on um.id = m.user_id
+        left join snail_user ur on ur.id = r.user_id
+        where
+        m.del_flag = '0'
+        and r.del_flag = '0'
+        order by m.create_date DESC,r.create_date DESC
     </select>
-
-  <insert id="insert" parameterType="com.alien.entity.SnailMessage">
-    insert into snail_message
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="praise != null">
-        praise,
-      </if>
-      <if test="createBy != null">
-        create_by,
-      </if>
-      <if test="updateBy != null">
-        update_by,
-      </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-      <if test="updateDate != null">
-        update_date,
-      </if>
-      <if test="delFlag != null">
-        del_flag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="praise != null">
-        #{praise,jdbcType=BIGINT},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=INTEGER},
-      </if>
-      <if test="updateBy != null">
-        #{updateBy,jdbcType=INTEGER},
-      </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null">
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-
-    <update id="updatePrise" parameterType="com.alien.entity.SnailMessage">
-        update snail_message
-        <set>
-            <if test="praise != null">
-                praise = #{praise,jdbcType=BIGINT},
+    <insert id="insertMessage" parameterType="com.alien.entity.SnailMessage">
+        insert into snail_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
             </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="praise != null">
+                praise,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="praise != null">
+                #{praise,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertReply" parameterType="com.alien.entity.SnailReply">
+        insert into snail_reply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="messageId != null">
+                message_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="praise != null">
+                praise,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="messageId != null">
+                #{messageId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="praise != null">
+                #{praise,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=INTEGER},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updatePraise" parameterType="com.alien.entity.SnailMessage">
+        update snail_message
+        set praise = praise+1
+        <where>
+            del_flag = '0'
+            <if test="id != null and id != '' ">
+                and id = #{id}
+            </if>
+        </where>
     </update>
 
     <update id="delete">

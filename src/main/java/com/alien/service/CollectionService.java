@@ -32,8 +32,13 @@ public class CollectionService {
     @Autowired
     private SnailHouseMapper houseMapper;
 
-    public ModelAndView list(SnailCollection snailUser){
+    public ModelAndView list(SnailCollection snailUser,HttpSession httpSession){
+        SessionUser sessionuser=(SessionUser) httpSession.getAttribute("sessionuser");
+        if(sessionuser == null){
+            return new ModelAndView("redirect:/user/Web_login");
+        }
         PageHelper.startPage(snailUser.getPageNum(), snailUser.getPageSize());
+        snailUser.setUserId(sessionuser.getId());
         List<SnailRoom> list= collectionMapper.list(snailUser);
         PageInfo<SnailRoom> pageInfo = new PageInfo<>(list);
         return ModelAndViewResult.succeedPage("/Web_collection",list, null, CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
@@ -71,7 +76,11 @@ public class CollectionService {
         };
         snailUser.preUpdate(sessionuser.getId());
         collectionMapper.delete(snailUser);
-        return list(snailUser);
+        return list(snailUser,httpSession);
+    }
+
+    public Long count(SnailCollection snailUser){
+        return collectionMapper.count(snailUser);
     }
 
 }

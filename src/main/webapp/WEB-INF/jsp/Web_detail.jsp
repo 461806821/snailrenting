@@ -39,58 +39,43 @@
             });
         });
     </script>
-    <!-- start-smoth-scrolling -->
-
+    <!-- //start-smoth-scrolling -->
+    <!-- start-pannellum -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/static/pannellum/pannellum.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/static/pannellum/pannellum.css">
+    <style>
+        #panorama {
+            width: 1200px;
+            height: 600px;
+        }
+        #controls {
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            padding-bottom: 3px;
+        }
+        .ctrl {
+            padding: 8px 5px;
+            width: 30px;
+            text-align: center;
+            background: rgba(200, 200, 200, 0.8);
+            display: inline-block;
+            cursor: pointer;
+        }
+        .ctrl:hover {
+            background: rgba(200, 200, 200, 1);
+        }
+    </style>
+    <!-- //start-pannellum -->
 </head>
 
 <body>
 <!-- header -->
-<div class="header">
-    <div class="header-top">
-        <div class="container">
-            <div class="header-top-left">
-                <ul>
-                    <%--                    <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 345 569</li>--%>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border pinterest" aria-hidden="true"></span>登录</a></li>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border twitter" aria-hidden="true"></span>注册</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-    <div class="header-bottom">
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="logo">
-                        <h1><a class="navbar-brand" href="${pageContext.request.contextPath }/index/Web_index">蜗牛找房<span>Snail renting</span></a></h1>
-                    </div>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-                    <nav>
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list" class="hvr-bounce-to-bottom">全部房源</a></li>
-                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">蜗牛服务</a></li>
-                            <li><a href="${pageContext.request.contextPath }/collectiom/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
-                            <li><a class="hvr-bounce-to-bottom">VR看房(未解锁)</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-        </div>
-    </div>
-</div>
+<%@ include file="Web_header.jsp"%>
 <!-- //header -->
 <!-- breadcrumbs -->
 <!-- breadcrumbs -->
@@ -114,18 +99,21 @@
         <div class="col-md-8 single-left">
             <div class="sample1">
                 <div class="carousel">
+                    <input type = "hidden" id = "vrimg1" name = "vrimg1" value = "${data.vrImg1}" />
+                    <input type = "hidden" id = "vrimg2" name = "vrimg2" value = "${data.vrImg2}" />
+                    <input type = "hidden" id = "vrimg3" name = "vrimg3" value = "${data.vrImg3}" />
                     <ul>
                         <c:if test="${!empty data.snailRoom.bedroomImg1}">
-                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.snailRoom.bedroomImg1}" alt="quibusdam et aut offi"> </li>
+                            <li> <img src="${pageContext.request.contextPath }/static/picture/${data.snailRoom.bedroomImg1}" alt="bedroomImg1"> </li>
                         </c:if>
                         <c:if test="${!empty data.snailRoom.bedroomImg2}">
-                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.snailRoom.bedroomImg2}" alt="Itaque earum rerum hic"> </li>
+                            <li> <img src="${pageContext.request.contextPath }/static/picture/${data.snailRoom.bedroomImg2}" alt="bedroomImg2"> </li>
                         </c:if>
                         <c:if test="${!empty data.bathImg1}">
-                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.bathImg1}" alt="doloribus asperio rep"> </li>
+                            <li> <img src="${pageContext.request.contextPath }/static/picture/${data.bathImg1}" alt="bathImg1"> </li>
                         </c:if>
                         <c:if test="${!empty data.bathImg2}">
-                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.bathImg2}" alt="maiores alias consequ"> </li>
+                            <li> <img src="${pageContext.request.contextPath }/static/picture/${data.bathImg2}" alt="bathImg2"> </li>
                         </c:if>
                     </ul>
                     <div class="controls">
@@ -136,16 +124,16 @@
                 <div class="thumbnails">
                     <ul>
                         <c:if test="${!empty data.houseImg}">
-                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.houseImg}"alt="doloribus asperio rep"> </li>
+                            <li> <img src="${pageContext.request.contextPath }/static/picture/${data.houseImg}"alt="doloribus asperio rep"> </li>
                         </c:if>
                         <c:if test="${!empty data.kitchenImg1}">
-                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.kitchenImg1}" alt=" "> </li>
+                            <li> <img src="${pageContext.request.contextPath }/static/picture/${data.kitchenImg1}" alt=" "> </li>
                         </c:if>
                         <c:if test="${!empty data.livingImg1}">
-                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.livingImg1}" alt=" "> </li>
+                            <li> <img src="${pageContext.request.contextPath }/static/picture/${data.livingImg1}" alt=" "> </li>
                         </c:if>
                         <c:if test="${!empty data.livingImg2}">
-                            <li> <img src="${pageContext.request.contextPath }/static/web/images/${data.livingImg2}" alt=" "> </li>
+                            <li> <img src="${pageContext.request.contextPath }/static/picture/${data.livingImg2}" alt=" "> </li>
                         </c:if>
                     </ul>
                 </div>
@@ -173,7 +161,7 @@
                 <ul class="com">
                     <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a>卧室：${data.bedroom} </a></li>
                     <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a>签约</a></li>
-                    <li><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/collection/Web_insert?id=${data.snailRoom.id}">点赞：${data.snailRoom.prasie} </a></li>
+                    <li><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/house/Web_praise?id=${data.snailRoom.id}">点赞：${data.snailRoom.praise} </a></li>
                     <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/collection/Web_insert?roomId=${data.snailRoom.id}">收藏</a></li>
                 </ul>
                 <div class="single-left2-sub">
@@ -181,7 +169,7 @@
                         <li>操作选择 </li>
                         <li><a href="${pageContext.request.contextPath }/service/Web_aftersale">预约看房</a></li>
                         <li><a >电话咨询</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Web_insert?id=${data.snailRoom.id}">立刻签约</a></li>
+                        <li><a href="${pageContext.request.contextPath }/order/Web_orderinsert?roomId=${data.snailRoom.id}">立刻签约</a></li>
                     </ul>
                 </div>
                 <div class="single-left2-sub">
@@ -253,46 +241,21 @@
                     </tbody>
                 </table>
             </div>
-            <div class="comments">
-                <h4>蜗牛圈-社交</h4>
-                <div class="comments-grid">
-                    <div class="comments-grid-left">
-                        <img src="/static/web/images/5.png" alt=" " class="img-responsive" />
-                    </div>
-                    <div class="comments-grid-right">
-                        <h3><a href="#">Adam Smith</a></h3>
-                        <h5><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> On 28th May, 2016</h5>
-                        <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.</p>
-                        <div class="reply">
-                            <a href="#">Reply</a>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="comments-grid">
-                    <div class="comments-grid-left">
-                        <img src="/static/web/images/4.png" alt=" " class="img-responsive" />
-                    </div>
-                    <div class="comments-grid-right">
-                        <h3><a href="#">James Rick</a></h3>
-                        <h5><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> On 28th May, 2016</h5>
-                        <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.</p>
-                        <div class="reply">
-                            <a href="#">Reply</a>
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
+            <div class="single-left2-sub">
+                <ul>
+                    <li>VR全景看房 </li>
+                </ul>
             </div>
-            <div class="write-reply">
-                <h3>Write a Reply Or Comment</h3>
-                <form action="#" method="post">
-                    <textarea name="Comment" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'SnailMessage...';}" required="">Write a comment here...</textarea>
-                    <input type="text" name="Name" value="Name..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name...';}" required="">
-                    <input type="email" name="Email" value="Email..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email...';}" required="">
-                    <input type="text" name="Website" value="Website..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Website...';}" required="">
-                    <input type="submit" value="Send" >
-                </form>
+            <div id="panorama">
+                <div id="controls">
+                    <div class="ctrl" id="pan-up">&#9650;</div>
+                    <div class="ctrl" id="pan-down">&#9660;</div>
+                    <div class="ctrl" id="pan-left">&#9664;</div>
+                    <div class="ctrl" id="pan-right">&#9654;</div>
+                    <div class="ctrl" id="zoom-in">&plus;</div>
+                    <div class="ctrl" id="zoom-out">&minus;</div>
+                    <div class="ctrl" id="fullscreen">&#x2922;</div>
+                </div>
             </div>
         </div>
         <div class="col-md-4 single-right">
@@ -303,7 +266,7 @@
                         <div class="related-post-left">
                             <a href="${pageContext.request.contextPath }/house/Web_select?id=${r.id}">
                                 <c:if test="${!empty r.bedroomImg1}">
-                                    <img src="${pageContext.request.contextPath }/static/web/images/${r.bedroomImg1}" alt=" " class="img-responsive" />
+                                    <img src="${pageContext.request.contextPath }/static/picture/${r.bedroomImg1}" alt=" " class="img-responsive" />
                                 </c:if>
                             </a>
                         </div>
@@ -331,8 +294,8 @@
                             <c:if test="${r.state == 3 }">审核中</c:if>
                             <c:if test="${r.state == 4 }">装修</c:if>
                             <c:if test="${r.state == 5 }">准备签约</c:if></a></li>
-                        <li><a>{r.sex}</a></li>
-                        <li class="active"><a><fmt:formatDate value="${r.createDate}" pattern="yyyy年MM月dd日" /></a></li>
+                        <li><a>女</a></li>
+                        <li class="active"><a>创建日期：<fmt:formatDate value="${r.createDate}" pattern="yyyy年MM月dd日" /></a></li>
                     </ol>
                 </c:forEach>
             </div>
@@ -341,45 +304,53 @@
     </div>
 </div>
 <!-- //single -->
-<!-- footer -->
-<div class="footer">
+<!-- mail -->
+<div class="special-services">
     <div class="container">
-        <h2>让  租  房   变  得  简  单  和  快  乐 。</h2>
-        <p class="para">100%真实房源，品质房屋，优质保洁，极速维修，品质房屋，放心呼吸。</p>
-        <div class="footer-grids">
-            <div class="col-md-4 footer-grid">
-                <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 中国，北京市，朝阳区，
-                    三里屯，7号.</p>
-                <p><a href="mailto:contact@example.com"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> snailrenting@163.com</a></p>
-                <p><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 456 789</p>
+        <h3><span>欢迎联系我们</span></h3>
+        <p class="autem">让  租  房   变  得  简  单  和  快  乐 。</p>
+        <div class="contact-grid1">
+            <div class="col-md-4 contact-grid1-left">
+                <div class="contact-grid1-left1">
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    <h4>邮箱联系</h4>
+                    <p>欢迎发送邮箱联系我们，管理员会尽快回复您的邮件。</p>
+                    <ul>
+                        <li>邮箱1: <a href="mailto:info@example.com">snailrenting1@163.com</a></li>
+                        <li>邮箱2: <a href="mailto:info@example.com">snailrenting2@152.com</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-md-2 footer-grid">
-                <ul>
-                    <li><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                    <li><a href="${pageContext.request.contextPath }/service/Web_service">服务</a></li>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login">登陆</a></li>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login">注册</a></li>
-                </ul>
+            <div class="col-md-4 contact-grid1-left">
+                <div class="contact-grid1-left1">
+                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                    <h4>电话联系</h4>
+                    <p>欢迎致电联系我们，客服会为您解答相关问题。</p>
+                    <ul>
+                        <li>电话: +0123 321 312</li>
+                        <li>传真: +123 312</li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-md-3 footer-grid">
-                <div class="footer-grid1">
-                    <div class="footer-grid1-left">
-                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
-                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
-                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
-                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
-                        <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
-                    </div>
+            <div class="col-md-4 contact-grid1-left">
+                <div class="contact-grid1-left1">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    <h4>线下联系</h4>
+                    <p>欢迎您到线下门店进行参观，希望可以帮您解决问题。</p>
+                    <ul>
+                        <li>地址: 中国，北京市，三屯，7号。</li>
+                        <li>蜗牛找房门店</li>
+                    </ul>
                 </div>
             </div>
             <div class="clearfix"> </div>
         </div>
-        <div class="footer-copy">
-            <p>Copyright &copy; 2020.Alien All rights <a href="#" target="_blank" title="Snailrenting"> Snailrenting</a></p>
-        </div>
     </div>
 </div>
-<!-- //footer -->
+<!-- //mail -->
+<!-- footer Area Start-->
+<%@ include file="Web_footer.jsp"%>
+<!-- footer Area End-->
 <!-- for bootstrap working -->
 <script src="/static/web/js/bootstrap.js"></script>
 <!-- //for bootstrap working -->
@@ -400,5 +371,135 @@
     });
 </script>
 <!-- //here ends scrolling icon -->
+<!-- here stars vr frame -->
+<script>
+    let vrimg1 = document.getElementById('vrimg1').value;
+    let vrimg2 = document.getElementById('vrimg2').value;
+    let vrimg3 = document.getElementById('vrimg3').value;
+    // viewer = pannellum.viewer('panorama',﻿{
+    //     "panorama" : "/static/picture/"+vrimg1,
+    //         "autoLoad" :  true,
+    //         "showControls" : false
+    // });
+    window.addEventListener('load', bodyLoad);
+    var viewer;
+    function bodyLoad(){
+        // 多场景配置
+        viewer = pannellum.viewer('panorama', {
+            "default": {
+                "firstScene": "living",//首次加载那个图片
+                "author": "snailrenting",//作者
+                "sceneFadeDuration": 1000,//全景图场景切换时的持续时间
+                "autoLoad": true,//自动加载
+                "orientationOnByDefault": true,//是否开启重力感应查看全景图，默认false
+                "showControls": false,//是否显示控制按钮，默认true；
+                "autoRotate": -2,//是否自动旋转，在加载之后，全景图会水平旋转显示，负数为往右边旋转，整数为往左边旋转，值为数字类型；
+                "autoRotateInactivityDelay": 2000//在autoRotate设定的情况下，用户停止操作多长时间后继续自动旋转，单位为毫秒；
+            },
+//场景，值为对象，其属性名代表着场景的id（sceneId），属性值为viewer的配置参数，其参数会覆盖默认（上述中的default对象）设置的参数；
+            "scenes": {
+                "living": {
+                    "title": "客厅全景展示",
+                    "hfov": 110,
+                    "pitch": -3,
+                    "yaw": 117,
+                    "type": "equirectangular",
+                    "panorama":  "/static/picture/"+vrimg1,//图片路径
+                    "hotSpots": [  //热点，以全景为坐标系的固定点，可以设置链接跳转和点击事件，也可以跳转到不同的场景，该属性的值为对象
+                        {
+                            "pitch": -13.1,//定位参数， 单位：角度
+                            "yaw": -8.9,//定位参数， 单位：角度 y轴，空间中的纵轴
+                            "type": "scene", //热点类型，scene 场景切换热点； info 信息展示；URL 以热点为链接，跳转到其他页面的`url
+                            "text": "前往卧室",
+                            // "cssClass":" pnlm-hotspot pnlm-sprite pnlm-scene1",//自定义样式
+                            "sceneId": "house"//sceneId 需要切换的场景id，当 type 为 scene使用；
+                        },{
+                            "pitch": -0.9,
+                            "yaw": 6.9,
+                            "type": "scene",
+                            "text": "前往卧室",
+                            "sceneId": "bedroom",
+                            "targetYaw": -23,
+                            "targetPitch": 2
+                        }
+                    ]
+                },
+
+                "house": {
+                    "title": "卧室全景展示",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "/static/picture/"+vrimg3,//图片路径
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,//定位参数， 单位：角度
+                            "yaw": 248,//定位参数， 单位：角度 y轴，空间中的纵轴
+                            "type": "scene", //热点类型，scene 场景切换热点； info 信息展示；URL 以热点为链接，跳转到其他页面的`url
+                            "text": "查看客厅",
+                            "sceneId": "living"//sceneId 需要切换的场景id，当 type 为 scene使用；
+                        },{
+                            "pitch": -0.9,
+                            "yaw": 6.9,
+                            "type": "scene",
+                            "text": "前往另一房间",
+                            "sceneId": "bedroom",
+                            "targetYaw": -23,
+                            "targetPitch": 2
+                        }
+                    ]
+                },
+
+                "bedroom": {
+                    "title": "全景照片",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama":  "/static/picture/"+vrimg2,//图片路径
+                    "hotSpots": [
+                        {
+                            "pitch": -2.1,//定位参数， 单位：角度
+                            "yaw": 218.9,//定位参数， 单位：角度 y轴，空间中的纵轴
+                            "type": "scene", //热点类型，scene 场景切换热点； info 信息展示；URL 以热点为链接，跳转到其他页面的`url
+                            "text": "查看客厅",
+                            "sceneId": "living"//sceneId 需要切换的场景id，当 type 为 scene使用；
+                        },{
+                            "pitch": -0.9,
+                            "yaw": 6.9,
+                            "type": "scene",
+                            "text": "前往另一房间",
+                            "sceneId": "house",
+                            "targetYaw": -23,
+                            "targetPitch": 2
+                        }
+                    ]
+                }
+            }
+        });
+    }
+
+    document.getElementById('pan-up').addEventListener('click', function(e) {
+        viewer.setPitch(viewer.getPitch() + 10);
+    });
+    document.getElementById('pan-down').addEventListener('click', function(e) {
+        viewer.setPitch(viewer.getPitch() - 10);
+    });
+    document.getElementById('pan-left').addEventListener('click', function(e) {
+        viewer.setYaw(viewer.getYaw() - 10);
+    });
+    document.getElementById('pan-right').addEventListener('click', function(e) {
+        viewer.setYaw(viewer.getYaw() + 10);
+    });
+    document.getElementById('zoom-in').addEventListener('click', function(e) {
+        viewer.setHfov(viewer.getHfov() - 10);
+    });
+    document.getElementById('zoom-out').addEventListener('click', function(e) {
+        viewer.setHfov(viewer.getHfov() + 10);
+    });
+    document.getElementById('fullscreen').addEventListener('click', function(e) {
+        viewer.toggleFullscreen();
+    });
+</script>
+<!-- //here ends vr frame -->
 </body>
 </html>

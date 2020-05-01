@@ -16,6 +16,13 @@ import java.util.List;
 public class DateUtils {
 
     /**
+     *
+     */
+    public static Date strToDate(String date) throws ParseException {
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf2.parse(date);
+    }
+    /**
      * 获取昨天日期
      *
      * @param date

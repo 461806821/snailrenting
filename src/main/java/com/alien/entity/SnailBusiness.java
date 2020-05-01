@@ -23,5 +23,7 @@ public class SnailBusiness extends BaseEntity<SnailBusiness> {
     private String desp;
 
     private Integer state;//状态（0待解决，1处理中，2已解决）
+
+    private String ago;
 }
 

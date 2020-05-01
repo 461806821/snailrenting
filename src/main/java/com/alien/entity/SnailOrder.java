@@ -27,9 +27,9 @@ public class SnailOrder extends BaseEntity<SnailOrder> {
 
     private Integer payState;//支付状态(0未支付，1已支付）
 
-    private Short payMoney;
+    private Long payMoney;
 
-    private Short discountMoney;
+    private Long discountMoney;
 
     private Date liveTime;//入住日期
 
@@ -41,5 +41,17 @@ public class SnailOrder extends BaseEntity<SnailOrder> {
 
     //vo
     private Integer liveDay;//
+
+    private String liveTime1;//入住日期
+
+    private String payTime1;//支付日期
+
+    private String payValidTime1;//支付截止日期
+
+    private String validTime1;//预计截止日期
+
+    private Integer checkType;//结算方式
+
+    private Integer payType;//支付方式
 }
 

@@ -56,12 +56,20 @@ public class SnailHouseVO extends BaseEntity<SnailHouseVO> {
 
     private String livingImg2;
 
+    private String vrImg1;
+
+    private String vrImg2;
+
+    private String vrImg3;
+
+
     private Date validTime;
 
     private String desp;
 
     private SnailRoom snailRoom;
     private List<SnailRoom> snailRooms;
+    private List<SnailRoomVO> snailRoomVOS;
     private String keyword;
 
     private String maxPriceVO;

@@ -43,52 +43,7 @@
 
 <body>
 <!-- header -->
-<div class="header">
-    <div class="header-top">
-        <div class="container">
-            <div class="header-top-left">
-                <ul>
-                    <%--                    <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>+0123 345 569</li>--%>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border pinterest" aria-hidden="true"></span>登录</a></li>
-                    <li><a href="${pageContext.request.contextPath }/user/Web_login"><span class="icon icon-border twitter" aria-hidden="true"></span>注册</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
-        </div>
-    </div>
-    <div class="header-bottom">
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="logo">
-                        <h1><a class="navbar-brand" href="${pageContext.request.contextPath }/index/Web_index">蜗牛找房<span>Snail renting</span></a></h1>
-                    </div>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-                    <nav>
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="${pageContext.request.contextPath }/index/Web_index">主页</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list?locationid=${locationid}" class="hvr-bounce-to-bottom">附近房源</a></li>
-                            <li><a href="${pageContext.request.contextPath }/house/Web_list?locationid=0" class="hvr-bounce-to-bottom">全部房源</a></li>
-                            <li><a href="${pageContext.request.contextPath }/service/Web_service" class="hvr-bounce-to-bottom">服务</a></li>
-                            <li><a href="${pageContext.request.contextPath }/collectiom/Web_list" class="hvr-bounce-to-bottom">我的收藏</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-        </div>
-    </div>
-</div>
+<%@ include file="Web_header.jsp"%>
 <!-- //header -->
 <!-- breadcrumbs -->
 <div class="services-top-breadcrumbs">
@@ -96,11 +51,11 @@
         <div class="services-top-breadcrumbs-right">
             <ul>
                 <li><a href="${pageContext.request.contextPath }/index/Web_index">主页</a> <i>/</i></li>
-                <li>添加房源</li>
+                <li>签约房源</li>
             </ul>
         </div>
         <div class="services-top-breadcrumbs-left">
-            <h3>添加房源</h3>
+            <h3>签约房源</h3>
         </div>
         <div class="clearfix"> </div>
     </div>
@@ -109,7 +64,7 @@
 <!-- services -->
 <div class="services">
     <div class="container">
-        <h3><span>添加房源</span></h3>
+        <h3><span>签约房源</span></h3>
         <p class="autem">请保证填写信息真实正确，提交后不能自行更改，请联系管理员更改。</p>
         <c:if test="${!empty msg }">
             <c:if test="${success == true }">
@@ -123,133 +78,62 @@
                 </div>
             </c:if>
         </c:if>
-        <form form="country1 country2" action="${pageContext.request.contextPath }/service/Web_houseinsert/insert" enctype="multipart/form-data" method="post">
-            <div class="row animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon1">名称：</span>
-                        <input type="text" name="name" value="${data.username}" class="form-control"  placeholder="请输入关于房源的关键字" aria-describedby="sizing-addon1">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon2">环境图片：</span>
-                        <input type="file" name="houseImg" value="${data.username}" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-md-6 contact-grid-left">
-                    <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-                        <span class="input-group-addon" id="basic-addon3">房源区域：</span>
-                        <select id="country1" name="locationId" onchange="change_country(this.value)" class="frm-field required">
-                            <option value="null">请选择</option>
-                            <option value="1">西城区</option>
-                            <option value="2">东城区</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon4">地址（*具体门牌号）：</span>
-                        <input type="text" name="address" class="form-control"  placeholder="详细地址" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-            </div><!-- /.row -->
-            <div class="clearfix"> </div>
-            <div class="row animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon5">卧室数量：</span>
-                        <input type="text" name="bedroom" oninput = "value=value.replace(/[^\d]/g,'')" class="form-control" aria-describedby="sizing-addon1">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon6">卧室图片：</span>
-                        <input type="file"  multiple="multiple" name="username" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon7">客厅数量：</span>
-                        <input type="text" name="living" oninput = "value=value.replace(/[^\d]/g,'')" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon8">客厅图片：</span>
-                        <input type="file"  multiple="multiple" name="username" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon9">厨房数量：</span>
-                        <input type="text" name="kitchen" oninput = "value=value.replace(/[^\d]/g,'')" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon10">厨房图片：</span>
-                        <input type="file"  multiple="multiple" name="username" value="${data.username}" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addo11">卫生间数量：</span>
-                        <input type="text" name="bath" oninput = "value=value.replace(/[^\d]/g,'')" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon12">卫生间图片：</span>
-                        <input type="file"  multiple="multiple" name="username" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-md-6 contact-grid-left">
-                    <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-                        <span class="input-group-addon" id="basic-addon1">租房类型：</span>
-                        <select id="country2" name="type" onchange="change_country(this.value)" class="frm-field required">
-                            <option value="null">请选择</option>
-                            <option value="1">整租</option>
-                            <option value="2">合租</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon">价格（/年）：</span>
-                        <input type="text" name="price" oninput = "value=value.replace(/[^\d]/g,'')" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        <span class="input-group-addon">.00</span>
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
+        <form form="country1 country2" action="${pageContext.request.contextPath }/order/Web_insert" method="post">
+            <input type="hidden" name="houseId" value="${data.houseId}">
+            <input type="hidden" name="roomId" value="${data.roomId}">
+            <input type="hidden" name="contract" value="${data.contract}">
+            <input type="hidden" name="payTime" value="${data.payTime}">
+            <input type="hidden" name="payMoney" value="${data.payMoney}">
+            <input type="hidden" name="discountMoney" value="${data.discountMoney}">
+            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <span class="input-group-addon">房源：房源编码#${data.houseId}，房屋编码#${data.roomId} </span>
             </div>
-            <div class="clearfix"> </div>
-            <div class="row animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon13">出租开始时间：</span>
-                        <input type="date" name="startTime" value="${data.username}" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <span class="input-group-addon" id="sizing-addon14">出租截止时间：</span>
-                        <input type="date" name="validTime" value="${data.username}" class="form-control" aria-describedby="sizing-addon2">
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-            </div><!-- /.row -->
-
-            <div class="row animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-                <div class="col-lg-6 in-gp-tl">
-                    <div class="input-group">
-                        <textarea name="desp" type="text" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '请输入您的问题详细描述...提交后我们会根据问题委派相关人员进行解决。';}" required="">请输入您的问题详细描述...提交后我们会根据问题委派相关人员进行解决。</textarea>
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-            </div><!-- /.row -->
-
+            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <span class="input-group-addon">合同号： ${data.contract} </span>
+            </div>
+            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <span class="input-group-addon">签约日： <fmt:formatDate value="${data.payTime}" pattern="yyyy年MM月dd日" /> </span>
+            </div>
+            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <span class="input-group-addon">原租金（/月）：￥${data.payMoney}.00元</span>
+            </div>
+            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <span class="input-group-addon">优惠后租金（/月）：￥${data.discountMoney}.00元</span>
+            </div>
+<%--            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">--%>
+<%--                <span class="input-group-addon" id="basic-addon1">结算方式：</span>--%>
+<%--                <select id="country1" name="checkType" onchange="change_country(this.value)" class="frm-field required">--%>
+<%--                    <option value="null">请选择</option>--%>
+<%--                    <option value="1">月付</option>--%>
+<%--                    <option value="2">季付</option>--%>
+<%--                    <option value="3">年付</option>--%>
+<%--                </select>--%>
+<%--            </div>--%>
+            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <span class="input-group-addon" id="basic-addon2">支付方式：</span>
+                <select id="country2" name="payType" onchange="change_country(this.value)" class="frm-field required">
+                    <option value="null">请选择</option>
+                    <option value="1">银行卡</option>
+                    <option value="2">支付宝</option>
+                    <option value="3">微信</option>
+                </select>
+            </div>
+            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <span class="input-group-addon" id="sizing-addon1">入住日期：</span>
+                <input type="date" name="liveTime1" class="form-control" aria-describedby="sizing-addon2">
+            </div>
+            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <span class="input-group-addon" id="sizing-addon2">截止时间：</span>
+                <input type="date" name="validTime1" class="form-control" aria-describedby="sizing-addon2">
+            </div>
+<%--            <div class="input-group animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">--%>
+<%--                <span class="input-group-addon" id="basic-addon">@</span>--%>
+<%--                <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">--%>
+<%--            </div>--%>
             <div class="row animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
                 <div class="col-lg-6 in-gp-tl">
                         <div class="keywords">
-                            <input type="submit" value="保存修改信息">
+                            <input type="submit" value="确认签约">
                         </div>
                 </div><!-- /.col-lg-6 -->
                 <div class="col-lg-6 in-gp-tl">

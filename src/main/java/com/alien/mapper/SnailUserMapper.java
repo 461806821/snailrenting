@@ -17,15 +17,8 @@ public interface SnailUserMapper {
 
     void delete(SnailUser record);
 
-    int deleteByPrimaryKey(Integer id);
+    Integer count(SnailUser record);
 
-//    int insert(SnailUser record);
+    void updateLoginNum(SnailUser record);
 
-    int insertSelective(SnailUser record);
-
-    SnailUser selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(SnailUser record);
-
-    int updateByPrimaryKey(SnailUser record);
 }

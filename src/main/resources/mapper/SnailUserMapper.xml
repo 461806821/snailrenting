@@ -7,6 +7,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="identity" jdbcType="VARCHAR" property="identity" />
@@ -26,6 +27,7 @@
         <result column="email" jdbcType="VARCHAR" property="email" />
         <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
         <result column="phone" jdbcType="VARCHAR" property="phone" />
         <result column="address" jdbcType="VARCHAR" property="address" />
         <result column="identity" jdbcType="VARCHAR" property="identity" />
@@ -44,11 +46,11 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, username, email, password, name, phone, address, identity, certificate, login_num, 
+    id, username, email, password, name, sex,phone, address, identity, certificate, login_num,
     login_time, create_by, update_by, create_date, update_date, del_flag
   </sql>
     <sql id="User_Column_List">
-    u.id, u.username, u.email, u.password, u.name, u.phone, u.address, u.identity, u.certificate, u.login_num,
+    u.id, u.username, u.email, u.password, u.name,u.sex, u.phone, u.address, u.identity, u.certificate, u.login_num,
     u.login_time, u.create_by, u.update_by, u.create_date, u.update_date, u.del_flag
     </sql>
 
@@ -64,7 +66,18 @@
             <if test="certificate != null and certificate != ''">
                 AND u.certificate =  #{certificate}
             </if>
+<!--            <if test="phone != null and phone != ''">-->
+<!--                AND u.phone LIKE #{phone}-->
+<!--            </if>-->
+<!--            <if test="name != null and name != ''">-->
+<!--                AND u.name LIKE #{name}-->
+<!--            </if>-->
+            <if test="keyword != null and keyword != '' ">
+                or u.phone like concat('%',#{keyword},'%')
+                or u.name like concat('%',#{keyword},'%')
+            </if>
         </where>
+        order by u.create_date DESC
     </select>
 
     <select id="select" resultMap="BaseResultMap">
@@ -99,6 +112,9 @@
             </if>
             <if test="name != null">
                 name,
+            </if>
+            <if test="sex != null">
+                sex,
             </if>
             <if test="phone != null">
                 phone,
@@ -149,6 +165,9 @@
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
             </if>
             <if test="phone != null">
                 #{phone,jdbcType=VARCHAR},
@@ -201,6 +220,9 @@
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
             <if test="phone != null">
                 phone = #{phone,jdbcType=VARCHAR},
             </if>
@@ -244,6 +266,11 @@
 		WHERE  a.id = #{id}
 	</update>
 
+    <update id="updateLoginNum">
+		UPDATE snail_user SET
+			 login_num = login_num+1
+		WHERE  id = #{id}
+	</update>
 <!--    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->
 <!--        select-->
 <!--        <include refid="Base_Column_List" />-->

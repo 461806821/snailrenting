@@ -2,6 +2,7 @@ package com.alien.controller;
 
 import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
+import com.alien.entity.vo.SessionUser;
 import com.alien.service.BannerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,4 +39,10 @@ public class WebIndexController {
         }
     }
 
+    @ApiOperation(value = "VR页面")
+    @RequestMapping("/Web_vr")
+    private ModelAndView pWeb_vr(HttpSession httpSession) {
+        log.info("VR页面");
+        return  new ModelAndView("/Web_vr");
+    }
 }

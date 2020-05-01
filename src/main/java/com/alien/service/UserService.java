@@ -3,6 +3,7 @@ package com.alien.service;
 import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
 import com.alien.entity.SnailAdmin;
+import com.alien.entity.SnailBusiness;
 import com.alien.entity.SnailUser;
 import com.alien.entity.vo.SessionAdmin;
 import com.alien.entity.vo.SessionUser;
@@ -44,6 +45,7 @@ public class UserService {
                 sessionuser.setUsername(a.getUsername());
                 sessionuser.setHeadImg(a.getHeadImg());
                 httpSession.setAttribute("sessionuser", sessionuser);
+                userMapper.updateLoginNum(a);
                 return new ModelAndView("redirect:/index/Web_index");
             }
             modelAndView.addObject("msg", "密码不正确！");
@@ -160,6 +162,14 @@ public class UserService {
         userMapper.delete(snailUser);
 
         return admin_list(snailUser,httpSession);
+    }
+
+    public Integer count(SnailUser snailUser){
+        return userMapper.count(snailUser);
+    }
+
+    public List<SnailUser> list(SnailUser snailBusiness){
+        return userMapper.list(snailBusiness);
     }
 
 //    public void export(SnailUser user, HttpServletResponse response) throws IOException {

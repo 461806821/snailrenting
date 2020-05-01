@@ -33,12 +33,13 @@
         <where>
             del_flag = '0'
             <if test="state != null and state != ''">
-                AND state = #{state}
+                AND state = #{state,jdbcType=INTEGER}
             </if>
             <if test="payState != null and payState != ''">
-                AND pay_state = #{payState}
+                AND pay_state = #{payState,jdbcType=INTEGER}
             </if>
         </where>
+        order by create_date DESC
     </select>
 
   <select id="select" resultMap="BaseResultMap">
@@ -226,6 +227,13 @@
 			 a.del_flag = '1'
 		WHERE  a.id = #{id}
 	</update>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from snail_order
+        <where>
+            del_flag = '0'
+        </where>
+    </select>
 
     <update id="updatePayState">
 		UPDATE snail_order a SET
