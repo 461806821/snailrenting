@@ -133,8 +133,8 @@
                                                                 <a class="btn btn-primary" href="${pageContext.request.contextPath }/order/Admin_update?id=${o.id}&pageNum=${pageNum}&pageSize=${pageSize}">修改</a>
                                                                 <a class="btn btn-primary" href="${pageContext.request.contextPath }/order/Admin_delete?id=${o.id}&pageNum=${pageNum}&pageSize=${pageSize}">删除</a>
                                                                 <c:if test="${o.state == 0}">
-                                                                    <a class="btn btn-primary" href="${pageContext.request.contextPath }/order/Admin_update/state?state=1&id=${o.id}&pageNum=${pageNum}&pageSize=${pageSize}">通过</a>
-                                                                    <a class="btn btn-primary" href="${pageContext.request.contextPath }/order/Admin_update/state?state=2&id=${o.id}&pageNum=${pageNum}&pageSize=${pageSize}">不通过</a>
+                                                                    <a class="btn btn-primary" href="${pageContext.request.contextPath }/order/Admin_update/state?state=1&id=${o.id}&roomId=${o.roomId}&userId=${o.userId}&pageNum=${pageNum}&pageSize=${pageSize}">通过</a>
+                                                                    <a class="btn btn-primary" href="${pageContext.request.contextPath }/order/Admin_update/state?state=2&id=${o.id}&roomId=${o.roomId}&userId=${o.userId}&pageNum=${pageNum}&pageSize=${pageSize}">不通过</a>
                                                                 </c:if>
                                                             </td>
                                                         </tr>

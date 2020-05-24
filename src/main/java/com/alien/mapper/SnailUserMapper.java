@@ -10,7 +10,7 @@ public interface SnailUserMapper {
     SnailUser select(SnailUser record);
 
     List<SnailUser> list(SnailUser record);
-
+    List<SnailUser> adminList(SnailUser record);
     void update(SnailUser record);
 
     void insert(SnailUser record);

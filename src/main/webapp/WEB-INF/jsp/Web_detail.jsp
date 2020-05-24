@@ -160,7 +160,13 @@
                 </c:if>
                 <ul class="com">
                     <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a>卧室：${data.bedroom} </a></li>
-                    <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a>签约</a></li>
+                    <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a>当前状态：
+                        <c:if test="${data.snailRoom.state == 0}">出租中</c:if>
+                        <c:if test="${data.snailRoom.state == 1}">已租</c:if>
+                        <c:if test="${data.snailRoom.state == 2}">停用</c:if>
+                        <c:if test="${data.snailRoom.state == 3}">审核中</c:if>
+                        <c:if test="${data.snailRoom.state == 4}">装修</c:if>
+                        <c:if test="${data.snailRoom.state == 5}">准备签约</c:if></a></li>
                     <li><span class="glyphicon glyphicon-heart" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/house/Web_praise?id=${data.snailRoom.id}">点赞：${data.snailRoom.praise} </a></li>
                     <li><span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a href="${pageContext.request.contextPath }/collection/Web_insert?roomId=${data.snailRoom.id}">收藏</a></li>
                 </ul>
@@ -169,7 +175,7 @@
                         <li>操作选择 </li>
                         <li><a href="${pageContext.request.contextPath }/service/Web_aftersale">预约看房</a></li>
                         <li><a >电话咨询</a></li>
-                        <li><a href="${pageContext.request.contextPath }/order/Web_orderinsert?roomId=${data.snailRoom.id}">立刻签约</a></li>
+                        <li><a <c:if test="${data.snailRoom.state == 0}">href="${pageContext.request.contextPath }/order/Web_orderinsert?roomId=${data.snailRoom.id}"</c:if>>立刻签约</a></li>
                     </ul>
                 </div>
                 <div class="single-left2-sub">

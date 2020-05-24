@@ -8,6 +8,7 @@ import com.alien.entity.vo.SessionUser;
 import com.alien.entity.vo.SnailRoomVO;
 import com.alien.mapper.SnailHouseMapper;
 import com.alien.mapper.SnailOrderMapper;
+import com.alien.mapper.SnailUserMapper;
 import com.alien.utils.CodeUtils;
 import com.alien.utils.DateUtils;
 import com.alien.utils.UuidUtils;
@@ -34,6 +35,8 @@ public class OrderService {
     private SnailOrderMapper orderMapper;
     @Autowired
     private SnailHouseMapper houseMapper;
+    @Autowired
+    private SnailUserMapper userMapper;
 
     public ModelAndView web_select(SnailOrder snailOrder,HttpSession httpSession){
         SessionUser sessionuser=(SessionUser) httpSession.getAttribute("sessionuser");
@@ -86,6 +89,11 @@ public class OrderService {
         //checkType payMoney
         snailOrder.preInsert(sessionuser.getId());
         orderMapper.insert(snailOrder);
+        //准备签约
+        SnailRoomVO r =new SnailRoomVO();
+        r.setId(snailOrder.getRoomId());
+        r.setState(5);
+        houseMapper.updateRoom(r);
         SnailOrder u=orderMapper.select(snailOrder);
         return ModelAndViewResult.succeed("/Web_order",u, "添加成功！", CodeEnum.MSG_SUCCES.getMsg());
     }
@@ -150,8 +158,16 @@ public class OrderService {
         }
         snailUser.preUpdate(sessionadmin.getId());
         orderMapper.updateState(snailUser);
-
-        snailUser.setState(null);
+        //room已租
+        SnailRoomVO r =new SnailRoomVO();
+        r.setId(snailUser.getRoomId());
+        r.setState(1);
+        houseMapper.updateRoom(r);
+        //user已租
+        SnailUser u =new SnailUser();
+        u.setId(snailUser.getUserId());
+        u.preUpdate(sessionadmin.getId());
+        userMapper.update(u);
         return admin_list(snailUser,httpSession);
     }
 

@@ -2,15 +2,15 @@ package com.alien.service;
 
 import com.alien.common.CodeEnum;
 import com.alien.common.ModelAndViewResult;
-import com.alien.entity.SnailAdmin;
-import com.alien.entity.SnailBusiness;
-import com.alien.entity.SnailUser;
+import com.alien.entity.*;
 import com.alien.entity.vo.SessionAdmin;
 import com.alien.entity.vo.SessionUser;
+import com.alien.mapper.SnailCollectionMapper;
 import com.alien.mapper.SnailUserMapper;
 import com.alien.utils.UuidUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import javassist.compiler.Parser;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +31,8 @@ public class UserService {
 
     @Autowired
     private SnailUserMapper userMapper;
+    @Autowired
+    private SnailCollectionMapper collectionMapper;
 
     /**
      * 登陆接口
@@ -45,6 +49,7 @@ public class UserService {
                 sessionuser.setUsername(a.getUsername());
                 sessionuser.setHeadImg(a.getHeadImg());
                 httpSession.setAttribute("sessionuser", sessionuser);
+                a.setLoginTime(new Date());
                 userMapper.updateLoginNum(a);
                 return new ModelAndView("redirect:/index/Web_index");
             }
@@ -70,8 +75,8 @@ public class UserService {
         snailUser.setId(sessionuser.getId());
         //房东或租户身份 回显，不是 跳转认证界面
         SnailUser u =userMapper.select(snailUser);
-        Integer certificate = 2;
-        if(certificate == 0 ){
+//        Integer certificate = 2;
+        if(u.getCertificate() == 0 ){
             return ModelAndViewResult.succeed("/Web_certificate",null, CodeEnum.MSG_SUCCES.getMsg());
         }
         return ModelAndViewResult.succeed("/Web_certificate",u,CodeEnum.MSG_SUCCES.getMsg());
@@ -83,8 +88,10 @@ public class UserService {
         if(sessionuser == null){
             return new ModelAndView("redirect:/user/Web_login");
         }
-        //身份认证逻辑
         snailUser.setId(sessionuser.getId());
+        //身份认证逻辑
+        snailUser.setCertificate(2);
+        snailUser.setIdentity(snailUser.getIdentity());
         snailUser.preUpdate(sessionuser.getId());
         userMapper.update(snailUser);
         SnailUser u=userMapper.select(snailUser);
@@ -116,7 +123,21 @@ public class UserService {
 
     public ModelAndView admin_list(SnailUser snailUser,HttpSession httpSession){
         PageHelper.startPage(snailUser.getPageNum(), snailUser.getPageSize());
-        List<SnailUser> list= userMapper.list(snailUser);
+        List<SnailUser> list= userMapper.adminList(snailUser);
+        if(list!=null){
+            for(SnailUser u:list){
+                SnailCollection c=new SnailCollection();
+                c.setUserId(u.getId());
+                List<SnailRoom> snailRoomList = collectionMapper.list(c);
+                List<Integer> roomIds =new ArrayList<>();
+                if(snailRoomList!=null){
+                    for(SnailRoom rl:snailRoomList){
+                        roomIds.add(rl.getId());
+                    }
+                }
+                u.setRoomIds(roomIds);
+            }
+        }
         PageInfo<SnailUser> pageInfo = new PageInfo<>(list);
         return ModelAndViewResult.succeedPage("/Admin_userlist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
     }

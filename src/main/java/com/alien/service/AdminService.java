@@ -66,6 +66,13 @@ public class AdminService {
         return modelAndView;
     }
 
+
+    /**
+     * 后台退出
+     * @param snailAdmin
+     * @param httpSession
+     * @return
+     */
     public ModelAndView logout(SnailAdmin snailAdmin, HttpSession httpSession){
         httpSession.removeAttribute("sessionadmin");
         return new ModelAndView("redirect:/admin/Admin_login");

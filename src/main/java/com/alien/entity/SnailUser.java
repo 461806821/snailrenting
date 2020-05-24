@@ -34,7 +34,7 @@ public class SnailUser extends BaseEntity<SnailUser> {
 
     private String identity;
 
-    private Integer certificate;//认证（0普通，1租客，2房东，3已租）
+    private Integer certificate;//认证（0租客，1普通，2房东，3已租）
 
     private Integer loginNum;
 

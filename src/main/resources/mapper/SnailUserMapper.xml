@@ -41,6 +41,25 @@
         <result column="del_flag" jdbcType="BIT" property="delFlag" />
         <collection property="roomIds" ofType="Integer" resultMap="RoomResultMap" />
     </resultMap>
+    <resultMap id="AdminUserResultMap" type="com.alien.entity.SnailUser">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="identity" jdbcType="VARCHAR" property="identity" />
+        <result column="certificate" jdbcType="INTEGER" property="certificate" />
+        <result column="login_num" jdbcType="INTEGER" property="loginNum" />
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+        <result column="create_by" jdbcType="INTEGER" property="createBy" />
+        <result column="update_by" jdbcType="INTEGER" property="updateBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="del_flag" jdbcType="BIT" property="delFlag" />
+    </resultMap>
   <resultMap type="Integer" id="RoomResultMap">
     <id column="room_id" jdbcType="INTEGER" property="roomId" />
   </resultMap>
@@ -64,14 +83,25 @@
             u.del_flag = '0'
             and a.del_flag = '0'
             <if test="certificate != null and certificate != ''">
-                AND u.certificate =  #{certificate}
+                and u.certificate = #{certificate}
             </if>
-<!--            <if test="phone != null and phone != ''">-->
-<!--                AND u.phone LIKE #{phone}-->
-<!--            </if>-->
-<!--            <if test="name != null and name != ''">-->
-<!--                AND u.name LIKE #{name}-->
-<!--            </if>-->
+            <if test="keyword != null and keyword != '' ">
+                or u.phone like concat('%',#{keyword},'%')
+                or u.name like concat('%',#{keyword},'%')
+            </if>
+        </where>
+        order by u.create_date DESC
+    </select>
+
+    <select id="adminList" parameterType="com.alien.entity.SnailUser" resultMap="AdminUserResultMap">
+        SELECT
+        <include refid="User_Column_List"/>
+        FROM snail_user u
+        <where>
+            u.del_flag = '0'
+            <if test="certificate != null and certificate != ''">
+                and u.certificate = #{certificate}
+            </if>
             <if test="keyword != null and keyword != '' ">
                 or u.phone like concat('%',#{keyword},'%')
                 or u.name like concat('%',#{keyword},'%')
@@ -268,7 +298,8 @@
 
     <update id="updateLoginNum">
 		UPDATE snail_user SET
-			 login_num = login_num+1
+			 login_num = login_num+1,
+			 login_time = #{loginTime}
 		WHERE  id = #{id}
 	</update>
 <!--    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->

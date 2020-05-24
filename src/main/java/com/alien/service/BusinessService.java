@@ -87,7 +87,7 @@ public class BusinessService {
         PageHelper.startPage(snailBusiness.getPageNum(), snailBusiness.getPageSize());
         List<SnailBusiness> list= businessMapper.list(snailBusiness);
         PageInfo<SnailBusiness> pageInfo = new PageInfo<>(list);
-        return ModelAndViewResult.succeedPage("/Admin_businesslist",list, "ok", CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
+        return ModelAndViewResult.succeedPage("/Admin_businesslist",list,null, CodeEnum.MSG_SUCCES.getMsg(),pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
     }
 
     public ModelAndView admin_select(SnailBusiness snailUser, HttpSession httpSession){

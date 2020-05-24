@@ -64,14 +64,14 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <a href="${pageContext.request.contextPath }/user/Admin_insert" type="button" class="btn btn-primary">添加用户</a>
+                                        <a href="${pageContext.request.contextPath }/user/Admin_userinsert" type="button" class="btn btn-primary">添加用户</a>
                                         <h3 class="h4"></h3>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6" type="button" class="btn btn-primary">全部用户</a>&nbsp;
-                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=0" type="button" class="btn btn-primary">普通</a>&nbsp;
-                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=1" type="button" class="btn btn-primary">租户</a>&nbsp;
-                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=2" type="button" class="btn btn-primary">房东</a>
+                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=${1}" type="button" class="btn btn-primary">普通</a>
+                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=${3}" type="button" class="btn btn-primary">租户</a>&nbsp;
+                                                <a href="${pageContext.request.contextPath }/user/Admin_list?pageSize=6&certificate=${2}" type="button" class="btn btn-primary">房东</a>
                                                 <label class="col-sm-3 form-control-label"></label>
                                                 <input type="text" name="keyword" class="form-control">
                                                 <div class="input-group-append">
@@ -140,7 +140,10 @@
                                                             <td>${u.phone}</td>
                                                             <td>${u.address}</td>
                                                             <td>${u.identity}</td>
-                                                            <td>${u.certificate}</td>
+                                                            <td><c:if test="${u.certificate == 1}">普通</c:if>
+                                                                <c:if test="${u.certificate == 0}">租客</c:if>
+                                                                <c:if test="${u.certificate == 2}">房东</c:if>
+                                                                <c:if test="${u.certificate == 3}">已租</c:if></td>
                                                             <td><fmt:formatDate value="${u.loginTime}" pattern="yyyy年MM月dd日hh分mm秒" /></td>
                                                             <td><fmt:formatDate value="${u.createDate}" pattern="yyyy年MM月dd日hh分mm秒" /></td>
                                                             <td>
@@ -158,11 +161,11 @@
                                                 </table>
                                                 <!-- page -->
                                                 <ul class="pagination pagination-lg">
-                                                    <li <c:if test="${pageNum-1 <=0}">class="disabled"</c:if>> <a <c:if test="${pageNum-1 >0}" >href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${pageNum-1}"</c:if> type="button" class="btn btn-primary"><i>上一页</i></a></li>
+                                                    <li <c:if test="${pageNum-1 <=0}">class="disabled"</c:if>> <a <c:if test="${pageNum-1 >0}" >href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${pageNum-1}&certificate=${certificate}"</c:if> type="button" class="btn btn-primary"><i>上一页</i></a></li>
                                                     <c:forEach var="prePageNum" begin="1" end="${total/pageSize+1}">
-                                                        <li <c:if test="${prePageNum == pageNum}" >class="active" </c:if> ><a href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${prePageNum}" type="button" class="btn btn-primary">${prePageNum}</a></li>
+                                                        <li <c:if test="${prePageNum == pageNum}" >class="active" </c:if> ><a href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${prePageNum}&certificate=${certificate}" type="button" class="btn btn-primary">${prePageNum}</a></li>
                                                     </c:forEach>
-                                                    <li><a <c:if test="${pageNum+1 < total/pageSize+1}" >href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${pageNum+1}"</c:if> type="button" class="btn btn-primary"><i>下一页</i></a></li>
+                                                    <li><a <c:if test="${pageNum+1 < total/pageSize+1}" >href="${pageContext.request.contextPath }/user/Admin_list?pageNum=${pageNum+1}&certificate=${certificate}"</c:if> type="button" class="btn btn-primary"><i>下一页</i></a></li>
                                                 </ul>
                                                 <!-- //page -->
                                             </c:otherwise>

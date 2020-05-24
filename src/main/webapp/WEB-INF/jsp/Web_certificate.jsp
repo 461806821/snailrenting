@@ -80,7 +80,7 @@
         </c:if>
         <c:choose>
             <c:when test="${data.certificate == 0 }">
-                <form action="${pageContext.request.contextPath }/service/Web_usercenter/update" enctype="multipart/form-data" method="post">
+                <form action="${pageContext.request.contextPath }/service/Web_certificate/update" enctype="multipart/form-data" method="post">
                     <div class="row animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
                         <div class="col-lg-6 in-gp-tl">
                             <div class="input-group">
@@ -106,7 +106,7 @@
                         <div class="col-lg-6 in-gp-tl">
                             <div class="input-group">
                                 <span class="input-group-addon" id="sizing-addon4">身份证：</span>
-                                <input type="text" name="username" class="form-control" maxlength="18" placeholder="身份证" aria-describedby="sizing-addon2">
+                                <input type="text" name="identity" class="form-control" maxlength="18" placeholder="身份证" aria-describedby="sizing-addon2">
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
                     </div><!-- /.row -->
@@ -144,7 +144,7 @@
                         </div>
                         <div class="col-lg-6 in-gp-tl">
                             <div class="input-group">
-                                <span class="input-group-addon">身份证：{data.webidentity}</span>
+                                <span class="input-group-addon">身份证：${data.identity}</span>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
                     </div><!-- /.row -->
