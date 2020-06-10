@@ -153,7 +153,7 @@ public class UserService {
         if(sessionadmin == null){
             return new ModelAndView("redirect:/admin/Admin_login");
         }
-        if(snailUser.getPassword()!=snailUser.getRepassword())
+        if(!snailUser.getPassword().equals(snailUser.getRepassword()))
             return ModelAndViewResult.succeed("/Admin_userinsert","两次输入的密码不一致，请重新输入！", CodeEnum.MSG_ERROR.getMsg());
         snailUser.preInsert(sessionadmin.getId());
         userMapper.insert(snailUser);

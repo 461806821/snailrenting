@@ -96,7 +96,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 form-control-label">房主ID</label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="userId" oninput = "value=value.replace(/[^\d]/g,'')" class="form-control"><small class="help-block-none">请输入数字。</small>
+                                                <input type="text" name="userId" class="form-control"><small class="help-block-none">请输入数字。</small>
                                             </div>
                                         </div>
                                         <div class="line"></div>
@@ -123,7 +123,7 @@
                                             <div class="col-sm-9">
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <input type="text" name="house_price" placeholder="" class="form-control">
+                                                        <input type="text" name="house_price" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                     </div>
                                                 </div>
@@ -263,7 +263,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <input type="text" name="1room_price" placeholder="" class="form-control">
+                                                                        <input type="text" name="1room_price" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                                     </div>
                                                                 </div>
@@ -275,7 +275,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <input type="text" name="1sale" placeholder="" class="form-control">
+                                                                        <input type="text" name="1sale" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                                     </div>
                                                                 </div>
@@ -328,7 +328,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <input type="text" name="2room_price" placeholder="" class="form-control">
+                                                                        <input type="text" name="2room_price" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                                     </div>
                                                                 </div>
@@ -340,7 +340,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <input type="text" name="2sale" placeholder="" class="form-control">
+                                                                        <input type="text" name="2sale" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                                     </div>
                                                                 </div>
@@ -375,16 +375,16 @@
                                             <div role="document" class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 id="exampleModalLabel3" class="modal-title">填写房间-1信息</h4>
+                                                        <h4 id="exampleModalLabel3" class="modal-title">填写房间-3信息</h4>
                                                         <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>请正确填写房间-1的信息。</p>
+                                                        <p>请正确填写房间-3的信息。</p>
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 form-control-label">名称</label>
                                                             <div class="col-sm-9">
-                                                                <input type="text" name="3room_name" required="required" class="form-control is-invalid">
-                                                                <div class="invalid-feedback">请输入房间-1名称。</div>
+                                                                <input type="text" name="3room_name" class="form-control is-invalid">
+                                                                <div class="invalid-feedback">请输入房间-3名称。</div>
                                                             </div>
                                                         </div>
                                                         <div class="line"></div>
@@ -393,7 +393,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <input type="text" name="3room_price" placeholder="" class="form-control">
+                                                                        <input type="text" name="3room_price" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                                     </div>
                                                                 </div>
@@ -405,7 +405,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <input type="text" name="3sale" placeholder="" class="form-control">
+                                                                        <input type="text" name="3sale" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                                     </div>
                                                                 </div>
@@ -440,7 +440,7 @@
                                             <div role="document" class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 id="exampleModalLabe4" class="modal-title">填写房间-1信息</h4>
+                                                        <h4 id="exampleModalLabe4" class="modal-title">填写房间-4信息</h4>
                                                         <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
                                                     </div>
                                                     <div class="modal-body">
@@ -448,7 +448,7 @@
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 form-control-label">名称</label>
                                                             <div class="col-sm-9">
-                                                                <input type="text" name="4room_name" required="required" class="form-control is-invalid">
+                                                                <input type="text" name="4room_name" class="form-control is-invalid">
                                                                 <div class="invalid-feedback">请输入房间-4的名称。</div>
                                                             </div>
                                                         </div>
@@ -458,7 +458,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <input type="text" name="4room_price" placeholder="" class="form-control">
+                                                                        <input type="text" name="4room_price" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                                     </div>
                                                                 </div>
@@ -470,7 +470,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        <input type="text" name="4sale" placeholder="" class="form-control">
+                                                                        <input type="text" name="4sale" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="" class="form-control">
                                                                         <div class="input-group-append"><span class="input-group-text">.00</span></div>
                                                                     </div>
                                                                 </div>

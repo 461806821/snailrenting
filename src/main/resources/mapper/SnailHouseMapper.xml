@@ -210,7 +210,7 @@
             </if>
             <if test="keyword != null and keyword != '' ">
                 or r.name like concat('%',#{keyword},'%')
-                or r.address like concat('%',#{keyword},'%')
+                or h.address like concat('%',#{keyword},'%')
             </if>
         </where>
         order by h.create_date DESC
@@ -252,7 +252,7 @@
             </if>
             <if test="keyword != null and keyword != '' ">
                 or r.name like concat('%',#{keyword},'%')
-                or r.address like concat('%',#{keyword},'%')
+                or h.address like concat('%',#{keyword},'%')
             </if>
         </where>
         order by h.create_date DESC

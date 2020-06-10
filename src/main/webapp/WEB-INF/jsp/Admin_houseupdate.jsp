@@ -98,7 +98,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 form-control-label">房主ID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" value="${data.userId }" disabled="" placeholder="" class="form-control">
+                                            <input type="text" name="userId" value="${data.userId }" disabled="" placeholder="" class="form-control">
                                         </div>
                                     </div>
                                     <div class="line"></div>

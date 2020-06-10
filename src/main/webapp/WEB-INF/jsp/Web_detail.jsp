@@ -300,7 +300,7 @@
                             <c:if test="${r.state == 3 }">审核中</c:if>
                             <c:if test="${r.state == 4 }">装修</c:if>
                             <c:if test="${r.state == 5 }">准备签约</c:if></a></li>
-                        <li><a>女</a></li>
+<%--                        <li><a>女</a></li>--%>
                         <li class="active"><a>创建日期：<fmt:formatDate value="${r.createDate}" pattern="yyyy年MM月dd日" /></a></li>
                     </ol>
                 </c:forEach>
